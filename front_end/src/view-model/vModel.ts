@@ -1,0 +1,1 @@
+//model for our front end, talks to the api, the bride between front end and back end
