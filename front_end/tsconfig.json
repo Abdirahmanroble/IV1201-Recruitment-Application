@@ -12,6 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "outDir": "./dist", // specify the output directory
     "jsx": "react-jsx",
 
     /* Linting */
