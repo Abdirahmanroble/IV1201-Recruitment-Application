@@ -1,1 +1,0 @@
-//The views the client should see, like a login page.

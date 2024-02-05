@@ -1,1 +1,0 @@
-//alla våra api calls implementeras i denna folder. Denna filen kan tas bort.
