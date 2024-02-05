@@ -33,20 +33,38 @@ services:
       - app-network
 
   # Front-end Container
+  # front-end:
+  #   build:
+  #     context: ./front_end
+  #     dockerfile: Dockerfile
+  #   container_name: front_end_tapp
+  #   ports:
+  #     - "4000:4000"
+  #   volumes:
+  #     - ./front_end/src:/usr/src/app/src
+  #     - /usr/src/app/node_modules
+  #   environment:
+  #     - NODE_ENV=development
+  #   networks:
+  #     - app-network
+
+  # Front-end Container
   front-end:
     build:
       context: ./front_end
       dockerfile: Dockerfile
     container_name: front_end_tapp
     ports:
-      - "4000:4000"
+      - "4000:5173"
     volumes:
-      - ./front_end/src:/usr/src/app/src
-      - /usr/src/app/node_modules
+      - ./front_end:/usr/src/app # Map the entire front_end directory
+      - /usr/src/app/node_modules # Keep node_modules internal to the container
     environment:
       - NODE_ENV=development
     networks:
       - app-network
+    stdin_open: true
+    tty: true
 
 networks:
   app-network:
