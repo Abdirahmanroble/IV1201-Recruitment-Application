@@ -2,6 +2,7 @@ import express, { type Express, type Response, type Request } from "express";
 import { QueryTypes } from "sequelize";
 import db from "./integration/DAO";
 import Person from "./model/person";
+import { getUser } from "./controller/login";
 
 async function testDatabaseConnection(): Promise<void> {
   try {
@@ -24,6 +25,11 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Sever is up and running!");
 });
 
+// app.get("/users", (req: Request, res: Response) => {
+//   // res.send("Sever is up and running!");
+//   res.json(Person);
+// });
+
 app.get("/tables", async (req: Request, res: Response) => {
   try {
     const [results] = await db.query(
@@ -36,25 +42,7 @@ app.get("/tables", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/user", async (req: Request, res: Response) => {
-  try {
-    const user = await Person.findAll({
-      where: {
-        surname: "Smith", // Adjust the attribute name if necessary
-      },
-    });
-
-    if (user) {
-      res.json(user);
-      console.log(user);
-    } else {
-      res.status(404).send("User not found");
-    }
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    res.status(500).send("Internal Server Error");
-  }
-});
+app.post("/user", getUser);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
