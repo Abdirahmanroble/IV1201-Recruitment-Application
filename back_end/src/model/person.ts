@@ -1,28 +1,77 @@
-/* eslint-disable @typescript-eslint/semi */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/prefer-readonly */
-class Person {
-  private name: string;
-  private surname: string;
-  private personnumber: string; // Assuming personnumber is a string, adjust the type as necessary
-  private email: string;
-  private password: string;
-  private username: string;
+import { Model, DataTypes } from "sequelize";
+import db from "../integration/DAO";
 
-  // eslint-disable-next-line @typescript-eslint/space-before-function-paren
-  constructor(
-    name: string,
-    surname: string,
-    personnumber: string,
-    email: string,
-    password: string,
-    username: string
-  ) {
-    this.name = name;
-    this.surname = surname;
-    this.personnumber = personnumber;
-    this.email = email;
-    this.password = password;
-    this.username = username;
-  }
+interface PersonAttributes {
+  person_id: number;
+  name: string;
+  surname: string;
+  pnr: string;
+  email: string;
+  password: string;
+  username: string;
+  role_id: number;
 }
+
+class Person extends Model<PersonAttributes> {
+  public person_id!: number;
+  public name!: string;
+  public surname!: string;
+  public pnr!: string;
+  public email!: string;
+  public password!: string;
+  public username!: string;
+  public role_id!: number;
+
+  // public readonly createdAt!: Date;
+  // public readonly updatedAt!: Date;
+}
+
+Person.init(
+  {
+    person_id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    name: {
+      type: new DataTypes.STRING(255),
+      allowNull: false,
+    },
+    surname: {
+      type: new DataTypes.STRING(255),
+      allowNull: false,
+    },
+    pnr: {
+      type: new DataTypes.STRING(255),
+      allowNull: false,
+    },
+    email: {
+      type: new DataTypes.STRING(255),
+      allowNull: false,
+    },
+    password: {
+      type: new DataTypes.STRING(255),
+      allowNull: false,
+    },
+    username: {
+      type: new DataTypes.STRING(255),
+      allowNull: false,
+    },
+    role_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: "roles",
+        key: "id",
+      },
+    },
+  },
+  {
+    sequelize: db,
+    modelName: "person",
+    tableName: "person",
+    timestamps: false,
+  }
+);
+
+export default Person;
