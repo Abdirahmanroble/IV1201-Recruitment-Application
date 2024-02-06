@@ -18,18 +18,20 @@ function testDatabaseConnection() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             yield DAO_1.default.authenticate();
-            console.log("Connection has been established successfully.");
+            console.log('Connection has been established successfully.');
         }
         catch (error) {
-            console.error("Unable to connect to the database:", error);
+            console.error('Unable to connect to the database:', error);
         }
     });
 }
-testDatabaseConnection();
+testDatabaseConnection().catch((error) => {
+    console.error('Database connection failed:', error);
+});
 const app = (0, express_1.default)();
 const port = 3000;
-app.get("/", (req, res) => {
-    res.send("Wow!");
+app.get('/', (req, res) => {
+    res.send('Sever is up and running!');
 });
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
