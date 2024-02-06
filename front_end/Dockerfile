@@ -9,6 +9,7 @@ COPY package*.json ./
 COPY tsconfig.json ./
 
 # Install the dependencies
+RUN npm install
 RUN npm install -g serve
 
 # Copy the rest of the application's code
@@ -21,7 +22,8 @@ COPY . .
 EXPOSE 4000
 
 # Use serve to serve the static files
-CMD ["serve", "-s", "dist", "-l", "4000"]
+# CMD ["serve", "-s", "dist", "-l", "4000"]
+CMD [ "npm", "start"]
 
 
 
