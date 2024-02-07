@@ -12,6 +12,7 @@ export default class ApplicantModel {
   private lastName: string = "";
   private personNumber: string = "";
   private email: string = "";
+  private username: string = "";
   private competences: { yearsOfExperience: number; name: string }[] = [];
 
   constructor() {
@@ -36,6 +37,10 @@ export default class ApplicantModel {
     this.email = email;
   }
 
+  public setUsername(username: string) {
+    this.username = username;
+  }
+
   public setCompetences(
     competences: { yearsOfExperience: number; name: string }[]
   ) {
@@ -58,6 +63,10 @@ export default class ApplicantModel {
 
   public getEmail(): string {
     return this.email;
+  }
+
+  public getUsername(): string {
+    return this.username;
   }
 
   public getCompetences(): { yearsOfExperience: number; name: string }[] {
