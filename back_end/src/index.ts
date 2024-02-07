@@ -1,6 +1,6 @@
 import express, { type Express, type Response, type Request } from "express";
 import { QueryTypes } from "sequelize";
-import db from "./integration/DAO";
+import db from "./integration/dbConfig";
 import Person from "./model/person";
 import { getUser } from "./controller/login";
 import personRoutes from "./routes/personRoutes";

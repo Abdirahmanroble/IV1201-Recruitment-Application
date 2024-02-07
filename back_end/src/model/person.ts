@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import db from "../integration/DAO";
+import db from "../integration/dbConfig";
 
 interface PersonAttributes {
   person_id: number;
