@@ -7,6 +7,18 @@
 
 import ApplicantModel from "../models/ApplicantModel";
 
+interface DatabaseBody {
+  message: string;
+  foundUser: {
+    name: string;
+    surname: string;
+    pnr: string;
+    email: string;
+    username: string;
+    role_id: number;
+  };
+}
+
 export default class ApplicantViewModel {
   private model: ApplicantModel;
   private signedIn: boolean;
@@ -19,7 +31,9 @@ export default class ApplicantViewModel {
   public createAccount() {}
 
   /**The method is used for testing only right now */
-  public login(email: string, password: string) {
+  public login(email: string, password: string): boolean {
+    let databaseBody: DatabaseBody;
+
     fetch("http://localhost:3000/login", {
       method: "POST",
       body: JSON.stringify({
@@ -29,7 +43,16 @@ export default class ApplicantViewModel {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-    }).then();
+    }).then(async (res) => {
+      const { data, errors } = await res.json();
+      if (data?.message) {
+        databaseBody.message = data?.message;
+        databaseBody.foundUser = data?.foundUser;
+        this.signedIn = true;
+        console.log(databaseBody);
+      }
+    });
+
     return this.signedIn;
   }
 
