@@ -3,6 +3,8 @@ import { QueryTypes } from "sequelize";
 import db from "./integration/DAO";
 import Person from "./model/person";
 import { getUser } from "./controller/login";
+import personRoutes from "./routes/personRoutes";
+
 
 async function testDatabaseConnection(): Promise<void> {
   try {
@@ -20,6 +22,7 @@ testDatabaseConnection().catch((error) => {
 const app: Express = express();
 
 const port = 3000;
+app.use(express.json());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Sever is up and running!");
@@ -43,6 +46,8 @@ app.get("/tables", async (req: Request, res: Response) => {
 });
 
 app.post("/user", getUser);
+
+app.use(personRoutes);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
