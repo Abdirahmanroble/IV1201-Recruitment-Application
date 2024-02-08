@@ -17,7 +17,7 @@ function App() {
       <Router>
         <Routes>
           <Route
-            path="/login"
+            path="/"
             element={
               <HomeController
                 viewModel={viewModel}
