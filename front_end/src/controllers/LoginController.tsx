@@ -1,22 +1,22 @@
-// import { observer } from "mobx-react";
 import { Component } from "react";
-
 import { ControllerProps } from "../@types/Login";
 import LoginView from "../views/LoginView/LoginView";
 
-// @observer
 export default class LoginController extends Component<ControllerProps> {
-  private onLogin = (email: string, password: string) => {
-    const success: boolean = this.props.viewModel.login(email, password);
-    if (success) this.props.login();
+  private onLogin = async (email: string, password: string) => {
+    try {
+      const success = await this.props.viewModel.login(email, password);
+      if (success) {
+        this.props.login();
+      } else {
+        console.log("Login failed");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   };
+
   render() {
-    return (
-      <LoginView
-        onLogin={(email: string, password: string) =>
-          this.onLogin(email, password)
-        }
-      />
-    );
+    return <LoginView onLogin={this.onLogin} />;
   }
 }

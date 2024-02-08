@@ -1,10 +1,3 @@
-/**
- * The ApplicantViewModel acts as a model for different views and contains logic. The view-model is independent
- * and is not affected by who consumes its data but acts as a regular class. The view-model has a reference
- * to the model from where it gets its data, the view-model can then make computations on the data
- * depending on the needs of the views.
- */
-
 import ApplicantModel from "../models/ApplicantModel";
 
 interface DatabaseBody {
@@ -51,28 +44,27 @@ export default class ApplicantViewModel {
           password: password,
         }),
         headers: {
-          "Content-type": "application/json; charset=UTF-8",
+          "Content-Type": "application/json; charset=UTF-8",
         },
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok.");
+        throw new Error("Network response was not ok");
       }
 
-      const { data } = await response.json();
+      const data = await response.json();
       if (data?.message) {
         databaseBody = data;
         this.signedIn = true;
-        console.log(databaseBody);
+      } else {
+        this.signedIn = false;
       }
+      console.log(databaseBody);
+      return this.signedIn;
     } catch (error) {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
-      );
+      console.error("Login request failed:", error);
+      return false;
     }
-
-    return this.signedIn;
   }
 
   public registerApplication() {}
