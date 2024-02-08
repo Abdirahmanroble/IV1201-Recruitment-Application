@@ -2,7 +2,7 @@ import express, { type Express, type Response, type Request } from "express";
 import db from "./integration/dbConfig";
 import { getUser } from "./controller/login";
 import personRoutes from "./routes/personRoutes";
-
+import cors from "cors";
 
 async function testDatabaseConnection(): Promise<void> {
   try {
@@ -22,10 +22,16 @@ const app: Express = express();
 const port = 3000;
 app.use(express.json());
 
+app.use(
+  cors({
+    origin: "http://localhost:4000",
+  })
+);
+
+
 app.get("/", (req: Request, res: Response) => {
   res.send("Sever is up and running!");
 });
-
 
 app.post("/user", getUser);
 
@@ -34,7 +40,6 @@ app.use(personRoutes);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
-
 
 // app.get("/users", (req: Request, res: Response) => {
 //   // res.send("Sever is up and running!");
