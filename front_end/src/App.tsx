@@ -11,6 +11,7 @@ function App() {
   const viewModel = new ApplicantViewModel(model);
 
   const [signedIn, setSignedIn] = useState(false);
+  const [stateViewModel, setViewModel] = useState(viewModel);
 
   if (signedIn)
     return (
@@ -20,7 +21,7 @@ function App() {
             path="/"
             element={
               <HomeController
-                viewModel={viewModel}
+                viewModel={stateViewModel}
                 logout={() => setSignedIn(false)}
               ></HomeController>
             }
@@ -33,6 +34,7 @@ function App() {
       <LoginController
         viewModel={viewModel}
         login={() => setSignedIn(true)}
+        changeState={(viewModel) => setViewModel(viewModel)}
       ></LoginController>
     );
 }

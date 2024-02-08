@@ -69,6 +69,10 @@ export default class ApplicantViewModel {
 
   public registerApplication() {}
 
+  public setEmail(email: string) {
+    this.model.setEmail(email);
+  }
+
   public get email(): string {
     return this.model.getEmail();
   }
