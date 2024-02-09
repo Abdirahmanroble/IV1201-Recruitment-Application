@@ -35,6 +35,8 @@ app.get("/", (req: Request, res: Response) => {
 
 app.post("/user", getUser);
 
+
+//Login
 app.use(personRoutes);
 
 app.listen(port, () => {
