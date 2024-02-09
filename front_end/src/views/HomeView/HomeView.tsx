@@ -8,7 +8,7 @@ export default class HomeView extends PureComponent<ViewProps> {
     return (
       <div className="home-view">
         <h1>This is the home view...</h1>
-        <h2>You are now logged in as {this.props.email}</h2>
+        <h2>You are now logged in</h2>
         <button onClick={this.props.onLogout}>LOGOUT</button>
       </div>
     );

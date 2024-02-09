@@ -1,10 +1,10 @@
 // personRoutes.ts
 
-import { Router } from 'express';
-import PersonController from '../controller/personController';
+import { Router } from 'express'
+import PersonController from '../controller/personController'
 
-const router = Router();
+const router = Router()
 
-router.post('/login', PersonController.login);
+router.post('/login', PersonController.login)
 
-export default router;
+export default router
