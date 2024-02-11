@@ -34,7 +34,11 @@ app.get('/', (req: Request, res: Response) => {
 
 app.post('/user', getUser)
 
-app.use(personRoutes)
+app.post("/user", getUser);
+
+
+//Login
+app.use(personRoutes);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`)
