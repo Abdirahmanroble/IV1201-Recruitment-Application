@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /**
  * Represents a competence profile with a specific number of years of experience.
  * This class is designed to encapsulate the competence level of an individual in terms of their years of experience in a particular domain.

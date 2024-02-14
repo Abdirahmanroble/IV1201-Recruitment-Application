@@ -47,7 +47,7 @@ interface LoginCredentials {
 /**
  * Service class for authentication-related operations.
  */
-class AuthService {
+export const AuthService = {
   /**
    * Attempts to authenticate a user with a username and password.
    * This method checks if a user exists with the given username and then verifies the password.
@@ -57,7 +57,7 @@ class AuthService {
    * @returns {Promise<Person | null>} - A promise that resolves to the user object if login is successful, or null if the login fails.
    * @throws {Error} - Throws an error if the login process fails due to an unexpected error.
    */
-  public static async login ({ username, password }: LoginCredentials): Promise<Person | null> {
+  async login ({ username, password }: LoginCredentials): Promise<Person | null> {
     try {
       const user = await Person.findOne({ where: { username } })
       if (user === null) {
@@ -74,5 +74,3 @@ class AuthService {
     }
   }
 }
-
-export default AuthService
