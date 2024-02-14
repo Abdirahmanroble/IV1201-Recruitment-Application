@@ -1,6 +1,5 @@
 import express, { type Express, type Response, type Request } from 'express'
 import db from './integration/dbConfig'
-import { getUser } from './controller/login'
 import personRoutes from './routes/personRoutes'
 import cors from 'cors'
 
@@ -32,13 +31,8 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Sever is up and running!')
 })
 
-app.post('/user', getUser)
-
-app.post("/user", getUser);
-
-
-//Login
-app.use(personRoutes);
+// Login
+app.use(personRoutes)
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`)

@@ -1,10 +1,10 @@
-// personRoutes.ts
-
 import { Router } from 'express'
-import PersonController from '../controller/personController'
+import { LoginController } from '../controller/loginController'
 
 const router = Router()
 
-router.post('/login', PersonController.login)
+router.post('/login', (req, res, next) => {
+  LoginController.login(req, res).catch(next)
+})
 
 export default router
