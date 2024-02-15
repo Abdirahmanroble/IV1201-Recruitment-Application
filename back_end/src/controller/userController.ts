@@ -1,5 +1,6 @@
 import e, { type Request, type Response } from "express";
 import AuthService from "../services/authService";
+import { createToken } from "../middleware/auth.middleware";
 /**
  * Controller for person-related operations.
  */
@@ -30,6 +31,10 @@ class UserController {
         username: user.username,
         role_id: user.role_id,
       };
+
+      const token = createToken(foundUser.email);
+      res.cookie("jwt", token, { httpOnly: true });
+
       res.json({ message: "Login successful", foundUser });
     } catch (error) {
       res.status(500).send(error);
@@ -55,6 +60,10 @@ class UserController {
           username: user.username,
           role_id: user.role_id,
         };
+
+        const token = createToken(createdUser.email);
+        res.cookie("jwt", token, { httpOnly: true });
+
         res.json({ message: "Register successful", createdUser });
       } else {
         res.status(401).send(user);
