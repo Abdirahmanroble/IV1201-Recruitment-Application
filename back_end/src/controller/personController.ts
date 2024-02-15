@@ -1,5 +1,6 @@
-import { type Request, type Response } from 'express'
-import AuthService from '../services/authService'
+import { type Request, type Response } from "express";
+import AuthService from "../services/authService";
+import { createToken } from "../middleware/auth.middleware";
 /**
  * Controller for person-related operations.
  */
@@ -12,15 +13,15 @@ class PersonController {
    * @param {Response} res - Express response object used to send back the login status.
    * @returns {Promise<void>} - A promise that resolves with no value.
    */
-  public static async login (req: Request, res: Response): Promise<void> {
-    const { username, password } = req.body
+  public static async login(req: Request, res: Response): Promise<void> {
+    const { username, password } = req.body;
 
     try {
-      const user = await AuthService.login({ username, password })
+      const user = await AuthService.login({ username, password });
 
       if (!user) {
-        res.status(401).send('Invalid credentials')
-        return
+        res.status(401).send("Invalid credentials");
+        return;
       }
       const foundUser = {
         name: user.name,
@@ -28,13 +29,16 @@ class PersonController {
         pnr: user.pnr,
         email: user.email,
         username: user.username,
-        role_id: user.role_id
-      }
-      res.json({ message: 'Login successful', foundUser })
+        role_id: user.role_id,
+      };
+      const token = createToken(foundUser.email);
+      res.cookie("jwt", token, { httpOnly: true });
+
+      res.json({ message: "Login successful", data: foundUser.email });
     } catch (error) {
-      res.status(500).send(error)
+      res.status(500).send(error);
     }
   }
 }
 
-export default PersonController
+export default PersonController;
