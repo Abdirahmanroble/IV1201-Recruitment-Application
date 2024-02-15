@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express'
-import Person from '../model/person'
+import Person from '../model/user'
 /**
  This is just test
  *
