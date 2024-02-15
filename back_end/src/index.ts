@@ -1,15 +1,10 @@
-import express, { type Express, type Response, type Request } from "express";
-import db from "./integration/dbConfig";
-import { getUser } from "./controller/login";
-import personRoutes from "./routes/personRoutes";
-import cors, { CorsOptions } from "cors";
+import express, { type Express, type Response, type Request } from 'express'
+import db from './integration/dbConfig'
+import { getUser } from './controller/login'
+import userRoutes from './routes/userRoutes'
+import cors from 'cors'
 
-/**
- * Tests the database connection.
- * Logs a success message if connection is established,
- * otherwise logs the error.
- */
-async function testDatabaseConnection(): Promise<void> {
+async function testDatabaseConnection (): Promise<void> {
   try {
     await db.authenticate();
     console.log("Connection has been established successfully.");
@@ -60,8 +55,9 @@ app.get("/", (req: Request, res: Response) => {
 // Route to handle user login
 app.post("/user", getUser);
 
-// Middleware to handle routes for user actions
-app.use(personRoutes);
+
+//Login
+app.use(userRoutes);
 
 // Start the server and listen on the specified port
 app.listen(port, () => {
