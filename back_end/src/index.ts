@@ -4,6 +4,11 @@ import { getUser } from "./controller/login";
 import personRoutes from "./routes/personRoutes";
 import cors, { CorsOptions } from "cors";
 
+/**
+ * Tests the database connection.
+ * Logs a success message if connection is established,
+ * otherwise logs the error.
+ */
 async function testDatabaseConnection(): Promise<void> {
   try {
     await db.authenticate();
@@ -13,17 +18,24 @@ async function testDatabaseConnection(): Promise<void> {
   }
 }
 
+// Immediately invoke the testDatabaseConnection function and catch any errors.
 testDatabaseConnection().catch((error) => {
   console.error("Database connection failed:", error);
 });
 
+// Initialize express app
 const app: Express = express();
 
+// Define the port number
 const port = 3000;
+
+// Middleware to parse JSON bodies
 app.use(express.json());
 
+// Define allowed origins for CORS
 const allowedOrigins = ["http://localhost:4000"]; // Add more origins as needed
 
+// CORS options configuration
 const corsOptions: CorsOptions = {
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.indexOf(origin) !== -1) {
@@ -37,17 +49,21 @@ const corsOptions: CorsOptions = {
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 
+// Apply CORS middleware with the configured options
 app.use(cors(corsOptions));
 
+// Root route
 app.get("/", (req: Request, res: Response) => {
-  res.send("Sever is up and running!");
+  res.send("Server is up and running!");
 });
 
+// Route to handle user login
 app.post("/user", getUser);
 
-//Login
+// Middleware to handle routes for user actions
 app.use(personRoutes);
 
+// Start the server and listen on the specified port
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
