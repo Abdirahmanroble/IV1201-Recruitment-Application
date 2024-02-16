@@ -19,7 +19,7 @@ export default class LoginView extends PureComponent<ViewProps> {
   render(): React.ReactNode {
     return (
       <div className="login-view">
-        <h1>This is the login view...</h1>
+        <h1>Login</h1>
         <LoginBox onLogin={this.props.onLogin}></LoginBox>
       </div>
     );

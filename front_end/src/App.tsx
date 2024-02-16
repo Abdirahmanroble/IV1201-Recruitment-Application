@@ -3,12 +3,14 @@ import { useState } from "react";
 
 import HomeController from "./controllers/HomeController";
 import LoginController from "./controllers/LoginController";
-import ApplicantModel from "./models/ApplicantModel";
 import ApplicantViewModel from "./view-models/ApplicantViewModel";
 
+import "./App.css";
+import Layout from "./components/Layout/Layout";
+import CreateAccountController from "./controllers/CreateAccountController";
+
 function App() {
-  const model = new ApplicantModel();
-  const viewModel = new ApplicantViewModel(model);
+  const viewModel = new ApplicantViewModel();
 
   const [signedIn, setSignedIn] = useState(false);
   const [stateViewModel, setViewModel] = useState(viewModel);
@@ -20,10 +22,14 @@ function App() {
           <Route
             path="/"
             element={
-              <HomeController
-                viewModel={stateViewModel}
-                logout={() => setSignedIn(false)}
-              ></HomeController>
+              <Layout
+                element={
+                  <HomeController
+                    viewModel={stateViewModel}
+                    logout={() => setSignedIn(false)}
+                  ></HomeController>
+                }
+              ></Layout>
             }
           ></Route>
         </Routes>
@@ -31,11 +37,36 @@ function App() {
     );
   else
     return (
-      <LoginController
-        viewModel={viewModel}
-        login={() => setSignedIn(true)}
-        changeState={(viewModel) => setViewModel(viewModel)}
-      ></LoginController>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Layout
+                element={
+                  <LoginController
+                    viewModel={viewModel}
+                    login={() => setSignedIn(true)}
+                    changeState={(viewModel) => setViewModel(viewModel)}
+                  ></LoginController>
+                }
+              ></Layout>
+            }
+          ></Route>
+          <Route
+            path="/create-account"
+            element={
+              <Layout
+                element={
+                  <CreateAccountController
+                    viewModel={viewModel}
+                  ></CreateAccountController>
+                }
+              ></Layout>
+            }
+          ></Route>
+        </Routes>
+      </Router>
     );
 }
 

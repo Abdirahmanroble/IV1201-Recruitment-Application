@@ -18,8 +18,8 @@ export default class HomeView extends PureComponent<ViewProps> {
   render(): React.ReactNode {
     return (
       <div className="home-view">
-        <h1>This is the home view...</h1>
-        <h2>You are now logged in</h2>
+        <h1>Home</h1>
+        <h2>Welcome {this.props.email}</h2>
         <button onClick={this.props.onLogout}>LOGOUT</button>
       </div>
     );

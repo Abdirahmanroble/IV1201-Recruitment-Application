@@ -23,7 +23,7 @@ export default class HomeController extends Component<ControllerProps> {
   render(): React.ReactNode {
     return (
       <HomeView
-        email={this.props.viewModel.email}
+        email={this.props.viewModel.getEmail()}
         onLogout={() => this.onLogout()}
       />
     );
