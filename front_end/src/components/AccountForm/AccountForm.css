@@ -1,22 +1,22 @@
-.login-box {
+.account-form-container {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 
   width: 18vw;
-  height: 30vh;
+  height: 60vh;
 
   background-color: var(--green-secondary);
   border: 0.1rem solid var(--green-primary);
   border-radius: 0.75rem;
 }
 
-.login-box-header {
+.account-form-header {
   font-weight: var(--bold-weight);
 }
 
-.login-box-input {
+.account-form-input {
   display: flex;
   flex-direction: column;
   gap: 1vh;
@@ -24,20 +24,20 @@
   width: 12vw;
 }
 
-.login-box-input input {
+.account-form-input input {
   background-color: var(--green-tetriary);
   border-radius: 0.25rem;
   border-style: hidden;
 }
 
-.login-box-buttons {
+.account-form-buttons {
   display: flex;
   flex-direction: column;
 
   width: 12vw;
 }
 
-.login-box-buttons button {
+.account-form-buttons button {
   background-color: var(--white);
   border: 0.1rem solid var(--green-primary);
   border-radius: 0.75rem;

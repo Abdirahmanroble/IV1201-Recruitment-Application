@@ -33,7 +33,7 @@ export default class LoginController extends Component<ControllerProps> {
   };
 
   /**
-   * Renders the HomeView component, passing the email and onLogout handler as props.
+   * Renders the LoginView component, passing the onLogin handler as props.
    *
    * @returns {React.ReactNode} The rendered component.
    */
