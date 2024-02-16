@@ -1,14 +1,4 @@
-interface DatabaseBody {
-  message: string;
-  foundUser: {
-    name: string;
-    surname: string;
-    pnr: string;
-    email: string;
-    username: string;
-    role_id: number;
-  };
-}
+import { LoginResponseBody, RegisterResponseBody } from "../@types/Applicant";
 
 /**
  * ApplicantViewModel is responsible for handling the user login logic.
@@ -30,36 +20,62 @@ export default class ApplicantViewModel {
   /**
    * Placeholder method for creating an account. Currently under development.
    */
-  public createAccount(
+  public async createAccount(
     firstName: string,
     lastName: string,
     email: string,
     personNumber: string,
     username: string,
     password: string
-  ): boolean {
-    console.log(
-      firstName +
-        "\n" +
-        lastName +
-        "\n" +
-        email +
-        "\n" +
-        personNumber +
-        "\n" +
-        username +
-        "\n" +
-        password
-    );
-    if (firstName && lastName && email && personNumber && username && password)
-      return true;
-    else return false;
-  }
+  ): Promise<boolean> {
+    if (
+      !(firstName && lastName && email && personNumber && username && password)
+    )
+      return false;
 
-  /**REMOVE LATER */
-  public testingLogin(email: string, password: string): boolean {
-    if (email === "nina@email.se" && password === "password") return true;
-    else return false;
+    let databaseBody: RegisterResponseBody = {
+      message: "",
+      createdUser: {
+        person_id: "",
+        name: "",
+        surname: "",
+        pnr: "",
+        email: "",
+        username: "",
+        role_id: 0,
+      },
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        body: JSON.stringify({
+          name: firstName,
+          surname: lastName,
+          pnr: personNumber,
+          email: email,
+          username: username,
+          password: password,
+        }),
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response failure");
+      }
+
+      const data = await response.json();
+      if (data?.message) {
+        databaseBody = data;
+        console.log(databaseBody);
+        return true;
+      } else return false;
+    } catch (error) {
+      console.error("Register request failed:", error);
+      return false;
+    }
   }
 
   /**
@@ -70,7 +86,7 @@ export default class ApplicantViewModel {
    */
 
   public async login(email: string, password: string): Promise<boolean> {
-    let databaseBody: DatabaseBody = {
+    let databaseBody: LoginResponseBody = {
       message: "",
       foundUser: {
         name: "",
@@ -95,7 +111,7 @@ export default class ApplicantViewModel {
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error("Network response failure");
       }
 
       const data = await response.json();
@@ -176,4 +192,37 @@ export default class ApplicantViewModel {
   public getCompetences(): { yearsOfExperience: number; name: string }[] {
     return this.competences;
   }
-}
+} /*
+
+/**REMOVE LATER */ /*
+public testingCreateAccount(
+  firstName: string,
+  lastName: string,
+  email: string,
+  personNumber: string,
+  username: string,
+  password: string
+): boolean {
+  console.log(
+    firstName +
+      "\n" +
+      lastName +
+      "\n" +
+      email +
+      "\n" +
+      personNumber +
+      "\n" +
+      username +
+      "\n" +
+      password
+  );
+  if (firstName && lastName && email && personNumber && username && password)
+    return true;
+  else return false;
+}*/ /*
+
+/**REMOVE LATER */ /*
+public testingLogin(email: string, password: string): boolean {
+  if (email === "nina@email.se" && password === "password") return true;
+  else return false;
+}*/

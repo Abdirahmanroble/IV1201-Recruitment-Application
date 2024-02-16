@@ -5,7 +5,7 @@ import CreateAccountView from "../views/CreateAccountView/CreateAccountView";
 
 // @observer
 export default class CreateAccountController extends Component<ControllerProps> {
-  private onCreateAccount = (
+  private onCreateAccount = async (
     firstName: string,
     lastName: string,
     email: string,
@@ -13,7 +13,7 @@ export default class CreateAccountController extends Component<ControllerProps> 
     username: string,
     password: string
   ) => {
-    const success: boolean = this.props.viewModel.createAccount(
+    const success: boolean = await this.props.viewModel.createAccount(
       firstName,
       lastName,
       email,

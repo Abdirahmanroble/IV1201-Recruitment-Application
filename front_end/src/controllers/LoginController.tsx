@@ -16,26 +16,10 @@ export default class LoginController extends Component<ControllerProps> {
    * @param {string} email - The email provided by the user.
    * @param {string} password - The password provided by the user.
    */
-  /*
+
   private onLogin = async (email: string, password: string) => {
     try {
       const success = await this.props.viewModel.login(email, password);
-      if (success) {
-        this.props.login();
-        this.props.viewModel.setEmail(email);
-        this.props.changeState(this.props.viewModel);
-      } else {
-        console.log("Login failed");
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-    }
-  };
-  */
-
-  private testingLogin = (email: string, password: string) => {
-    try {
-      const success = this.props.viewModel.testingLogin(email, password);
       if (success) {
         this.props.login();
         this.props.viewModel.setEmail(email);
@@ -55,6 +39,6 @@ export default class LoginController extends Component<ControllerProps> {
    */
 
   render(): React.ReactNode {
-    return <LoginView onLogin={this.testingLogin} />;
+    return <LoginView onLogin={this.onLogin} />;
   }
 }
