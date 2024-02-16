@@ -1,5 +1,5 @@
 # Use the official Node.js 18 image as a parent image
-FROM node:latest
+FROM node:18
 # Set dockerize version
 ENV DOCKERIZE_VERSION v0.6.1
 
@@ -17,8 +17,10 @@ COPY tsconfig.json ./
 # Install the dependencies
 RUN npm install
 
-# Copy the rest of the application's code
 COPY . .
+
+# Rebuild bcrypt to ensure it's compiled for the container's environment
+RUN npm rebuild bcrypt --build-from-source
 
 # Build the project
  RUN npm run build

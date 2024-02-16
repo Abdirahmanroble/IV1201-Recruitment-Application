@@ -1,6 +1,7 @@
 import express, { type Express, type Response, type Request } from 'express'
 import db from './integration/dbConfig'
-import personRoutes from './routes/personRoutes'
+import { getUser } from './controller/login'
+import userRoutes from './routes/userRoutes'
 import cors from 'cors'
 
 async function testDatabaseConnection (): Promise<void> {
@@ -31,8 +32,13 @@ app.get('/', (req: Request, res: Response) => {
   res.send('Sever is up and running!')
 })
 
-// Login
-app.use(personRoutes)
+app.post('/user', getUser)
+
+app.post("/user", getUser);
+
+
+//Login
+app.use(userRoutes);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`)
