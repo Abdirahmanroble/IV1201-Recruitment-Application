@@ -14,12 +14,12 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
       }
     })
 
-    if (user) {
+    if (user == null) {
+      res.status(404).send('User not found')
+    } else {
       res.json(user)
 
       console.log(user)
-    } else {
-      res.status(404).send('User not found')
     }
   } catch (error) {
     console.error('Error fetching user:', error)

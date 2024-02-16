@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-extraneous-class */
 // authService.ts
 
 /* import bcrypt from 'bcrypt';
@@ -32,8 +33,8 @@ class AuthService {
 export default AuthService; */
 
 // authService.ts
-import bcrypt from "bcrypt";
-import User from "../model/user";
+import bcrypt from 'bcrypt'
+import User from '../model/user'
 /**
  * Defines the structure for login credentials.
  * @typedef {Object} LoginCredentials
@@ -41,18 +42,18 @@ import User from "../model/user";
  * @property {string} password - User's password.
  */
 interface LoginCredentials {
-  username: string;
-  password: string;
+  username: string
+  password: string
 }
 interface registerCredentials {
-  person_id: number;
-  name: string;
-  surname: string;
-  pnr: string;
-  email: string;
-  username: string;
-  password: string;
-  role_id: number;
+  person_id: number
+  name: string
+  surname: string
+  pnr: string
+  email: string
+  username: string
+  password: string
+  role_id: number
 }
 /**
  * Service class for authentication-related operations.
@@ -67,49 +68,50 @@ class AuthService {
    * @returns {Promise<Person | null>} - A promise that resolves to the user object if login is successful, or null if the login fails.
    * @throws {Error} - Throws an error if the login process fails due to an unexpected error.
    */
-  public static async login({
+  public static async login ({
     username,
-    password,
+    password
   }: LoginCredentials): Promise<User | null> {
     try {
-      const user = await User.findOne({ where: { username } });
+      const user = await User.findOne({ where: { username } })
       if (user === null) {
-        return null;
+        return null
       }
 
       if (user.password !== password) {
-        return null;
+        return null
       }
 
-      return user;
+      return user
     } catch (error) {
-      throw new Error("Login failed");
+      throw new Error('Login failed')
     }
   }
-  public static async register({
+
+  public static async register ({
     name,
     surname,
     pnr,
     email,
     username,
-    password,
+    password
   }: registerCredentials): Promise<User | string> {
     try {
       if (
-        name === "" ||
-        surname === "" ||
-        pnr === "" ||
-        email === "" ||
-        username === "" ||
-        password === ""
+        name === '' ||
+        surname === '' ||
+        pnr === '' ||
+        email === '' ||
+        username === '' ||
+        password === ''
       ) {
-        return "All fields are required";
+        return 'All fields are required'
       }
 
-      const hash = await bcrypt.hash(password, 10);
-      const userExists = await User.findOne({ where: { username } });
+      const hash = await bcrypt.hash(password, 10)
+      const userExists = await User.findOne({ where: { username } })
       if (userExists !== null) {
-        return "User already exists";
+        return 'User already exists'
       }
       const user = await User.create({
         name,
@@ -117,14 +119,14 @@ class AuthService {
         pnr,
         email,
         username,
-        password: hash,
-      });
-      console.log(user.password);
-      return user;
+        password: hash
+      })
+      console.log(user.password)
+      return user
     } catch (error) {
-      throw new Error("Register failed");
+      throw new Error('Register failed')
     }
   }
 }
 
-export default AuthService;
+export default AuthService
