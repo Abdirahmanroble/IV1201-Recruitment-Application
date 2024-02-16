@@ -4,15 +4,8 @@ import { AuthService } from '../services/authService'
  * Controller for person-related operations.
  */
 export const LoginController = {
-  /**
-   * Handles login requests. Authenticates a user based on username and password. Security will be added in the second sprint.
-   * If authentication is successful, responds with the user's details. Otherwise, returns an error.
-   *
-   * @param {Request} req - Express request object, expected to contain `username` and `password` in the body.
-   * @param {Response} res - Express response object used to send back the login status.
-   * @returns {Promise<void>} - A promise that resolves with no value.
-   */
-  async login (req: Request, res: Response): Promise<void> {
+ 
+ async login (req: Request, res: Response): Promise<void> {
     const { username, password } = req.body
 
     try {
