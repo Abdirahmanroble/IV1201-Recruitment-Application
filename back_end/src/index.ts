@@ -1,9 +1,18 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
-import express, { type Express, type Response, type Request } from 'express'
-import db from './integration/dbConfig'
-import { getUser } from './controller/login'
-import userRoutes from './routes/userRoutes'
+import express, { type Express, type Response, type Request } from 'express';
+import db from './integration/dbConfig';
+
+import './model/person'; 
+import './model/availability';
+import './model/competence'; 
+import './model/competenceProfile'; 
+import './model/role'; 
+import './model/application';
+import './setupAssociations'; // This imports and runs the associations setup
+
 import cors, { type CorsOptions } from 'cors'
+import loginRoute from './routes/loginRoute';
+import listApplicationRoute from './routes/listApplicationRoute';
+import createApplicationRoute from './routes/createApplicationRoute';
 
 /**
  * Tests the database connection.
@@ -12,17 +21,17 @@ import cors, { type CorsOptions } from 'cors'
  */
 async function testDatabaseConnection (): Promise<void> {
   try {
-    await db.authenticate()
-    console.log('Connection has been established successfully.')
+    await db.authenticate();
+    console.log('Connection has been established successfully.');
   } catch (error) {
-    console.error('Unable to connect to the database:', error)
+    console.error('Unable to connect to the database:', error);
   }
 }
 
 // Immediately invoke the testDatabaseConnection function and catch any errors.
 testDatabaseConnection().catch((error) => {
-  console.error('Database connection failed:', error)
-})
+  console.error('Database connection failed:', error);
+});
 
 // Initialize express app
 const app: Express = express()
@@ -55,14 +64,13 @@ app.use(cors(corsOptions))
 
 // Root route
 app.get('/', (req: Request, res: Response) => {
-  res.send('Server is up and running!')
+  res.send('Sever is up and running!')
 })
 
-// Route to handle user login
-app.post('/user', getUser)
-
-// Route to handle user actions
-app.use(userRoutes)
+// Setup routes
+app.use(loginRoute);
+app.use(listApplicationRoute);
+app.use(createApplicationRoute);
 
 // Start the server and listen on the specified port
 app.listen(port, () => {

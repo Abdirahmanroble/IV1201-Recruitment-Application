@@ -1,18 +1,18 @@
-import { Model, DataTypes } from 'sequelize'
-import db from '../integration/dbConfig'
+import { Model, DataTypes } from "sequelize";
+import db from "../integration/dbConfig";
 
 /**
  * Interface for Person attributes to ensure type safety.
  */
 interface UserAttributes {
-  person_id?: number
+  person_id: number
   name: string
   surname: string
   pnr: string
   email: string
   password: string
   username: string
-  role_id?: number
+  role_id: number
 }
 /**
  * Sequelize model representing a Person entity in the database.
@@ -20,14 +20,14 @@ interface UserAttributes {
  * such as automatic table creation (if not exist) and easy querying.
  */
 class User extends Model<UserAttributes> {
-  public person_id?: number
+  public person_id!: number
   public name!: string
   public surname!: string
   public pnr!: string
   public email!: string
   public password!: string
   public username!: string
-  public role_id?: number
+  public role_id!: number
 
   // public readonly createdAt!: Date;
   // public readonly updatedAt!: Date;
@@ -41,40 +41,40 @@ User.init(
     person_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true
+      primaryKey: true,
     },
     name: {
       type: new DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
     },
     surname: {
       type: new DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
     },
     pnr: {
       type: new DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
     },
     email: {
       type: new DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
     },
     password: {
       type: new DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
     },
     username: {
       type: new DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
     },
     role_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'roles',
-        key: 'id'
-      }
-    }
+        model: "Role",
+        key: "role_id",
+      },
+    },
   },
   {
     sequelize: db,
