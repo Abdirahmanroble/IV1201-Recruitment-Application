@@ -2,14 +2,15 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 // personRoutes.ts
 
-import { Router } from 'express'
-import UserController from '../controller/userController'
+import { Router } from "express";
+import UserController from "../controller/userController";
+import LoginController from "../controller/loginController";
 
-const router = Router()
+const router = Router();
 
-router.post('/login', UserController.login)
+router.post("/login", LoginController.login);
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
-router.post('/register', UserController.register)
+router.post("/register", UserController.register);
 
-export default router
+export default router;

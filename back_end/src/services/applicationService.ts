@@ -1,6 +1,6 @@
 import { ApplicationAttributes } from "../model/application"; // Ensure correct path
 import Application from "../model/application";
-import Person from "../model/person";
+import Person from "../model/user";
 import Availability from "../model/availability";
 
 export const ApplicationService = {
@@ -18,7 +18,7 @@ export const ApplicationService = {
       }
     }
   },
-  
+
   async getAllApplications(): Promise<Application[]> {
     try {
       const applications = await Application.findAll({

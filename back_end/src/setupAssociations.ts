@@ -1,5 +1,5 @@
 
-import Person from './model/person';
+import Person from './model/user';
 import Availability from './model/availability';
 import CompetenceProfile from './model/competenceProfile';
 import Competence from './model/competence';

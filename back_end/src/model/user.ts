@@ -5,14 +5,14 @@ import db from "../integration/dbConfig";
  * Interface for Person attributes to ensure type safety.
  */
 interface UserAttributes {
-  person_id: number
-  name: string
-  surname: string
-  pnr: string
-  email: string
-  password: string
-  username: string
-  role_id: number
+  person_id?: number;
+  name: string;
+  surname: string;
+  pnr: string;
+  email: string;
+  password: string;
+  username: string;
+  role_id?: number;
 }
 /**
  * Sequelize model representing a Person entity in the database.
@@ -20,14 +20,14 @@ interface UserAttributes {
  * such as automatic table creation (if not exist) and easy querying.
  */
 class User extends Model<UserAttributes> {
-  public person_id!: number
-  public name!: string
-  public surname!: string
-  public pnr!: string
-  public email!: string
-  public password!: string
-  public username!: string
-  public role_id!: number
+  public person_id?: number;
+  public name!: string;
+  public surname!: string;
+  public pnr!: string;
+  public email!: string;
+  public password!: string;
+  public username!: string;
+  public role_id?: number;
 
   // public readonly createdAt!: Date;
   // public readonly updatedAt!: Date;
@@ -78,10 +78,10 @@ User.init(
   },
   {
     sequelize: db,
-    modelName: 'user',
-    tableName: 'person',
-    timestamps: false
+    modelName: "user",
+    tableName: "person",
+    timestamps: false,
   }
-)
+);
 
-export default User
+export default User;
