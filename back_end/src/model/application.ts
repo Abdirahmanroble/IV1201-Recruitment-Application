@@ -1,7 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 import db from "../integration/dbConfig";
 import Person from "./person";
-
 export interface ApplicationAttributes {
   application_id: number; // Optional because it's auto-generated
   person_id: number;

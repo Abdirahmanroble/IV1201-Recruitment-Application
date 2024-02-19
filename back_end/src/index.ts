@@ -13,7 +13,6 @@ import './setupAssociations'; // This imports and runs the associations setup
 import cors from 'cors';
 import loginRoute from './routes/loginRoute';
 import listApplicationRoute from './routes/listApplicationRoute';
-import createApplicationRoute from './routes/createApplicationRoute';
 
 async function testDatabaseConnection(): Promise<void> {
   try {
@@ -41,7 +40,6 @@ app.get('/', (req: Request, res: Response) => {
 // Setup routes
 app.use(loginRoute);
 app.use(listApplicationRoute);
-app.use(createApplicationRoute);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

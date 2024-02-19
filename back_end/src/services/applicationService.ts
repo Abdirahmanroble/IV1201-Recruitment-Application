@@ -3,23 +3,10 @@ import Application from "../model/application";
 import Person from "../model/person";
 import Availability from "../model/availability";
 
+
 export const ApplicationService = {
-  async createApplication(
-    applicationData: ApplicationAttributes
-  ): Promise<Application> {
-    try {
-      const application = await Application.create(applicationData as any);
-      return application;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Creating application failed: ${error.message}`);
-      } else {
-        throw new Error("Creating application failed due to an unknown error");
-      }
-    }
-  },
-  
-  async getAllApplications(): Promise<Application[]> {
+
+  async getAllApplications(): Promise<any[]> {
     try {
       const applications = await Application.findAll({
         include: [
@@ -39,15 +26,23 @@ export const ApplicationService = {
           "applicationdate",
         ],
       });
-      return applications;
+
+      return applications.map((application) => {
+        const person = application.get('Person') as Person; 
+        const availability = application.get('Availability') as Availability;
+        
+        return {
+          application_id: application.application_id,
+          fullName: `${person?.name} ${person?.surname}`,
+          status: application.status,
+          applicationDate: application.applicationdate,
+          fromDate: availability?.from_date,
+          toDate: availability?.to_date,
+        };
+      });
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Fetching all applications failed: ${error.message}`);
-      } else {
-        throw new Error(
-          "Fetching all applications failed due to an unknown error"
-        );
-      }
+      console.error('Error fetching applications:', error);
+      throw new Error('Fetching all applications failed');
     }
-  },
+  }
 };
