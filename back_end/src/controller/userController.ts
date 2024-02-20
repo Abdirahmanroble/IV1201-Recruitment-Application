@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { type Request, type Response } from 'express'
-import AuthService from '../services/authService'
-import { createToken } from '../middleware/auth.middleware'
+import { NextFunction, type Request, type Response } from "express";
+import AuthService from "../services/authService";
+import { createToken, validateToken } from "../middleware/auth.middleware";
 /**
  * Controller for person-related operations.
  */
@@ -15,15 +15,15 @@ class UserController {
    * @param {Response} res - Express response object used to send back the login status.
    * @returns {Promise<void>} - A promise that resolves with no value.
    */
-  public static async login (req: Request, res: Response): Promise<void> {
-    const { username, password } = req.body
+  public static async login(req: Request, res: Response): Promise<void> {
+    const { username, password } = req.body;
 
     try {
-      const user = await AuthService.login({ username, password })
+      const user = await AuthService.login({ username, password });
 
       if (user === null || user === undefined) {
-        res.status(401).send('Invalid credentials')
-        return
+        res.status(401).send("Invalid credentials");
+        return;
       }
       const foundUser = {
         name: user.name,
@@ -31,30 +31,30 @@ class UserController {
         pnr: user.pnr,
         email: user.email,
         username: user.username,
-        role_id: user.role_id
-      }
+        role_id: user.role_id,
+      };
 
-      const token = createToken(foundUser.email)
-      res.cookie('jwt', token, { httpOnly: true })
+      const token = createToken(foundUser.email);
+      res.cookie("jwt", token, { httpOnly: true });
 
-      res.json({ message: 'Login successful', foundUser })
+      res.json({ message: "Login successful", foundUser });
     } catch (error) {
-      res.status(500).send(error)
+      res.status(500).send(error);
     }
   }
 
-  public static async register (req: Request, res: Response): Promise<void> {
-    const userDTO = req.body
+  public static async register(req: Request, res: Response): Promise<void> {
+    const userDTO = req.body;
 
     try {
-      const user = await AuthService.register(userDTO)
+      const user = await AuthService.register(userDTO);
       if (user === null || user === undefined) {
-        res.status(401).send('Invalid credentials')
-        return
+        res.status(401).send("Invalid credentials");
+        return;
       }
-      if (typeof user === 'string') {
+      if (typeof user === "string") {
         // Check if user is a string (error message)
-        res.status(401).send(user)
+        res.status(401).send(user);
       } else {
         const createdUser = {
           person_id: user.person_id,
@@ -63,18 +63,27 @@ class UserController {
           pnr: user.pnr,
           email: user.email,
           username: user.username,
-          role_id: user.role_id
-        }
+          role_id: user.role_id,
+        };
 
-        const token = createToken(createdUser.email)
-        res.cookie('jwt', token, { httpOnly: true })
+        const token = createToken(createdUser.email);
+        res.cookie("jwt", token, { httpOnly: true });
 
-        res.json({ message: 'Register successful', createdUser })
+        res.json({ message: "Register successful", createdUser });
       }
     } catch (error) {
-      res.status(500).send(error)
+      res.status(500).send(error);
     }
+  }
+
+  public static async logout(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    res.clearCookie("jwt");
+    res.status(200).send("User logged out successfully");
   }
 }
 
-export default UserController
+export default UserController;

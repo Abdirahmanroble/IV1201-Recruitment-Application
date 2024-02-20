@@ -59,7 +59,6 @@ const validateToken = async (
     // Handle the error scenarios appropriately
     res.clearCookie("jwt");
     res.status(400).send("Invalid token.");
-    res.redirect("/");
   }
 };
 

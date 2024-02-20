@@ -55,11 +55,12 @@ app.use(cors(corsOptions));
 
 // Root route
 app.get("/", (req: Request, res: Response) => {
-  res.send('Server is up and running!')
+  res.send("Server is up and running!");
 });
 
 // Route to handle user actions
 app.use(userRoutes);
+
 
 // Start the server and listen on the specified port
 app.listen(port, () => {

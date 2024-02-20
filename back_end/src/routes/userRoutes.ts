@@ -12,4 +12,6 @@ router.post('/login', UserController.login)
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 router.post('/register', UserController.register)
 
+router.post('/logout', UserController.logout)
+
 export default router
