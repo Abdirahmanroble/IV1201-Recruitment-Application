@@ -31,3 +31,15 @@ export interface RegisterResponseBody {
     role_id: number;
   };
 }
+
+export interface ApplicationsResponseBody {
+  message: string;
+  applications: {
+    application_id: number;
+    fullName: string;
+    status: string;
+    applicationDate: Date;
+    fromDate: Date;
+    toDate: Date;
+  }[];
+}

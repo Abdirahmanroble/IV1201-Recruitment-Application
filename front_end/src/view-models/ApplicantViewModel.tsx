@@ -2,6 +2,7 @@ import {
   UserBody,
   LoginResponseBody,
   RegisterResponseBody,
+  ApplicationsResponseBody,
 } from "../@types/Applicant";
 
 /**
@@ -149,9 +150,53 @@ export default class ApplicantViewModel {
     this.changeAuthState(false);
   }
 
-  public registerApplication() {}
+  public async listAllApplications(): Promise<
+    {
+      application_id: number;
+      fullName: string;
+      status: string;
+      applicationDate: Date;
+      fromDate: Date;
+      toDate: Date;
+    }[]
+  > {
+    let databaseBody: ApplicationsResponseBody = {
+      message: "",
+      applications: [
+        {
+          application_id: 0,
+          fullName: "",
+          status: "",
+          applicationDate: new Date(),
+          fromDate: new Date(),
+          toDate: new Date(),
+        },
+      ],
+    };
 
-  public listAllApplications() {}
+    try {
+      const response = await fetch("http://localhost:3000/applications", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response failure.");
+      }
+
+      const data = await response.json();
+      if (data?.message) {
+        databaseBody = data;
+        this.log(databaseBody);
+        return databaseBody.applications;
+      } else return databaseBody.applications;
+    } catch (error) {
+      console.error("Applications request failed:", error);
+      return databaseBody.applications;
+    }
+  }
 
   /**Setters */
 

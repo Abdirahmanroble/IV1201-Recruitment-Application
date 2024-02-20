@@ -5,7 +5,26 @@ import ListApplicationsView from "../views/ListApplicationsView/ListApplications
 
 // @observer
 export default class ListApplicationsController extends Component<ControllerProps> {
+  state = { data: null, error: null };
+
+  componentDidMount(): void {
+    this.getData();
+  }
+
+  getData() {
+    this.props.viewModel
+      .listAllApplications()
+      .then((data) => this.setState({ data: data }))
+      .catch((error) => this.setState({ error: error }));
+  }
+
   render(): React.ReactNode {
-    return <ListApplicationsView />;
+    return this.state.data ? (
+      <ListApplicationsView applications={this.state.data} />
+    ) : this.state.error ? (
+      <div></div>
+    ) : (
+      <div></div>
+    );
   }
 }
