@@ -134,6 +134,24 @@ ALTER TABLE public.person ALTER COLUMN person_id ADD GENERATED ALWAYS AS IDENTIT
 );
 
 
+CREATE TABLE public.application (
+    application_id SERIAL PRIMARY KEY,
+    person_id INTEGER NOT NULL,
+    availability_id INTEGER NOT NULL,
+    status VARCHAR(255) NOT NULL CHECK (status IN ('accepted', 'rejected', 'unhandled')),
+    applicationdate DATE NOT NULL,
+    openapplicationstatus BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+
+ALTER TABLE public.application OWNER TO postgres;
+
+
+INSERT INTO public.application (person_id, availability_id, status, applicationdate, openapplicationstatus) VALUES
+(11, 18901, 'unhandled', '2018-05-01', TRUE),
+(12, 18541, 'accepted', '2018-05-15', FALSE),
+(13, 18596, 'rejected', '2018-05-20', FALSE);
+
 --
 -- Name: role; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -158,7 +176,6 @@ ALTER TABLE public.role ALTER COLUMN role_id ADD GENERATED ALWAYS AS IDENTITY (
     NO MAXVALUE
     CACHE 1
 );
-
 
 --
 -- Data for Name: availability; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -4891,6 +4908,12 @@ ALTER TABLE ONLY public.competence_profile
 
 ALTER TABLE ONLY public.person
     ADD CONSTRAINT person_role_id_fkey FOREIGN KEY (role_id) REFERENCES public.role(role_id);
+
+ALTER TABLE ONLY public.application
+     ADD CONSTRAINT application_person_id_fkey FOREIGN KEY (person_id) REFERENCES public.person(person_id);
+    
+ALTER TABLE ONLY public.application
+    ADD CONSTRAINT application_availability_id_fkey FOREIGN KEY (availability_id) REFERENCES public.availability(availability_id);
 
 
 --

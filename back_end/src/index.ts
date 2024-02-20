@@ -1,8 +1,16 @@
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import express, { type Express, type Response, type Request } from 'express'
 import db from './integration/dbConfig'
-import { getUser } from './controller/login'
+
+import './model/user'
+import './model/availability'
+import './model/competence'
+import './model/competenceProfile'
+import './model/role'
+import './model/application'
+import './setupAssociations' // This imports and runs the associations setup
+
 import userRoutes from './routes/userRoutes'
+import listApplicationRoute from './routes/listApplicationRoute'
 import cors, { type CorsOptions } from 'cors'
 
 /**
@@ -10,6 +18,7 @@ import cors, { type CorsOptions } from 'cors'
  * Logs a success message if connection is established,
  * otherwise logs the error.
  */
+
 async function testDatabaseConnection (): Promise<void> {
   try {
     await db.authenticate()
@@ -55,14 +64,12 @@ app.use(cors(corsOptions))
 
 // Root route
 app.get('/', (req: Request, res: Response) => {
-  res.send('Server is up and running!')
+  res.send('Serrver is up and running!')
 })
 
-// Route to handle user login
-app.post('/user', getUser)
-
-// Route to handle user actions
+// Setup routes
 app.use(userRoutes)
+app.use(listApplicationRoute)
 
 // Start the server and listen on the specified port
 app.listen(port, () => {
