@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize'
+
 /**
  * Retrieves an environment variable by key and throws an error if it is not found or empty.
  * This function is used to ensure that necessary environment variables are present before initializing the database connection.
@@ -30,7 +31,6 @@ const dbPort =
 if (isNaN(dbPort)) {
   throw new Error('Invalid DB_PORT value. It must be a valid integer.')
 }
-
 /**
  * The Sequelize database instance configured with environment variables.
  * It is set up to connect to a PostgreSQL database using the provided credentials and connection details.

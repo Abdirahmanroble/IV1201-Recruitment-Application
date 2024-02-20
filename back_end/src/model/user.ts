@@ -2,7 +2,7 @@ import { Model, DataTypes } from 'sequelize'
 import db from '../integration/dbConfig'
 
 /**
- * Interface for Person attributes to ensure type safety.
+ * Interface for User attributes to ensure type safety.
  */
 interface UserAttributes {
   person_id?: number
@@ -15,7 +15,7 @@ interface UserAttributes {
   role_id?: number
 }
 /**
- * Sequelize model representing a Person entity in the database.
+ * Sequelize model representing a User entity in the database.
  * This class extends Model from Sequelize, ensuring ORM capabilities for the Person entity,
  * such as automatic table creation (if not exist) and easy querying.
  */
@@ -28,12 +28,9 @@ class User extends Model<UserAttributes> {
   public password!: string
   public username!: string
   public role_id?: number
-
-  // public readonly createdAt!: Date;
-  // public readonly updatedAt!: Date;
 }
 /**
- * Initializes the Person model with its schema defined in the database.
+ * Initializes the User model with its schema defined in the database.
  * Each field is mapped to a corresponding database column with data types and constraints.
  */
 User.init(
@@ -71,14 +68,14 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'roles',
-        key: 'id'
+        model: 'Role',
+        key: 'role_id'
       }
     }
   },
   {
     sequelize: db,
-    modelName: 'user',
+    modelName: 'User',
     tableName: 'person',
     timestamps: false
   }
