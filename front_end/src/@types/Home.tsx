@@ -1,4 +1,4 @@
-import ApplicantViewModel from "../view-models/ApplicantViewModel";
+import ViewModel from "../view-models/ViewModel";
 
 export interface ViewProps {
   username: string;
@@ -6,5 +6,5 @@ export interface ViewProps {
 }
 
 export interface ControllerProps {
-  viewModel: ApplicantViewModel;
+  viewModel: ViewModel;
 }

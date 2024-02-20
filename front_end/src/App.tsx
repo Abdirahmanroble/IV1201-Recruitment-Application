@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import HomeController from "./controllers/HomeController";
 import LoginController from "./controllers/LoginController";
-import ApplicantViewModel from "./view-models/ApplicantViewModel";
+import ViewModel from "./view-models/ViewModel";
 
 import "./App.css";
 import Layout from "./components/Layout/Layout";
@@ -12,7 +12,7 @@ import ListApplicationsController from "./controllers/ListApplicationsController
 
 function App() {
   const [signedIn, setSignedIn] = useState(false);
-  const [viewModel, setViewModel] = useState(new ApplicantViewModel());
+  const [viewModel, setViewModel] = useState(new ViewModel());
 
   viewModel.setChangeAuthState((state) => setSignedIn(state));
   viewModel.setChangeState((model) => setViewModel(model));

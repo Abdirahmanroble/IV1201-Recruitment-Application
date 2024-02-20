@@ -1,4 +1,4 @@
-import ApplicantViewModel from "../view-models/ApplicantViewModel";
+import ViewModel from "../view-models/ViewModel";
 
 export interface AccountFormProps {
   onCreateAccount: (
@@ -23,5 +23,5 @@ export interface ViewProps {
 }
 
 export interface ControllerProps {
-  viewModel: ApplicantViewModel;
+  viewModel: ViewModel;
 }

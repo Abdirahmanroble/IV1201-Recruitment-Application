@@ -6,9 +6,9 @@ import {
 } from "../@types/Applicant";
 
 /**
- * ApplicantViewModel is responsible for handling the user login logic.
+ * ViewModel is responsible for handling the user login logic.
  */
-export default class ApplicantViewModel {
+export default class ViewModel {
   private firstName: string = "";
   private lastName: string = "";
   private personNumber: string = "";
@@ -21,14 +21,14 @@ export default class ApplicantViewModel {
   public changeAuthState: (state: boolean) => void = (state: boolean) => {
     console.log(state);
   };
-  public changeState: (viewModel: ApplicantViewModel) => void = (
-    viewModel: ApplicantViewModel
+  public changeState: (viewModel: ViewModel) => void = (
+    viewModel: ViewModel
   ) => {
     console.log(viewModel);
   };
 
   /**
-   * Creates an instance of ApplicantViewModel.
+   * Creates an instance of ViewModel.
    */
   constructor() {}
 
@@ -248,9 +248,8 @@ export default class ApplicantViewModel {
     };
   }
 
-  public setChangeState(changeState: (viewModel: ApplicantViewModel) => void) {
-    this.changeState = (viewModel: ApplicantViewModel) =>
-      changeState(viewModel);
+  public setChangeState(changeState: (viewModel: ViewModel) => void) {
+    this.changeState = (viewModel: ViewModel) => changeState(viewModel);
   }
 
   /**Getters */

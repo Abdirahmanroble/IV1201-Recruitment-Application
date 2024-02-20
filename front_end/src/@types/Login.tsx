@@ -1,4 +1,4 @@
-import ApplicantViewModel from "../view-models/ApplicantViewModel";
+import ViewModel from "../view-models/ViewModel";
 
 export interface LoginBoxProps {
   onLogin: (email: string, password: string) => void;
@@ -9,5 +9,5 @@ export interface ViewProps {
 }
 
 export interface ControllerProps {
-  viewModel: ApplicantViewModel;
+  viewModel: ViewModel;
 }
