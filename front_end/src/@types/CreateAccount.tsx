@@ -1,5 +1,13 @@
 import ViewModel from "../view-models/ViewModel";
 
+export interface FormInputProps {
+  text: string;
+  type: string;
+  value: string;
+  onChange: (value: string) => void;
+  counter: number;
+}
+
 export interface AccountFormProps {
   onCreateAccount: (
     firstName: string,
@@ -8,7 +16,7 @@ export interface AccountFormProps {
     personNumber: string,
     username: string,
     password: string
-  ) => void;
+  ) => Promise<boolean>;
 }
 
 export interface ViewProps {
@@ -19,7 +27,7 @@ export interface ViewProps {
     personNumber: string,
     username: string,
     password: string
-  ) => void;
+  ) => Promise<boolean>;
 }
 
 export interface ControllerProps {
