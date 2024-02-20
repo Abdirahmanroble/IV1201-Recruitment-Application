@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { isTokenPresent } from "./utils/auth";
 
 import HomeController from "./controllers/HomeController";
 import LoginController from "./controllers/LoginController";
@@ -14,6 +15,19 @@ function App() {
 
   const [signedIn, setSignedIn] = useState(false);
   const [stateViewModel, setViewModel] = useState(viewModel);
+
+  useEffect(() => {
+    const updateAuthState = () => {
+      const tokenExists = isTokenPresent();
+      setSignedIn(tokenExists);
+    };
+
+    updateAuthState();
+
+    const intervalId = setInterval(updateAuthState, 10 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   if (signedIn)
     return (
