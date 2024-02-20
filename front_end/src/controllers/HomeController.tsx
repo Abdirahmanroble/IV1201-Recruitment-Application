@@ -12,8 +12,6 @@ import HomeView from "../views/HomeView/HomeView";
 
 // @observer
 export default class HomeController extends Component<ControllerProps> {
-  private onLogout = () => this.props.viewModel.logout();
-
   /**
    * Renders the HomeView component, passing the email and onLogout handler as props.
    *
@@ -21,11 +19,6 @@ export default class HomeController extends Component<ControllerProps> {
    */
 
   render(): React.ReactNode {
-    return (
-      <HomeView
-        username={this.props.viewModel.getUsername()}
-        onLogout={() => this.onLogout()}
-      />
-    );
+    return <HomeView username={this.props.viewModel.getUsername()} />;
   }
 }

@@ -20,7 +20,6 @@ export default class HomeView extends PureComponent<ViewProps> {
       <div className="home-view">
         <h1>Home</h1>
         <h2>Welcome {this.props.username}</h2>
-        <button onClick={this.props.onLogout}>LOGOUT</button>
       </div>
     );
   }

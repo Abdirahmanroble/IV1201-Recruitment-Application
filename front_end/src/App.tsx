@@ -31,6 +31,7 @@ function App() {
                 element={
                   <HomeController viewModel={viewModel}></HomeController>
                 }
+                onLogout={() => viewModel.logout()}
               ></Layout>
             }
           ></Route>
@@ -51,6 +52,7 @@ function App() {
                 element={
                   <HomeController viewModel={viewModel}></HomeController>
                 }
+                onLogout={() => viewModel.logout()}
               ></Layout>
             }
           ></Route>
@@ -65,6 +67,7 @@ function App() {
                     viewModel={viewModel}
                   ></ListApplicationsController>
                 }
+                onLogout={() => viewModel.logout()}
               ></Layout>
             }
           ></Route>
@@ -84,6 +87,7 @@ function App() {
                 element={
                   <LoginController viewModel={viewModel}></LoginController>
                 }
+                onLogout={() => viewModel.logout()}
               ></Layout>
             }
           ></Route>
@@ -98,6 +102,7 @@ function App() {
                     viewModel={viewModel}
                   ></CreateAccountController>
                 }
+                onLogout={() => viewModel.logout()}
               ></Layout>
             }
           ></Route>

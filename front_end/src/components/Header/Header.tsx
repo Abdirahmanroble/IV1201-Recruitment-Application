@@ -49,6 +49,9 @@ function Header(props: HeaderProps) {
           <Link to="/" className="App-link">
             <div className={`${home}`}>Home</div>
           </Link>
+          <div onClick={props.onLogout} className="header-logout">
+            LOGOUT
+          </div>
         </div>
       </div>
     );
@@ -63,6 +66,9 @@ function Header(props: HeaderProps) {
           <Link to="/list-applications" className="App-link">
             <div className={`${listingApplications}`}>List Applications</div>
           </Link>
+          <div onClick={props.onLogout} className="header-logout">
+            LOGOUT
+          </div>
         </div>
       </div>
     );

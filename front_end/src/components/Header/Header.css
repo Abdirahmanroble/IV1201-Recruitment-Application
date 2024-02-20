@@ -25,6 +25,7 @@
 .header-paths {
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: 2vw;
 
   padding-right: 1vw;
@@ -32,4 +33,15 @@
 
 .pressed-path {
   color: var(--white);
+}
+
+.header-logout {
+  background-color: var(--red-secondary);
+  border: 0.1rem solid var(--red-primary);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  color: var(--red-primary);
+  font-weight: var(--title-weight);
+  padding: 1vh;
+  font-size: 0.8rem;
 }

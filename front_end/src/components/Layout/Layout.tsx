@@ -9,6 +9,7 @@ function Layout(props: LayoutProps) {
       <Header
         signedIn={props.signedIn}
         isApplicant={props.isApplicant}
+        onLogout={props.onLogout}
       ></Header>
       <div className="layout-element">{props.element}</div>
       <Footer></Footer>
