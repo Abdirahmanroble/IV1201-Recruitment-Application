@@ -15,6 +15,11 @@ import "./LoginBox.css";
 function LoginBox(props: LoginBoxProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [counter, setCounter] = useState(0);
+  const [success, setSuccess] = useState(true);
+
+  let display = "none";
+  if (success === false) display = "block";
 
   return (
     <div className="login-box">
@@ -34,7 +39,18 @@ function LoginBox(props: LoginBoxProps) {
         ></input>
       </div>
       <div className="login-box-buttons">
-        <button onClick={() => props.onLogin(email, password)}>LOGIN</button>
+        <button
+          onClick={async () => {
+            const userWasLoggedIn = await props.onLogin(email, password);
+            setCounter(counter + 1);
+            setSuccess(userWasLoggedIn);
+          }}
+        >
+          LOGIN
+        </button>
+      </div>
+      <div className="login-box-error" style={{ display: `${display}` }}>
+        {`Invalid credentials (${counter})`}
       </div>
     </div>
   );

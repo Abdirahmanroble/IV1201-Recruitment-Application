@@ -20,13 +20,10 @@ export default class LoginController extends Component<ControllerProps> {
   private onLogin = async (email: string, password: string) => {
     try {
       const success = await this.props.viewModel.login(email, password);
-      if (success) {
-        console.log("Login success");
-      } else {
-        console.log("Login failure");
-      }
+      return success;
     } catch (error) {
       console.error("Login error:", error);
+      return false;
     }
   };
 

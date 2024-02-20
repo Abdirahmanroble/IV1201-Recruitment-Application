@@ -299,36 +299,3 @@ export default class ViewModel {
     console.log(obj);
   }
 }
-
-/*
-public testingCreateAccount(
-  firstName: string,
-  lastName: string,
-  email: string,
-  personNumber: string,
-  username: string,
-  password: string
-): boolean {
-  console.log(
-    firstName +
-      "\n" +
-      lastName +
-      "\n" +
-      email +
-      "\n" +
-      personNumber +
-      "\n" +
-      username +
-      "\n" +
-      password
-  );
-  if (firstName && lastName && email && personNumber && username && password)
-    return true;
-  else return false;
-}
-
-public testingLogin(email: string, password: string): boolean {
-  if (email === "nina@email.se" && password === "password") return true;
-  else return false;
-}
-*/

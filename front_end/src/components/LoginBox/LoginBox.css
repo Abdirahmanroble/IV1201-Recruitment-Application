@@ -43,3 +43,9 @@
   border-radius: 0.75rem;
   cursor: pointer;
 }
+
+.login-box-error {
+  color: var(--red-primary);
+  font-weight: var(--bold-weight);
+  font-size: 0.8rem;
+}
