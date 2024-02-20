@@ -21,8 +21,8 @@ export default class CreateAccountController extends Component<ControllerProps> 
       username,
       password
     );
-    if (success) console.log("SUCCESS");
-    else console.log("FAILED ATTEMPT");
+    if (success) console.log("Create account success");
+    else console.log("Create account failure");
   };
 
   render(): React.ReactNode {

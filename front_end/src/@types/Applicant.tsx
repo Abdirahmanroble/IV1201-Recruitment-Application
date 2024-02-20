@@ -10,6 +10,15 @@ export interface LoginResponseBody {
   };
 }
 
+export interface UserBody {
+  name: string;
+  surname: string;
+  pnr: string;
+  email: string;
+  username: string;
+  role_id: number;
+}
+
 export interface RegisterResponseBody {
   message: string;
   createdUser: {

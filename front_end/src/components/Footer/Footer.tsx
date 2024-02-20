@@ -1,6 +1,6 @@
 import "./Footer.css";
 
-function Footer(/* props: FooterProps */) {
+function Footer() {
   return (
     <div className="footer-container">
       <div className="footer-title">Group 5</div>

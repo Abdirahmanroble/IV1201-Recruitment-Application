@@ -10,6 +10,4 @@ export interface ViewProps {
 
 export interface ControllerProps {
   viewModel: ApplicantViewModel;
-  login: () => void;
-  changeState: (viewModel: ApplicantViewModel) => void;
 }

@@ -1,4 +1,8 @@
-import { LoginResponseBody, RegisterResponseBody } from "../@types/Applicant";
+import {
+  UserBody,
+  LoginResponseBody,
+  RegisterResponseBody,
+} from "../@types/Applicant";
 
 /**
  * ApplicantViewModel is responsible for handling the user login logic.
@@ -10,7 +14,17 @@ export default class ApplicantViewModel {
   private email: string = "";
   private username: string = "";
   private competences: { yearsOfExperience: number; name: string }[] = [];
+  private role: number = 0;
   private signedIn: boolean = false;
+
+  public changeAuthState: (state: boolean) => void = (state: boolean) => {
+    console.log(state);
+  };
+  public changeState: (viewModel: ApplicantViewModel) => void = (
+    viewModel: ApplicantViewModel
+  ) => {
+    console.log(viewModel);
+  };
 
   /**
    * Creates an instance of ApplicantViewModel.
@@ -63,13 +77,13 @@ export default class ApplicantViewModel {
       });
 
       if (!response.ok) {
-        throw new Error("Network response failure");
+        throw new Error("Network response failure.");
       }
 
       const data = await response.json();
       if (data?.message) {
         databaseBody = data;
-        console.log(databaseBody);
+        this.log(databaseBody);
         return true;
       } else return false;
     } catch (error) {
@@ -112,17 +126,18 @@ export default class ApplicantViewModel {
       });
 
       if (!response.ok) {
-        throw new Error("Network response failure");
+        throw new Error("Network response failure.");
       }
 
       const data = await response.json();
       if (data?.message) {
         databaseBody = data;
-        this.signedIn = true;
+        this.log(databaseBody);
+        this.setUserBody(databaseBody.foundUser);
+        this.changeAuthState(true);
       } else {
-        this.signedIn = false;
+        this.changeAuthState(false);
       }
-      console.log(databaseBody);
       return this.signedIn;
     } catch (error) {
       console.error("Login request failed:", error);
@@ -130,20 +145,29 @@ export default class ApplicantViewModel {
     }
   }
 
+  public logout() {
+    this.changeAuthState(false);
+  }
+
   public registerApplication() {}
+
+  public listAllApplications() {}
 
   /**Setters */
 
   public setFirstName(firstName: string) {
     this.firstName = firstName;
+    this.changeState(this);
   }
 
   public setLastName(lastName: string) {
     this.lastName = lastName;
+    this.changeState(this);
   }
 
   public setPersonNumber(personNumber: string) {
     this.personNumber = personNumber;
+    this.changeState(this);
   }
 
   /**
@@ -152,16 +176,36 @@ export default class ApplicantViewModel {
    */
   public setEmail(email: string) {
     this.email = email;
+    this.changeState(this);
   }
 
   public setUsername(username: string) {
     this.username = username;
+    this.changeState(this);
   }
 
   public setCompetences(
     competences: { yearsOfExperience: number; name: string }[]
   ) {
     this.competences = competences;
+    this.changeState(this);
+  }
+
+  public setRole(role: number) {
+    this.role = role;
+    this.changeState(this);
+  }
+
+  public setChangeAuthState(changeAuthState: (state: boolean) => void) {
+    this.changeAuthState = (state: boolean) => {
+      changeAuthState(state);
+      this.signedIn = state;
+    };
+  }
+
+  public setChangeState(changeState: (viewModel: ApplicantViewModel) => void) {
+    this.changeState = (viewModel: ApplicantViewModel) =>
+      changeState(viewModel);
   }
 
   /**Getters */
@@ -193,9 +237,26 @@ export default class ApplicantViewModel {
   public getCompetences(): { yearsOfExperience: number; name: string }[] {
     return this.competences;
   }
-} /*
 
-/**REMOVE LATER */ /*
+  public getRole(): number {
+    return this.role;
+  }
+
+  private setUserBody(user: UserBody) {
+    this.setFirstName(user.name);
+    this.setLastName(user.surname);
+    this.setPersonNumber(user.pnr);
+    this.setEmail(user.email);
+    this.setUsername(user.username);
+    this.setRole(user.role_id);
+  }
+
+  private log(obj: Object) {
+    console.log(obj);
+  }
+}
+
+/*
 public testingCreateAccount(
   firstName: string,
   lastName: string,
@@ -220,10 +281,10 @@ public testingCreateAccount(
   if (firstName && lastName && email && personNumber && username && password)
     return true;
   else return false;
-}*/ /*
+}
 
-/**REMOVE LATER */ /*
 public testingLogin(email: string, password: string): boolean {
   if (email === "nina@email.se" && password === "password") return true;
   else return false;
-}*/
+}
+*/

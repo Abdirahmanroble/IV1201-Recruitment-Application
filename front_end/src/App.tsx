@@ -8,14 +8,17 @@ import ApplicantViewModel from "./view-models/ApplicantViewModel";
 import "./App.css";
 import Layout from "./components/Layout/Layout";
 import CreateAccountController from "./controllers/CreateAccountController";
+import ListApplicationsController from "./controllers/ListApplicationsController";
 
 function App() {
-  const viewModel = new ApplicantViewModel();
-
   const [signedIn, setSignedIn] = useState(false);
-  const [stateViewModel, setViewModel] = useState(viewModel);
+  const [viewModel, setViewModel] = useState(new ApplicantViewModel());
 
-  if (signedIn)
+  viewModel.setChangeAuthState((state) => setSignedIn(state));
+  viewModel.setChangeState((model) => setViewModel(model));
+
+  if (signedIn && viewModel.getRole() === 2)
+    // Applicant
     return (
       <Router>
         <Routes>
@@ -23,11 +26,44 @@ function App() {
             path="/"
             element={
               <Layout
+                signedIn={true}
+                isApplicant={true}
                 element={
-                  <HomeController
-                    viewModel={stateViewModel}
-                    logout={() => setSignedIn(false)}
-                  ></HomeController>
+                  <HomeController viewModel={viewModel}></HomeController>
+                }
+              ></Layout>
+            }
+          ></Route>
+        </Routes>
+      </Router>
+    );
+  else if (signedIn && viewModel.getRole() === 1)
+    // Recruiter
+    return (
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Layout
+                signedIn={true}
+                isApplicant={false}
+                element={
+                  <HomeController viewModel={viewModel}></HomeController>
+                }
+              ></Layout>
+            }
+          ></Route>
+          <Route
+            path="/list-applications"
+            element={
+              <Layout
+                signedIn={true}
+                isApplicant={false}
+                element={
+                  <ListApplicationsController
+                    viewModel={viewModel}
+                  ></ListApplicationsController>
                 }
               ></Layout>
             }
@@ -43,12 +79,10 @@ function App() {
             path="/"
             element={
               <Layout
+                signedIn={false}
+                isApplicant={false}
                 element={
-                  <LoginController
-                    viewModel={viewModel}
-                    login={() => setSignedIn(true)}
-                    changeState={(viewModel) => setViewModel(viewModel)}
-                  ></LoginController>
+                  <LoginController viewModel={viewModel}></LoginController>
                 }
               ></Layout>
             }
@@ -57,6 +91,8 @@ function App() {
             path="/create-account"
             element={
               <Layout
+                signedIn={false}
+                isApplicant={false}
                 element={
                   <CreateAccountController
                     viewModel={viewModel}

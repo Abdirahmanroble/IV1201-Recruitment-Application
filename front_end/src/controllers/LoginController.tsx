@@ -21,11 +21,9 @@ export default class LoginController extends Component<ControllerProps> {
     try {
       const success = await this.props.viewModel.login(email, password);
       if (success) {
-        this.props.login();
-        this.props.viewModel.setEmail(email);
-        this.props.changeState(this.props.viewModel);
+        console.log("Login success");
       } else {
-        console.log("Login failed");
+        console.log("Login failure");
       }
     } catch (error) {
       console.error("Login error:", error);
