@@ -20,14 +20,6 @@
   display: flex;
   flex-direction: column;
   gap: 1vh;
-
-  width: 12vw;
-}
-
-.login-box-input input {
-  background-color: var(--green-tetriary);
-  border-radius: 0.25rem;
-  border-style: hidden;
 }
 
 .login-box-buttons {
