@@ -12,7 +12,16 @@ import HomeView from "../views/HomeView/HomeView";
 
 // @observer
 export default class HomeController extends Component<ControllerProps> {
-  private onLogout = () => this.props.logout();
+  // private onLogout = () => this.props.logout();
+
+  // Modification inside HomeController class
+
+  private onLogout = async () => {
+    const success = await this.props.viewModel.logout();
+    if (success) {
+      this.props.logout(); // This should trigger the state change in App.tsx to render the login view
+    }
+  };
 
   /**
    * Renders the HomeView component, passing the email and onLogout handler as props.

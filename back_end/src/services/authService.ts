@@ -68,12 +68,38 @@ class AuthService {
    * @returns {Promise<Person | null>} - A promise that resolves to the user object if login is successful, or null if the login fails.
    * @throws {Error} - Throws an error if the login process fails due to an unexpected error.
    */
-  public static async login({ username, password }: LoginCredentials): Promise<User | null> {
+  public static async login({
+    username,
+    password,
+  }: LoginCredentials): Promise<User | null> {
     try {
-      const user = await User.findOne({ where: { username } });
-      if (user === null) {
-        return null;
+      let user: User | null = await User.findOne({ where: { username } });
+
+      if (user == null) {
+        user = await User.findOne({ where: { email: username } });
+
+        if (user == null) {
+          throw new Error("Username or email does not exist.");
+        }
       }
+
+      // Recruiter
+      // if (user.role_id == "1") {
+      //   const isMatch = await User.findOne({ where: { password: user.password } });
+      //   if (!isMatch) {
+      //       throw new Error("Password does not match.");
+      //   }
+      // }
+
+
+      // Applicant
+      // if (user.role_id == "2") {
+      //   const isMatch = await bcrypt.compare(password, user.password);
+      //   if (!isMatch) {
+      //       throw new Error("Password does not match.");
+      //   }
+      // }
+
 
       if (user.password !== password) {
         return null;
