@@ -17,6 +17,11 @@ function App() {
   viewModel.setChangeAuthState((state) => setSignedIn(state));
   viewModel.setChangeState((model) => setViewModel(model));
 
+  const onLogout = () => {
+    viewModel.logout();
+    window.location.replace("/");
+  };
+
   if (signedIn && viewModel.getRole() === 2)
     // Applicant
     return (
@@ -31,7 +36,7 @@ function App() {
                 element={
                   <HomeController viewModel={viewModel}></HomeController>
                 }
-                onLogout={() => viewModel.logout()}
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>
@@ -52,7 +57,7 @@ function App() {
                 element={
                   <HomeController viewModel={viewModel}></HomeController>
                 }
-                onLogout={() => viewModel.logout()}
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>
@@ -67,7 +72,7 @@ function App() {
                     viewModel={viewModel}
                   ></ListApplicationsController>
                 }
-                onLogout={() => viewModel.logout()}
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>
@@ -79,7 +84,7 @@ function App() {
       <Router>
         <Routes>
           <Route
-            path="/"
+            path="/*"
             element={
               <Layout
                 signedIn={false}
@@ -87,7 +92,7 @@ function App() {
                 element={
                   <LoginController viewModel={viewModel}></LoginController>
                 }
-                onLogout={() => viewModel.logout()}
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>
@@ -102,7 +107,7 @@ function App() {
                     viewModel={viewModel}
                   ></CreateAccountController>
                 }
-                onLogout={() => viewModel.logout()}
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>
