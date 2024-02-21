@@ -38,7 +38,7 @@ function App() {
         </Routes>
       </Router>
     );
-  else if (signedIn && viewModel.getRole() === 1)
+  else if (signedIn && viewModel.getRole() === 1 || viewModel.getRole() === null)
     // Recruiter
     return (
       <Router>
