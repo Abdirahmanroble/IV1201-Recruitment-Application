@@ -1,19 +1,34 @@
-import { LoginResponseBody, RegisterResponseBody } from "../@types/Applicant";
+import {
+  UserBody,
+  LoginResponseBody,
+  RegisterResponseBody,
+  ApplicationsResponseBody,
+} from "../@types/Applicant";
 
 /**
- * ApplicantViewModel is responsible for handling the user login logic.
+ * ViewModel is responsible for handling the user login logic.
  */
-export default class ApplicantViewModel {
+export default class ViewModel {
   private firstName: string = "";
   private lastName: string = "";
   private personNumber: string = "";
   private email: string = "";
   private username: string = "";
   private competences: { yearsOfExperience: number; name: string }[] = [];
+  private role: number = 0;
   private signedIn: boolean = false;
 
+  public changeAuthState: (state: boolean) => void = (state: boolean) => {
+    console.log(state);
+  };
+  public changeState: (viewModel: ViewModel) => void = (
+    viewModel: ViewModel
+  ) => {
+    console.log(viewModel);
+  };
+
   /**
-   * Creates an instance of ApplicantViewModel.
+   * Creates an instance of ViewModel.
    */
   constructor() {}
 
@@ -63,13 +78,13 @@ export default class ApplicantViewModel {
       });
 
       if (!response.ok) {
-        throw new Error("Network response failure");
+        throw new Error("Network response failure.");
       }
 
       const data = await response.json();
       if (data?.message) {
         databaseBody = data;
-        console.log(databaseBody);
+        this.log(databaseBody);
         return true;
       } else return false;
     } catch (error) {
@@ -112,17 +127,18 @@ export default class ApplicantViewModel {
       });
 
       if (!response.ok) {
-        throw new Error("Network response failure");
+        throw new Error("Network response failure.");
       }
 
       const data = await response.json();
       if (data?.message) {
         databaseBody = data;
-        this.signedIn = true;
+        this.log(databaseBody);
+        this.setUserBody(databaseBody.foundUser);
+        this.changeAuthState(true);
       } else {
-        this.signedIn = false;
+        this.changeAuthState(false);
       }
-      console.log(databaseBody);
       return this.signedIn;
     } catch (error) {
       console.error("Login request failed:", error);
@@ -130,20 +146,73 @@ export default class ApplicantViewModel {
     }
   }
 
-  public registerApplication() {}
+  public logout() {
+    this.changeAuthState(false);
+  }
+
+  public async listAllApplications(): Promise<
+    {
+      application_id: number;
+      fullName: string;
+      status: string;
+      applicationDate: Date;
+      fromDate: Date;
+      toDate: Date;
+    }[]
+  > {
+    let databaseBody: ApplicationsResponseBody = {
+      message: "",
+      applications: [
+        {
+          application_id: 0,
+          fullName: "",
+          status: "",
+          applicationDate: new Date(),
+          fromDate: new Date(),
+          toDate: new Date(),
+        },
+      ],
+    };
+
+    try {
+      const response = await fetch("http://localhost:3000/applications", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response failure.");
+      }
+
+      const data = await response.json();
+      if (data?.message) {
+        databaseBody = data;
+        this.log(databaseBody);
+        return databaseBody.applications;
+      } else return databaseBody.applications;
+    } catch (error) {
+      console.error("Applications request failed:", error);
+      return databaseBody.applications;
+    }
+  }
 
   /**Setters */
 
   public setFirstName(firstName: string) {
     this.firstName = firstName;
+    this.changeState(this);
   }
 
   public setLastName(lastName: string) {
     this.lastName = lastName;
+    this.changeState(this);
   }
 
   public setPersonNumber(personNumber: string) {
     this.personNumber = personNumber;
+    this.changeState(this);
   }
 
   /**
@@ -152,16 +221,35 @@ export default class ApplicantViewModel {
    */
   public setEmail(email: string) {
     this.email = email;
+    this.changeState(this);
   }
 
   public setUsername(username: string) {
     this.username = username;
+    this.changeState(this);
   }
 
   public setCompetences(
     competences: { yearsOfExperience: number; name: string }[]
   ) {
     this.competences = competences;
+    this.changeState(this);
+  }
+
+  public setRole(role: number) {
+    this.role = role;
+    this.changeState(this);
+  }
+
+  public setChangeAuthState(changeAuthState: (state: boolean) => void) {
+    this.changeAuthState = (state: boolean) => {
+      changeAuthState(state);
+      this.signedIn = state;
+    };
+  }
+
+  public setChangeState(changeState: (viewModel: ViewModel) => void) {
+    this.changeState = (viewModel: ViewModel) => changeState(viewModel);
   }
 
   /**Getters */
@@ -193,37 +281,21 @@ export default class ApplicantViewModel {
   public getCompetences(): { yearsOfExperience: number; name: string }[] {
     return this.competences;
   }
-} /*
 
-/**REMOVE LATER */ /*
-public testingCreateAccount(
-  firstName: string,
-  lastName: string,
-  email: string,
-  personNumber: string,
-  username: string,
-  password: string
-): boolean {
-  console.log(
-    firstName +
-      "\n" +
-      lastName +
-      "\n" +
-      email +
-      "\n" +
-      personNumber +
-      "\n" +
-      username +
-      "\n" +
-      password
-  );
-  if (firstName && lastName && email && personNumber && username && password)
-    return true;
-  else return false;
-}*/ /*
+  public getRole(): number {
+    return this.role;
+  }
 
-/**REMOVE LATER */ /*
-public testingLogin(email: string, password: string): boolean {
-  if (email === "nina@email.se" && password === "password") return true;
-  else return false;
-}*/
+  private setUserBody(user: UserBody) {
+    this.setFirstName(user.name);
+    this.setLastName(user.surname);
+    this.setPersonNumber(user.pnr);
+    this.setEmail(user.email);
+    this.setUsername(user.username);
+    this.setRole(user.role_id);
+  }
+
+  private log(obj: Object) {
+    console.log(obj);
+  }
+}

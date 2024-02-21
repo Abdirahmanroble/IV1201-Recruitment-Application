@@ -82,7 +82,7 @@ class UserController {
   public static async getUserApplications (req: Request, res: Response): Promise<void> {
     try {
       const applications = await ApplicationService.getAllApplications()
-      res.json(applications)
+      res.json({ message: 'Applications gotten successfully', applications })
     } catch (error: unknown) {
       if (error instanceof Error) {
         res.status(500).send(error.message)

@@ -6,7 +6,11 @@ import "./Layout.css";
 function Layout(props: LayoutProps) {
   return (
     <div className="layout-container">
-      <Header></Header>
+      <Header
+        signedIn={props.signedIn}
+        isApplicant={props.isApplicant}
+        onLogout={props.onLogout}
+      ></Header>
       <div className="layout-element">{props.element}</div>
       <Footer></Footer>
     </div>
