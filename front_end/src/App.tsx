@@ -1,15 +1,23 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
-import HomeController from "./controllers/HomeController";
-import LoginController from "./controllers/LoginController";
 import ViewModel from "./view-models/ViewModel";
 
-import "./App.css";
 import Layout from "./components/Layout/Layout";
-import CreateAccountController from "./controllers/CreateAccountController";
-import ListApplicationsController from "./controllers/ListApplicationsController";
 
+import HomeController from "./controllers/HomeController";
+import ListApplicationsController from "./controllers/ListApplicationsController";
+import LoginController from "./controllers/LoginController";
+import CreateAccountController from "./controllers/CreateAccountController";
+
+import "./App.css";
+
+/**
+ * The main component of the application responsible for rendering different routes
+ * based on the user's authentication status and role.
+ *
+ * @returns The main application component.
+ */
 function App() {
   const [signedIn, setSignedIn] = useState(false);
   const [viewModel, setViewModel] = useState(new ViewModel());
@@ -22,8 +30,7 @@ function App() {
     window.location.replace("/");
   };
 
-  if (signedIn && viewModel.getRole() === 2)
-    // Applicant
+  if (signedIn && viewModel.getRole() === 2 /**Applicant */)
     return (
       <Router>
         <Routes>
@@ -43,8 +50,7 @@ function App() {
         </Routes>
       </Router>
     );
-  else if (signedIn && viewModel.getRole() === 1)
-    // Recruiter
+  else if (signedIn && viewModel.getRole() === 1 /**Recruiter */)
     return (
       <Router>
         <Routes>

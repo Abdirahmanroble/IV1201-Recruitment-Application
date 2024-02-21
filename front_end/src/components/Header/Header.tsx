@@ -3,7 +3,13 @@ import { Link, useLocation } from "react-router-dom";
 import { HeaderProps } from "../../@types/Layout";
 import "./Header.css";
 
-function Header(props: HeaderProps) {
+/**
+ * Represents the header component of the application, providing navigation links and logout functionality.
+ *
+ * @param {HeaderProps} props - The properties passed to the Header component.
+ * @returns {JSX.Element} The rendered header component.
+ */
+function Header(props: HeaderProps): JSX.Element {
   const currentPath = useLocation().pathname;
 
   let signingIn = "",
@@ -55,7 +61,7 @@ function Header(props: HeaderProps) {
         </div>
       </div>
     );
-  else if (props.signedIn && !props.isApplicant)
+  else /**Recruiter */
     return (
       <div className="header-container">
         <div className="header-title">Recruitment Application</div>

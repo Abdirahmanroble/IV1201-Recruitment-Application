@@ -1,10 +1,16 @@
 import { useState } from "react";
-
 import { AccountFormProps } from "../../@types/CreateAccount";
-import "./AccountForm.css";
 import FormInput from "../FormInput/FormInput";
+import "./AccountForm.css";
 
-function LoginBox(props: AccountFormProps) {
+/**
+ * Represents a form for creating a new user account.
+ *
+ * @param {AccountFormProps} props - The properties for the account form component.
+ * @param {Function} props.onCreateAccount - The function to handle the creation of a new account.
+ * @returns {JSX.Element} The rendered account form component.
+ */
+function LoginBox(props: AccountFormProps): JSX.Element {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
