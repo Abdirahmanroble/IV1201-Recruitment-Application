@@ -43,7 +43,7 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
         <button
           onClick={async () => {
             const userWasLoggedIn = await props.onLogin(email, password);
-            if (!(email === "" || password === "")) setCounter(counter + 1);
+            setCounter(counter + 1);
             setSuccess(userWasLoggedIn);
           }}
         >
@@ -54,7 +54,7 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
         className="login-box-error"
         style={{ display: `${invalidCredentials}` }}
       >
-        {`Invalid credentials (${counter})`}
+        Invalid credentials
       </div>
       <div className="login-box-error" style={{ display: `${emptyBox}` }}>
         Please fill in the empty boxes
