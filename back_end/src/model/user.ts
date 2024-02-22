@@ -82,11 +82,11 @@ User.init(
   }
 );
 
-User.beforeSave(async (user, options) => {
-  if (user.changed("password")) {
-    const salt = await bcrypt.genSalt(10); // or another salt round count
-    user.password = await bcrypt.hash(user.password, salt);
-  }
-});
+// User.beforeSave(async (user, options) => {
+//   if (user.changed("password")) {
+//     const salt = await bcrypt.genSalt(10); // or another salt round count
+//     user.password = await bcrypt.hash(user.password, salt);
+//   }
+// });
 
 export default User;

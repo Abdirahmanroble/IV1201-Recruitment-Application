@@ -64,8 +64,9 @@ app.use(cors(corsOptions));
 
 // Root route
 app.get('/', (req: Request, res: Response) => {
-  res.send('Serrver is up and running!')
+  res.send('Server is up and running!')
 })
+
 
 // Setup routes
 app.use(userRoutes)

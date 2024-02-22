@@ -36,9 +36,8 @@ function App() {
     return () => clearInterval(intervalId);
   }, []);
 
-  // if (signedIn)
-  // viewModel.setChangeAuthState((state) => setSignedIn(state));
-  // viewModel.setChangeState((model) => setViewModel(model));
+  viewModel.setChangeAuthState((state) => setSignedIn(state));
+  viewModel.setChangeState((model) => setViewModel(model));
 
   const onLogout = () => {
     viewModel.logout();
@@ -65,7 +64,10 @@ function App() {
         </Routes>
       </Router>
     );
-  else if (signedIn && viewModel.getRole() === 1 || viewModel.getRole() === null)
+  else if (
+    (signedIn && viewModel.getRole() === 1) ||
+    viewModel.getRole() === null
+  )
     // Recruiter
     return (
       <Router>
