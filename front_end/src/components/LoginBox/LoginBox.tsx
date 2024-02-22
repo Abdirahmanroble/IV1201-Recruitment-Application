@@ -1,19 +1,15 @@
 import { useState } from "react";
-
 import { LoginBoxProps } from "../../@types/Login";
-import "./LoginBox.css";
 import FormInput from "../FormInput/FormInput";
+import "./LoginBox.css";
 
 /**
- * LoginBox is a functional component that renders a login form.
- * It allows users to enter their email and password and submit these
- * credentials via the "onLogin" function passed in through props.
+ * Represents a login box component used for user authentication.
  *
- * @param {LoginBoxProps} props - The props for the LoginBox component.
- * @returns {React.ReactElement} The React element that represents the login form.
+ * @param {LoginBoxProps} props - The properties passed to the LoginBox component.
+ * @returns {JSX.Element} The rendered login box component.
  */
-
-function LoginBox(props: LoginBoxProps) {
+function LoginBox(props: LoginBoxProps): JSX.Element {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [counter, setCounter] = useState(0);

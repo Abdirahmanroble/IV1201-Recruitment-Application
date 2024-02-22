@@ -1,7 +1,13 @@
 import { FormInputProps } from "../../@types/CreateAccount";
 import "./FormInput.css";
 
-function FormInput(props: FormInputProps) {
+/**
+ * Represents a form input component used for collecting user input.
+ *
+ * @param {FormInputProps} props - The properties passed to the FormInput component.
+ * @returns {JSX.Element} The rendered form input component.
+ */
+function FormInput(props: FormInputProps): JSX.Element {
   let color = "",
     borderColor = "";
   if (props.value === "" && props.counter > 0) {

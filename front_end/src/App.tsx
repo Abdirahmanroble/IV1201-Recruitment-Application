@@ -1,15 +1,23 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
-import HomeController from "./controllers/HomeController";
-import LoginController from "./controllers/LoginController";
 import ViewModel from "./view-models/ViewModel";
 
-import "./App.css";
 import Layout from "./components/Layout/Layout";
-import CreateAccountController from "./controllers/CreateAccountController";
-import ListApplicationsController from "./controllers/ListApplicationsController";
 
+import HomeController from "./controllers/HomeController";
+import ListApplicationsController from "./controllers/ListApplicationsController";
+import LoginController from "./controllers/LoginController";
+import CreateAccountController from "./controllers/CreateAccountController";
+
+import "./App.css";
+
+/**
+ * The main component of the application responsible for rendering different routes
+ * based on the user's authentication status and role.
+ *
+ * @returns The main application component.
+ */
 function App() {
   const [signedIn, setSignedIn] = useState(false);
   const [viewModel, setViewModel] = useState(new ViewModel());
@@ -17,8 +25,12 @@ function App() {
   viewModel.setChangeAuthState((state) => setSignedIn(state));
   viewModel.setChangeState((model) => setViewModel(model));
 
-  if (signedIn && viewModel.getRole() === 2)
-    // Applicant
+  const onLogout = () => {
+    viewModel.logout();
+    window.location.replace("/");
+  };
+
+  if (signedIn && viewModel.getRole() === 2 /**Applicant */)
     return (
       <Router>
         <Routes>
@@ -31,15 +43,14 @@ function App() {
                 element={
                   <HomeController viewModel={viewModel}></HomeController>
                 }
-                onLogout={() => viewModel.logout()}
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>
         </Routes>
       </Router>
     );
-  else if (signedIn && viewModel.getRole() === 1 || viewModel.getRole() === null)
-    // Recruiter
+  else if (signedIn && viewModel.getRole() === 1 /**Recruiter */)
     return (
       <Router>
         <Routes>
@@ -52,7 +63,7 @@ function App() {
                 element={
                   <HomeController viewModel={viewModel}></HomeController>
                 }
-                onLogout={() => viewModel.logout()}
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>
@@ -67,7 +78,7 @@ function App() {
                     viewModel={viewModel}
                   ></ListApplicationsController>
                 }
-                onLogout={() => viewModel.logout()}
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>
@@ -79,7 +90,7 @@ function App() {
       <Router>
         <Routes>
           <Route
-            path="/"
+            path="/*"
             element={
               <Layout
                 signedIn={false}
@@ -87,7 +98,7 @@ function App() {
                 element={
                   <LoginController viewModel={viewModel}></LoginController>
                 }
-                onLogout={() => viewModel.logout()}
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>
@@ -102,7 +113,7 @@ function App() {
                     viewModel={viewModel}
                   ></CreateAccountController>
                 }
-                onLogout={() => viewModel.logout()}
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>
