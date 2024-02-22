@@ -2,7 +2,6 @@ import { type Request, type Response } from 'express'
 import { ApplicationService } from '../services/applicationService'
 import AuthService from '../services/authService'
 import { createToken } from '../middleware/auth.middleware'
-
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 
 /**
