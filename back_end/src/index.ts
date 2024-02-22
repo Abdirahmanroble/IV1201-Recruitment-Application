@@ -43,7 +43,7 @@ const port = 3000
 app.use(express.json())
 
 // Define allowed origins for CORS
-const allowedOrigins = ['http://localhost:4000'] // Add more origins as needed
+const allowedOrigins = ['http://localhost:4000', 'http://localhost:5173'] // Add more origins as needed
 
 // CORS options configuration
 const corsOptions: CorsOptions = {

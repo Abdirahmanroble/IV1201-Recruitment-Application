@@ -6,14 +6,14 @@ import bcrypt from "bcrypt";
  * Interface for User attributes to ensure type safety.
  */
 interface UserAttributes {
-  person_id?: number;
-  name: string;
-  surname: string;
-  pnr: string;
-  email: string;
-  password: string;
-  username: string;
-  role_id?: number;
+  person_id?: number
+  name: string
+  surname: string
+  pnr: string
+  email: string
+  password: string
+  username: string
+  role_id: number
 }
 /**
  * Sequelize model representing a User entity in the database.
@@ -21,14 +21,14 @@ interface UserAttributes {
  * such as automatic table creation (if not exist) and easy querying.
  */
 class User extends Model<UserAttributes> {
-  public person_id?: number;
-  public name!: string;
-  public surname!: string;
-  public pnr!: string;
-  public email!: string;
-  public password!: string;
-  public username!: string;
-  public role_id?: number;
+  public person_id?: number
+  public name!: string
+  public surname!: string
+  public pnr!: string
+  public email!: string
+  public password!: string
+  public username!: string
+  public role_id!: number
 }
 /**
  * Initializes the User model with its schema defined in the database.

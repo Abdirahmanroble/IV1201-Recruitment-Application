@@ -1,15 +1,10 @@
-<<<<<<< HEAD
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { isTokenPresent } from "./utils/auth";
-=======
-import { useState } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 
 import ViewModel from "./view-models/ViewModel";
 
 import Layout from "./components/Layout/Layout";
->>>>>>> fullstack
 
 import HomeController from "./controllers/HomeController";
 import ListApplicationsController from "./controllers/ListApplicationsController";
@@ -28,7 +23,6 @@ function App() {
   const [signedIn, setSignedIn] = useState(false);
   const [viewModel, setViewModel] = useState(new ViewModel());
 
-<<<<<<< HEAD
   useEffect(() => {
     const updateAuthState = () => {
       const tokenExists = isTokenPresent();
@@ -42,10 +36,9 @@ function App() {
     return () => clearInterval(intervalId);
   }, []);
 
-  if (signedIn)
-=======
-  viewModel.setChangeAuthState((state) => setSignedIn(state));
-  viewModel.setChangeState((model) => setViewModel(model));
+  // if (signedIn)
+  // viewModel.setChangeAuthState((state) => setSignedIn(state));
+  // viewModel.setChangeState((model) => setViewModel(model));
 
   const onLogout = () => {
     viewModel.logout();
@@ -53,7 +46,6 @@ function App() {
   };
 
   if (signedIn && viewModel.getRole() === 2 /**Applicant */)
->>>>>>> fullstack
     return (
       <Router>
         <Routes>
@@ -73,7 +65,8 @@ function App() {
         </Routes>
       </Router>
     );
-  else if (signedIn && viewModel.getRole() === 1 /**Recruiter */)
+  else if (signedIn && viewModel.getRole() === 1 || viewModel.getRole() === null)
+    // Recruiter
     return (
       <Router>
         <Routes>
