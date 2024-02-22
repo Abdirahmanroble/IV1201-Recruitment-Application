@@ -44,7 +44,7 @@ function App() {
     window.location.replace("/");
   };
 
-  if (signedIn && viewModel.getRole() === 2 /**Applicant */)
+  if (signedIn && viewModel.getRole() === 2 || viewModel.getRole() === null/**Applicant */)
     return (
       <Router>
         <Routes>
@@ -64,11 +64,7 @@ function App() {
         </Routes>
       </Router>
     );
-  else if (
-    (signedIn && viewModel.getRole() === 1) ||
-    viewModel.getRole() === null
-  )
-    // Recruiter
+  else if (signedIn && viewModel.getRole() === 1 /**Recruiter */)
     return (
       <Router>
         <Routes>

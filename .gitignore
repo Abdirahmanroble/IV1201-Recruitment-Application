@@ -26,5 +26,4 @@ dist-ssr
 
 /initdb
 .vscode
-
 .env
