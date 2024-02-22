@@ -12,7 +12,7 @@ interface UserAttributes {
   email: string
   password: string
   username: string
-  role_id?: number
+  role_id: number
 }
 /**
  * Sequelize model representing a User entity in the database.
@@ -27,7 +27,7 @@ class User extends Model<UserAttributes> {
   public email!: string
   public password!: string
   public username!: string
-  public role_id?: number
+  public role_id!: number
 }
 /**
  * Initializes the User model with its schema defined in the database.

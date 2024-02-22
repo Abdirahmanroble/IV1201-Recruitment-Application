@@ -1,4 +1,6 @@
 import { Sequelize } from 'sequelize'
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 /**
  * Retrieves an environment variable by key and throws an error if it is not found or empty.
@@ -16,10 +18,10 @@ function getEnvVariable (key: string): string {
   return value
 }
 // Retrieve necessary database configuration from environment variables.
-const dbName = getEnvVariable('DB_DATABASE')
-const dbUsername = getEnvVariable('DB_USERNAME')
-const dbPassword = process.env.DB_PASSWORD
-const dbHost = getEnvVariable('DB_HOST')
+const dbName = getEnvVariable('DB_DATABASE'); // Ensures it's a string
+const dbUsername = getEnvVariable('DB_USERNAME'); // Ensures it's a string
+const dbPassword = getEnvVariable('DB_PASSWORD'); // This can be undefined, as passwords are optional in Sequelize if your DB doesn't require one
+const dbHost = getEnvVariable('DB_HOST'); // Ensures it's a string
 
 // Optionally retrieve DB port, default to 5432 if not provided or if provided value is not a number.
 const dbPortString = process.env.DB_PORT
@@ -41,7 +43,13 @@ const db = new Sequelize(dbName, dbUsername, dbPassword, {
   host: dbHost,
   dialect: 'postgres',
   port: dbPort,
-  logging: console.log
-})
-
+  logging: console.log,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // You can also specify the path to the CA cert file
+      // ca: fs.readFileSync('/path/to/server-certificates/root.crt').toString(),
+    },
+  },
+});
 export default db
