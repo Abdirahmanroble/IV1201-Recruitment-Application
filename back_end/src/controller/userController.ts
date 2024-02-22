@@ -1,8 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { NextFunction, type Request, type Response } from "express";
-import AuthService from "../services/authService";
+import { type Request, type Response, NextFunction } from 'express'
+import { ApplicationService } from '../services/applicationService'
+import AuthService from '../services/authService'
 import { createToken, validateToken } from "../middleware/auth.middleware";
-import { ApplicationService } from "../services/applicationService";
+
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 /**
  * Controller for person-related operations.
  */
@@ -73,42 +75,19 @@ class UserController {
         res.json({ message: "Register successful", createdUser });
       }
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send(error)
     }
   }
 
-  public static async getUserApplications(
-    req: Request,
-    res: Response
-  ): Promise<void> {
+  public static async getUserApplications (req: Request, res: Response): Promise<void> {
     try {
-      const applications = await ApplicationService.getAllApplications();
-
-      res.json(applications);
+      const applications = await ApplicationService.getAllApplications()
+      res.json({ message: 'Applications gotten successfully', applications })
     } catch (error: unknown) {
       if (error instanceof Error) {
-        res.status(500).send(error.message);
+        res.status(500).send(error.message)
       } else {
-        res.status(500).send("An unknown error occurred");
-      }
-    }
-  }
-
-  public static async createApplication(
-    req: Request,
-    res: Response
-  ): Promise<void> {
-    try {
-      const applicationData = req.body;
-      const application = await ApplicationService.createApplication(
-        applicationData
-      );
-      res.status(201).json(application);
-    } catch (error) {
-      if (error instanceof Error) {
-        res.status(500).send(error.message);
-      } else {
-        res.status(500).send("An unknown error occurred");
+        res.status(500).send('An unknown error occurred')
       }
     }
   }

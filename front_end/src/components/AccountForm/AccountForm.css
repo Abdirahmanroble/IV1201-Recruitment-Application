@@ -5,7 +5,7 @@
   align-items: center;
 
   width: 18vw;
-  height: 60vh;
+  height: 65vh;
 
   background-color: var(--green-secondary);
   border: 0.1rem solid var(--green-primary);
@@ -20,14 +20,6 @@
   display: flex;
   flex-direction: column;
   gap: 1vh;
-
-  width: 12vw;
-}
-
-.account-form-input input {
-  background-color: var(--green-tetriary);
-  border-radius: 0.25rem;
-  border-style: hidden;
 }
 
 .account-form-buttons {
@@ -42,4 +34,16 @@
   border: 0.1rem solid var(--green-primary);
   border-radius: 0.75rem;
   cursor: pointer;
+}
+
+.account-form-error {
+  color: var(--red-primary);
+  font-weight: var(--bold-weight);
+  font-size: 0.8rem;
+}
+
+.account-form-success {
+  color: var(--green-primary);
+  font-weight: var(--bold-weight);
+  font-size: 0.8rem;
 }

@@ -1,21 +1,34 @@
+<<<<<<< HEAD
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { isTokenPresent } from "./utils/auth";
+=======
+import { useState } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+
+import ViewModel from "./view-models/ViewModel";
+
+import Layout from "./components/Layout/Layout";
+>>>>>>> fullstack
 
 import HomeController from "./controllers/HomeController";
+import ListApplicationsController from "./controllers/ListApplicationsController";
 import LoginController from "./controllers/LoginController";
-import ApplicantViewModel from "./view-models/ApplicantViewModel";
-
-import "./App.css";
-import Layout from "./components/Layout/Layout";
 import CreateAccountController from "./controllers/CreateAccountController";
 
+import "./App.css";
+
+/**
+ * The main component of the application responsible for rendering different routes
+ * based on the user's authentication status and role.
+ *
+ * @returns The main application component.
+ */
 function App() {
-  const viewModel = new ApplicantViewModel();
-
   const [signedIn, setSignedIn] = useState(false);
-  const [stateViewModel, setViewModel] = useState(viewModel);
+  const [viewModel, setViewModel] = useState(new ViewModel());
 
+<<<<<<< HEAD
   useEffect(() => {
     const updateAuthState = () => {
       const tokenExists = isTokenPresent();
@@ -30,6 +43,17 @@ function App() {
   }, []);
 
   if (signedIn)
+=======
+  viewModel.setChangeAuthState((state) => setSignedIn(state));
+  viewModel.setChangeState((model) => setViewModel(model));
+
+  const onLogout = () => {
+    viewModel.logout();
+    window.location.replace("/");
+  };
+
+  if (signedIn && viewModel.getRole() === 2 /**Applicant */)
+>>>>>>> fullstack
     return (
       <Router>
         <Routes>
@@ -37,12 +61,47 @@ function App() {
             path="/"
             element={
               <Layout
+                signedIn={true}
+                isApplicant={true}
                 element={
-                  <HomeController
-                    viewModel={stateViewModel}
-                    logout={() => setSignedIn(false)}
-                  ></HomeController>
+                  <HomeController viewModel={viewModel}></HomeController>
                 }
+                onLogout={onLogout}
+              ></Layout>
+            }
+          ></Route>
+        </Routes>
+      </Router>
+    );
+  else if (signedIn && viewModel.getRole() === 1 /**Recruiter */)
+    return (
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Layout
+                signedIn={true}
+                isApplicant={false}
+                element={
+                  <HomeController viewModel={viewModel}></HomeController>
+                }
+                onLogout={onLogout}
+              ></Layout>
+            }
+          ></Route>
+          <Route
+            path="/list-applications"
+            element={
+              <Layout
+                signedIn={true}
+                isApplicant={false}
+                element={
+                  <ListApplicationsController
+                    viewModel={viewModel}
+                  ></ListApplicationsController>
+                }
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>
@@ -54,16 +113,15 @@ function App() {
       <Router>
         <Routes>
           <Route
-            path="/"
+            path="/*"
             element={
               <Layout
+                signedIn={false}
+                isApplicant={false}
                 element={
-                  <LoginController
-                    viewModel={viewModel}
-                    login={() => setSignedIn(true)}
-                    changeState={(viewModel) => setViewModel(viewModel)}
-                  ></LoginController>
+                  <LoginController viewModel={viewModel}></LoginController>
                 }
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>
@@ -71,11 +129,14 @@ function App() {
             path="/create-account"
             element={
               <Layout
+                signedIn={false}
+                isApplicant={false}
                 element={
                   <CreateAccountController
                     viewModel={viewModel}
                   ></CreateAccountController>
                 }
+                onLogout={onLogout}
               ></Layout>
             }
           ></Route>

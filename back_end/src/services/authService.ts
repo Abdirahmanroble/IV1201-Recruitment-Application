@@ -1,40 +1,6 @@
 /* eslint-disable @typescript-eslint/no-extraneous-class */
-// authService.ts
-
-/* import bcrypt from 'bcrypt';
-import Person from '../model/person';
-import db from '../integration/DAO';
-
-interface LoginCredentials {
-  username: string;
-  password: string;
-}
-
-class AuthService {
-  public static async login({ username, password }: LoginCredentials): Promise<Person | null> {
-    try {
-      const user = await Person.findOne({ where: { username } });
-      if (!user) {
-        return null; // User not found
-      }
-
-      const isPasswordValid = await bcrypt.compare(password, user.password);
-      if (!isPasswordValid) {
-        return null; // Invalid password
-      }
-
-      return user; // Login successful
-    } catch (error) {
-      throw new Error('Login failed');
-    }
-  }
-}
-
-export default AuthService; */
-
-// authService.ts
-import bcrypt from "bcrypt";
-import User from "../model/user";
+import bcrypt from 'bcrypt'
+import User from '../model/user'
 /**
  * Defines the structure for login credentials.
  * @typedef {Object} LoginCredentials

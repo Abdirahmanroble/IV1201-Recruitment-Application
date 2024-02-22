@@ -145,6 +145,13 @@ CREATE TABLE public.application (
 
 
 ALTER TABLE public.application OWNER TO postgres;
+
+
+INSERT INTO public.application (person_id, availability_id, status, applicationdate, openapplicationstatus) VALUES
+(11, 18901, 'unhandled', '2018-05-01', TRUE),
+(12, 18541, 'accepted', '2018-05-15', FALSE),
+(13, 18596, 'rejected', '2018-05-20', FALSE);
+
 --
 -- Name: role; Type: TABLE; Schema: public; Owner: postgres
 --

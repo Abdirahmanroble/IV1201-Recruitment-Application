@@ -20,14 +20,6 @@
   display: flex;
   flex-direction: column;
   gap: 1vh;
-
-  width: 12vw;
-}
-
-.login-box-input input {
-  background-color: var(--green-tetriary);
-  border-radius: 0.25rem;
-  border-style: hidden;
 }
 
 .login-box-buttons {
@@ -42,4 +34,10 @@
   border: 0.1rem solid var(--green-primary);
   border-radius: 0.75rem;
   cursor: pointer;
+}
+
+.login-box-error {
+  color: var(--red-primary);
+  font-weight: var(--bold-weight);
+  font-size: 0.8rem;
 }
