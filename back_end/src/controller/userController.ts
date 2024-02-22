@@ -42,7 +42,7 @@ class UserController {
 
       res.json({ message: "Login successful", foundUser });
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send("error logging in");
     }
   }
 

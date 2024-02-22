@@ -45,37 +45,18 @@ class AuthService {
           (await User.findOne({ where: { username } })) ||
           (await User.findOne({ where: { email: username } }))
 
-        if (user == null) {
-          throw new Error("Username or email does not exist.")
-        }
-
-        // Recruiter
-        // if (user.role_id == "1") {
-        //   const isMatch = await User.findOne({ where: { password: user.password } });
-        //   if (!isMatch) {
-        //       throw new Error("Password does not match.");
-        //   }
-        // }
-
-        // Applicant
-        // if (user.role_id == "2") {
-        //   const isMatch = await bcrypt.compare(password, user.password);
-        //   if (!isMatch) {
-        //       throw new Error("Password does not match.");
-        //   }
-        // }
-
-        const isPasswordValid = await bcrypt.compare(password, user.password)
-        console.log("Login Hashed Password " + user.password)
-        if (isPasswordValid) {
-          return user
-        }
-
-        if (user.password !== password) {
+        if (!user) {
           return null
         }
-
-        return user
+        if (!user.password) {
+          return user
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password)
+        if (isPasswordValid) {
+          return user
+        } else {
+          return null
+        }
       })
     } catch (error) {
       throw new Error("Login failed")
@@ -93,10 +74,6 @@ class AuthService {
   }: registerCredentials): Promise<User | string> {
     try {
       return await db.transaction(async () => {
-        if (!name || !surname || !pnr || !email || !username || !password) {
-          throw new Error("All fields are required")
-        }
-
         const hash = await bcrypt.hash(password, 10)
         const userExists = await User.findOne({ where: { username } })
         if (userExists !== null) {
