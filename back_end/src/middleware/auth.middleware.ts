@@ -37,6 +37,16 @@ interface JwtPayload {
   // add other payload properties as needed
 }
 
+
+/**
+ * Validates the JWT token from request cookies. If valid, attaches the decoded user payload to `req.user`.
+ * Responds with an error and clears the 'jwt' cookie if the token is missing or invalid.
+ *
+ * @param {RequestWithUser} req - Express request object with potential user payload.
+ * @param {Response} res - Express response object for sending responses.
+ * @param {NextFunction} next - Callback to the next middleware function.
+ */
+
 const validateToken = async (
   req: RequestWithUser,
   res: Response,
@@ -49,14 +59,11 @@ const validateToken = async (
   }
 
   try {
-    // Verify the token
     const decoded = jwt.verify(token, secretWord) as JwtPayload;
-    // Add the decoded user to the request object
     req.user = decoded;
 
     next();
   } catch (error) {
-    // Handle the error scenarios appropriately
     res.clearCookie("jwt");
     res.status(400).send("Invalid token.");
   }
