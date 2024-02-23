@@ -1,7 +1,7 @@
-import Application from "../model/application";
-import User from "../model/user";
-import Availability from "../model/availability";
-import db from "../integration/dbConfig";
+import Application from '../model/application'
+import User from '../model/user'
+import Availability from '../model/availability'
+import db from '../integration/dbConfig'
 
 /**
  * `ApplicationService` is an object that encapsulates business logic related to application entities.
@@ -23,31 +23,31 @@ export const ApplicationService = {
    * and availability date range. If the operation fails, it throws an error with a descriptive message.
    * @throws {Error} If fetching applications from the database fails.
    */
-  async getAllApplications(): Promise<any[]> {
+  async getAllApplications (): Promise<any[]> {
     try {
       return await db.transaction(async () => {
         const applications = await Application.findAll({
           include: [
             {
               model: User,
-              attributes: ["name", "surname"],
+              attributes: ['name', 'surname']
             },
             {
               model: Availability,
-              attributes: ["from_date", "to_date"],
-            },
+              attributes: ['from_date', 'to_date']
+            }
           ],
           attributes: [
-            "application_id",
-            "status",
-            "openapplicationstatus",
-            "applicationdate",
-          ],
-        });
+            'application_id',
+            'status',
+            'openapplicationstatus',
+            'applicationdate'
+          ]
+        })
 
         return applications.map((application) => {
-          const user = application.get("User") as User;
-          const availability = application.get("Availability") as Availability;
+          const user = application.get('User') as User
+          const availability = application.get('Availability') as Availability
 
           return {
             application_id: application.application_id,
@@ -55,13 +55,13 @@ export const ApplicationService = {
             status: application.status,
             applicationDate: application.applicationdate,
             fromDate: availability?.from_date,
-            toDate: availability?.to_date,
-          };
-        });
-      });
+            toDate: availability?.to_date
+          }
+        })
+      })
     } catch (error) {
-      console.error("Error fetching applications:", error);
-      throw new Error("Fetching all applications failed");
+      console.error('Error fetching applications:', error)
+      throw new Error('Fetching all applications failed')
     }
-  },
-};
+  }
+}

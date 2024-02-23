@@ -1,10 +1,18 @@
-import { Router } from "express";
-import UserController from "../controller/userController";
-import { validationResult } from "express-validator";
-import UserValidators from "../util/Validators";
+/* eslint-disable @typescript-eslint/no-misused-promises,
+    @typescript-eslint/await-thenable,
+    @typescript-eslint/no-confusing-void-expression,
+    @typescript-eslint/no-unsafe-argument,
+    @typescript-eslint/unbound-method,
+    @typescript-eslint/explicit-function-return-type,
+    @typescript-eslint/strict-boolean-expressions */
+
+import { Router } from 'express'
+import UserController from '../controller/userController'
+import { validationResult } from 'express-validator'
+import UserValidators from '../util/Validators'
 
 /* Initialize the router object from Express */
-const router = Router();
+const router = Router()
 /**
  * Route for handling user login requests.
  * This route first validates the request body for any errors using the express-validator package.
@@ -13,21 +21,21 @@ const router = Router();
  * then calls the login controller method if validation succeeds.
  */
 router.post(
-  "/login",
+  '/login',
   async (req, res, next) => {
     try {
-      const errors = validationResult(req);
+      const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ errors: errors.array() })
       }
-      await UserValidators.validateLoginData(req.body);
-      next();
+      await UserValidators.validateLoginData(req.body)
+      next()
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
   UserController.login
-);
+)
 /**
  * Route for handling user registration requests.
  * Validates the request body for errors, returning a 400 status with the error details if any are found.
@@ -35,21 +43,21 @@ router.post(
  * then proceeds to the registration controller method if validation is successful.
  */
 router.post(
-  "/register",
+  '/register',
   async (req, res, next) => {
     try {
-      const errors = validationResult(req);
+      const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ errors: errors.array() })
       }
-      await UserValidators.validateRegistrationData(req.body);
-      next();
+      await UserValidators.validateRegistrationData(req.body)
+      next()
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
   UserController.register
-);
+)
 /**
  * Route for handling user logout requests.
  * Validates the request to ensure no validation errors are present.
@@ -58,20 +66,20 @@ router.post(
  * then calls the logout controller method if validation succeeds.
  */
 router.post(
-  "/logout",
+  '/logout',
   async (req, res, next) => {
     try {
-      const errors = validationResult(req);
+      const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ errors: errors.array() })
       }
-      await UserValidators.validateLogout(req);
-      next();
+      await UserValidators.validateLogout(req)
+      next()
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
   UserController.logout
-);
+)
 
-export default router;
+export default router

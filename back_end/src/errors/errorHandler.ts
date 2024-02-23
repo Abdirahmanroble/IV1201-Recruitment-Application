@@ -1,6 +1,7 @@
-import { Request, Response, NextFunction, Application } from "express"
-import Logger from "../util/Logger"
-import { ValidationError } from "sequelize"
+/* eslint-disable @typescript-eslint/strict-boolean-expressions */
+import { type Request, type Response, type NextFunction, type Application } from 'express'
+import Logger from '../util/Logger'
+import { ValidationError } from 'sequelize'
 
 /**
  * ErrorHandling class for managing application-wide error handling in an Express application.
@@ -12,13 +13,13 @@ class ErrorHandling {
    * Logger instance for logging exceptions.
    * @private
    */
-  private logger: Logger
+  private readonly logger: Logger
 
   /**
    * Initializes a new instance of the ErrorHandling class.
    * Constructs a new Logger instance for use in error handling.
    */
-  constructor() {
+  constructor () {
     this.logger = new Logger()
   }
 
@@ -33,8 +34,8 @@ class ErrorHandling {
    * @param next - The next function to pass control to the next middleware.
    * @returns {void}
    */
-  public handleError(
-    err: any,
+  public handleError (
+    err: Error,
     req: Request,
     res: Response,
     next: NextFunction
@@ -42,15 +43,21 @@ class ErrorHandling {
     this.logger.logException(err)
 
     if (res.headersSent) {
-      return next(err)
+      next(err)
+      return
     }
 
     // res.status(500).send({ error: "Operation failed." })
 
-    const status = err instanceof ValidationError ? 400 : 500;
-    const message = err.message || 'An unexpected error occurred';
+    const status = err instanceof ValidationError ? 400 : 500
+    const message = err.message || 'An unexpected error occurred'
 
-    this.sendHttpResponse(res, status, message);
+    if (message !== '') {
+      this.sendHttpResponse(res, status, message)
+    } else {
+      // Handle the case where 'message' is an empty string
+      this.sendHttpResponse(res, status, 'Error occurred, but no message provided.')
+    }
   }
 
   /**
@@ -60,9 +67,8 @@ class ErrorHandling {
    * @param app - The Express Application instance to which the error handling middleware will be registered.
    * @returns {void}
    */
-  public register(app: Application): void {
-    app.use((err: any, req: Request, res: Response, next: NextFunction) =>
-      this.handleError(err, req, res, next)
+  public register (app: Application): void {
+    app.use((err: Error, req: Request, res: Response, next: NextFunction) => { this.handleError(err, req, res, next) }
     )
   }
 
@@ -74,16 +80,16 @@ class ErrorHandling {
    * @param status - The HTTP status code for the response.
    * @param body - The response body content. If undefined, sends an empty response.
    */
-  private sendHttpResponse(res: Response, status: number, body?: string): void {
+  private sendHttpResponse (res: Response, status: number, body?: string): void {
     // Assuming Validators.isIntegerBetween is a method that throws an error if the validation fails
     // Validators.isIntegerBetween(status, 200, 501);
 
-    if (body === undefined) {
+    if (body !== undefined && body !== '') {
       res.status(status).end()
       return
     }
 
-    const key = status < 400 ? "success" : "error"
+    const key = status < 400 ? 'success' : 'error'
     res.status(status).json({ [key]: body })
   }
 }

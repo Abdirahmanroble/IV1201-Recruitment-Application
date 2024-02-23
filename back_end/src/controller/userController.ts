@@ -1,7 +1,8 @@
-import { type Request, type Response, NextFunction } from "express";
-import { ApplicationService } from "../services/applicationService";
-import AuthService from "../services/authService";
-import { createToken, validateToken } from "../middleware/auth.middleware";
+import { type Request, type Response, type NextFunction } from 'express'
+import { ApplicationService } from '../services/applicationService'
+import AuthService from '../services/authService'
+import { createToken } from '../middleware/auth.middleware'
+/* eslint-disable @typescript-eslint/no-extraneous-class, @typescript-eslint/no-unsafe-argument */
 
 /**
  * Controller for user-related operations in an Express application.
@@ -17,15 +18,15 @@ class UserController {
    * @param {Response} res - The Express response object used for sending back the login response.
    * @returns {Promise<void>} A promise that resolves with no return value.
    */
-  public static async login(req: Request, res: Response): Promise<void> {
-    const { username, password } = req.body;
+  public static async login (req: Request, res: Response): Promise<void> {
+    const { username, password } = req.body
 
     try {
-      const user = await AuthService.login({ username, password });
+      const user = await AuthService.login({ username, password })
 
       if (user === null || user === undefined) {
-        res.status(401).send("Invalid credentials");
-        return;
+        res.status(401).send('Invalid credentials')
+        return
       }
       const foundUser = {
         name: user.name,
@@ -33,17 +34,18 @@ class UserController {
         pnr: user.pnr,
         email: user.email,
         username: user.username,
-        role_id: user.role_id,
-      };
+        role_id: user.role_id
+      }
 
-      const token = createToken(foundUser.email);
-      res.cookie("jwt", token, { httpOnly: true });
+      const token = createToken(foundUser.email)
+      res.cookie('jwt', token, { httpOnly: true })
 
-      res.json({ message: "Login successful", foundUser });
+      res.json({ message: 'Login successful', foundUser })
     } catch (error) {
-      res.status(500).send("error logging in");
+      res.status(500).send('error logging in')
     }
   }
+
   /**
    * Handles user registration requests. Registers a new user with the provided details
    * and returns the newly created user's details along with a JWT token.
@@ -53,17 +55,18 @@ class UserController {
    * @param {Response} res - The Express response object used for sending back the registration response.
    * @returns {Promise<void>} A promise that resolves with no return value.
    */
-  public static async register(req: Request, res: Response): Promise<void> {
-    const userDTO = req.body;
+  public static async register (req: Request, res: Response): Promise<void> {
+    const userDTO = req.body
 
     try {
-      const user = await AuthService.register(userDTO);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      const user = await AuthService.register(userDTO)
       if (user === null || user === undefined) {
-        res.status(401).send("Invalid credentials");
-        return;
+        res.status(401).send('Invalid credentials')
+        return
       }
-      if (typeof user === "string") {
-        res.status(401).send(user);
+      if (typeof user === 'string') {
+        res.status(401).send(user)
       } else {
         const createdUser = {
           person_id: user.person_id,
@@ -72,16 +75,16 @@ class UserController {
           pnr: user.pnr,
           email: user.email,
           username: user.username,
-          role_id: user.role_id,
-        };
+          role_id: user.role_id
+        }
 
-        const token = createToken(createdUser.email);
-        res.cookie("jwt", token, { httpOnly: true });
+        const token = createToken(createdUser.email)
+        res.cookie('jwt', token, { httpOnly: true })
 
-        res.json({ message: "Register successful", createdUser });
+        res.json({ message: 'Register successful', createdUser })
       }
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send(error)
     }
   }
 
@@ -93,21 +96,22 @@ class UserController {
    * @param {Response} res - The Express response object used for sending back the applications.
    * @returns {Promise<void>} A promise that resolves with no return value, sending the applications in the response.
    */
-  public static async getUserApplications(
+  public static async getUserApplications (
     req: Request,
     res: Response
   ): Promise<void> {
     try {
-      const applications = await ApplicationService.getAllApplications();
-      res.json({ message: "Applications gotten successfully", applications });
+      const applications = await ApplicationService.getAllApplications()
+      res.json({ message: 'Applications gotten successfully', applications })
     } catch (error: unknown) {
       if (error instanceof Error) {
-        res.status(500).send(error.message);
+        res.status(500).send(error.message)
       } else {
-        res.status(500).send("An unknown error occurred");
+        res.status(500).send('An unknown error occurred')
       }
     }
   }
+
   /**
    * Handles user logout requests. Clears the JWT token cookie, effectively logging the user out.
    *
@@ -116,13 +120,13 @@ class UserController {
    * @param {NextFunction} next - The next middleware function in the Express request-response cycle.
    * @returns {Promise<void>} A promise that resolves with no return value.
    */
-  public static async logout(
+  public static async logout (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> {
-    res.clearCookie("jwt");
-    res.status(200).send("User logged out successfully");
+    res.clearCookie('jwt')
+    res.status(200).send('User logged out successfully')
   }
 }
-export default UserController;
+export default UserController

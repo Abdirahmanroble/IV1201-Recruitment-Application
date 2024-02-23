@@ -1,6 +1,5 @@
 import { Model, DataTypes } from 'sequelize'
 import db from '../integration/dbConfig'
-// import CompetenceProfile from "./competenceProfile";
 
 /**
  * Interface for Competence attributes to ensure type safety.
