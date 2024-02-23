@@ -17,7 +17,7 @@ import "./setupAssociations" // This imports and runs the associations setup
 import userRoutes from "./routes/userRoutes"
 import listApplicationRoute from "./routes/listApplicationRoute"
 import cors, { type CorsOptions } from "cors"
-import { error } from "console"
+import ErrorHandling from "./errors/errorHandler"
 
 /**
  * Tests the database connection.
@@ -73,19 +73,13 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Server is up and running!")
 })
 
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-  // Assuming Error is extended to include statusCode and status
-  ;(error as any).statusCode = (error as any).statusCode || 500
-  ;(error as any).status = (error as any).status || "error"
-  res.status((error as any).statusCode).json({
-    status: (error as any).status,
-    message: error.message,
-  })
-})
-
 // Setup routes
 app.use(userRoutes)
 app.use(listApplicationRoute)
+
+// Register the error handling middleware as the last middleware
+const errorHandling = new ErrorHandling();
+errorHandling.register(app);
 
 // Start the server and listen on the specified port
 app.listen(port, () => {

@@ -30,6 +30,7 @@
     "pg-hstore": "^2.3.4",
     "rimraf": "^5.0.5",
     "sequelize": "^6.37.1",
+    "verror": "^1.10.1",
     "wait-for": "^2.1.1"
   },
   "devDependencies": {
@@ -43,6 +44,7 @@
     "@types/node": "^20.11.13",
     "@types/pg": "^8.11.0",
     "@types/sequelize": "^4.28.20",
+    "@types/verror": "^1.10.9",
     "@typescript-eslint/eslint-plugin": "^6.20.0",
     "@typescript-eslint/parser": "^6.20.0",
     "eslint": "^8.56.0",

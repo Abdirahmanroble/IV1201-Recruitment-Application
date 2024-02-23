@@ -1,4 +1,5 @@
 import validator from "validator";
+import { type Request } from "express";
 
 class UserValidators {
   static validateLoginData(data: {
@@ -55,6 +56,15 @@ class UserValidators {
     }
   }
 
+  static validateLogout(req: Request,){
+    const authCookie = req.cookies.chatAuth;
+    if (!authCookie) {
+      throw new Error(
+        "Invalid Token, Unauthorized  access to log out.",
+      );
+    }
+  }
+
   private static isNonZeroLengthString(value: string, fieldName: string): void {
     if (typeof value !== "string" || validator.isEmpty(value)) {
       throw new Error(`${fieldName} must be a non-empty string.`);
@@ -71,6 +81,9 @@ class UserValidators {
     }
     return !validator.isEmpty(identifier);
   }
+
+
+
 }
 
 export default UserValidators;
