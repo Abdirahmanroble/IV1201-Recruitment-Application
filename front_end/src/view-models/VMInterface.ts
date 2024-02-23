@@ -43,9 +43,15 @@ export interface VM {
   listAllApplications(): Promise<ApplicationsPromiseBody>;
 
   /**
-   * Logs the user out.
+   * Attempts to log out the current user by making a POST request to the backend logout endpoint.
+   * The backend logout endpoint is then expected to clear the authentication cookie.
+   * If the request is successful, it updates the "signedIn" state to false, indicating that the user is no longer authenticated.
+   * It handles any errors by logging them and returning false, indicating the logout attempt was unsuccessful.
+   *
+   * @returns A promise that resolves to "true" if the logout was successful,
+   * or "false" if the logout failed due to either a non-OK response from the server or a network error.
    */
-  logout(): void;
+  logout(): Promise<boolean>;
 
   /**
    * Sets the first name of the user.
