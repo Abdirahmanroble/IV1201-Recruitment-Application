@@ -1,0 +1,49 @@
+.account-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+
+  width: 18vw;
+  height: 65vh;
+
+  background-color: var(--green-secondary);
+  border: 0.1rem solid var(--green-primary);
+  border-radius: 0.75rem;
+}
+
+.account-form-header {
+  font-weight: var(--bold-weight);
+}
+
+.account-form-input {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.account-form-buttons {
+  display: flex;
+  flex-direction: column;
+
+  width: 12vw;
+}
+
+.account-form-buttons button {
+  background-color: var(--white);
+  border: 0.1rem solid var(--green-primary);
+  border-radius: 0.75rem;
+  cursor: pointer;
+}
+
+.account-form-error {
+  color: var(--red-primary);
+  font-weight: var(--bold-weight);
+  font-size: 0.8rem;
+}
+
+.account-form-success {
+  color: var(--green-primary);
+  font-weight: var(--bold-weight);
+  font-size: 0.8rem;
+}

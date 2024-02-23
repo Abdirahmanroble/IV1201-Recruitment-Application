@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@types/verror": "^1.10.9"
+  }
+}

@@ -1,0 +1,37 @@
+/* global variables */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  /* colours */
+  --black-primary: #0f1322;
+  --black-secondary: #999999;
+  --black-tetriary: #333333;
+  --grey-primary: #cccccc;
+  --grey-secondary: #f2f2f2;
+  --background: #f5f7fb;
+  --white: #ffffff;
+  --green-primary: #43ac78;
+  --green-secondary: #93e9be;
+  --green-tetriary: #e6fff7;
+  --red-primary: #db2b2b;
+  --red-secondary: #ffe6e6;
+  --orange-primary: #f9a444;
+  --orange-secondary: #fff5e6;
+
+  /* fonts */
+  --title-weight: 700;
+  --subtitle-weight: 600;
+  --bold-weight: 500;
+}
+
+* {
+  font-family: "Inter", sans-serif;
+}
+body {
+  background-color: var(--background);
+}
+
+.App-link {
+  text-decoration: none;
+  color: var(--black-primary);
+}

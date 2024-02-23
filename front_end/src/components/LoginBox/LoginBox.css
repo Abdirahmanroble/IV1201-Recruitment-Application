@@ -1,0 +1,43 @@
+.login-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+
+  width: 18vw;
+  height: 30vh;
+
+  background-color: var(--green-secondary);
+  border: 0.1rem solid var(--green-primary);
+  border-radius: 0.75rem;
+}
+
+.login-box-header {
+  font-weight: var(--bold-weight);
+}
+
+.login-box-input {
+  display: flex;
+  flex-direction: column;
+  gap: 1vh;
+}
+
+.login-box-buttons {
+  display: flex;
+  flex-direction: column;
+
+  width: 12vw;
+}
+
+.login-box-buttons button {
+  background-color: var(--white);
+  border: 0.1rem solid var(--green-primary);
+  border-radius: 0.75rem;
+  cursor: pointer;
+}
+
+.login-box-error {
+  color: var(--red-primary);
+  font-weight: var(--bold-weight);
+  font-size: 0.8rem;
+}

@@ -1,0 +1,33 @@
+.application-card-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 30vw;
+  height: 15vh;
+
+  border-radius: 0.75rem;
+}
+
+.application-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
+  padding-left: 1vw;
+}
+
+.application-card-name {
+  font-weight: var(--subtitle-weight);
+}
+
+.application-card-date {
+  font-weight: var(--bold-weight);
+}
+
+.application-card-status {
+  font-weight: var(--title-weight);
+  text-transform: uppercase;
+  padding-right: 1vw;
+}
