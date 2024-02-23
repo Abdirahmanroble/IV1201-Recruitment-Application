@@ -1,39 +1,50 @@
-/* eslint-disable @typescript-eslint/no-extraneous-class */
-import bcrypt from "bcrypt"
-import User from "../model/user"
-import db from "../integration/dbConfig"
+import bcrypt from "bcrypt";
+import User from "../model/user";
+import db from "../integration/dbConfig";
+
 /**
- * Defines the structure for login credentials.
- * @typedef {Object} LoginCredentials
- * @property {string} username - User's username.
+ * Interface representing login credentials.
+ * @interface
+ * @property {string} username - User's username or email.
  * @property {string} password - User's password.
  */
 interface LoginCredentials {
-  username: string
-  password: string
+  username: string;
+  password: string;
 }
+/**
+ * Interface representing registration credentials.
+ * @interface
+ * @property {number} person_id - Unique identifier for the person.
+ * @property {string} name - User's first name.
+ * @property {string} surname - User's last name.
+ * @property {string} pnr - Personal identification number.
+ * @property {string} email - User's email address.
+ * @property {string} username - Desired username for the account.
+ * @property {string} password - Password for the account.
+ * @property {number} role_id - Role identifier for the user.
+ */
 interface registerCredentials {
-  person_id: number
-  name: string
-  surname: string
-  pnr: string
-  email: string
-  username: string
-  password: string
-  role_id: number
+  person_id: number;
+  name: string;
+  surname: string;
+  pnr: string;
+  email: string;
+  username: string;
+  password: string;
+  role_id: number;
 }
 /**
  * Service class for authentication-related operations.
  */
 class AuthService {
   /**
-   * Attempts to authenticate a user with a username and password.
-   * This method checks if a user exists with the given username and then verifies the password.
-   * Note: This implementation compares plain text passwords and Will be updated to use secure password hashing in the next sprint.
+   * Authenticates a user using their username (or email) and password.
+   * Verifies if the user exists and if the provided password matches the stored password hash.
    *
-   * @param {LoginCredentials} loginCredentials - The login credentials containing the username and password.
-   * @returns {Promise<Person | null>} - A promise that resolves to the user object if login is successful, or null if the login fails.
-   * @throws {Error} - Throws an error if the login process fails due to an unexpected error.
+   * @param {LoginCredentials} loginCredentials - The user's login credentials.
+   * @returns {Promise<User | null>} A promise that resolves with the user object if authentication is successful, or null if authentication fails.
+   * @throws {Error} Throws an error if there is a problem during the authentication process.
    */
   public static async login({
     username,
@@ -43,26 +54,33 @@ class AuthService {
       return await db.transaction(async () => {
         let user: User | null =
           (await User.findOne({ where: { username } })) ||
-          (await User.findOne({ where: { email: username } }))
+          (await User.findOne({ where: { email: username } }));
 
         if (!user) {
-          return null
+          return null;
         }
         if (!user.password) {
-          return user
+          return user;
         }
-        const isPasswordValid = await bcrypt.compare(password, user.password)
+        const isPasswordValid = await bcrypt.compare(password, user.password);
         if (isPasswordValid) {
-          return user
+          return user;
         } else {
-          return null
+          return null;
         }
-      })
+      });
     } catch (error) {
-      throw new Error("Login failed")
+      throw new Error("Login failed");
     }
   }
-
+  /**
+   * Registers a new user with the provided credentials.
+   * Checks if a user with the same username already exists and hashes the password before storing it.
+   *
+   * @param {registerCredentials} registrationData - The data required to register a new user.
+   * @returns {Promise<User | string>} A promise that resolves with the newly created user object, or a string indicating that the user already exists.
+   * @throws {Error} Throws an error if there is a problem during the registration process.
+   */
   public static async register({
     name,
     surname,
@@ -74,10 +92,10 @@ class AuthService {
   }: registerCredentials): Promise<User | string> {
     try {
       return await db.transaction(async () => {
-        const hash = await bcrypt.hash(password, 10)
-        const userExists = await User.findOne({ where: { username } })
+        const hash = await bcrypt.hash(password, 10);
+        const userExists = await User.findOne({ where: { username } });
         if (userExists !== null) {
-          return "User already exists"
+          return "User already exists";
         }
         const user = await User.create({
           name,
@@ -87,13 +105,13 @@ class AuthService {
           username,
           password: hash,
           role_id: role_id,
-        })
-        return user
-      })
+        });
+        return user;
+      });
     } catch (error) {
-      throw new Error("Register failed")
+      throw new Error("Register failed");
     }
   }
 }
 
-export default AuthService
+export default AuthService;

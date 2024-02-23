@@ -5,6 +5,17 @@ import { createToken } from "../middleware/auth.middleware";
  * Controller for person-related operations.
  */
 class LoginController {
+  /**
+   * Authenticates a user using provided username and password.
+   * If authentication is successful, generates a JWT token for the user and sends it back
+   * as an HTTP-only cookie. Responds with the user's details (excluding the password) and
+   * a success message. If authentication fails due to invalid credentials, responds with a 401 status.
+   * On other errors, sends a 500 status with the error message.
+   *
+   * @param {Request} req - The Express request object containing the login credentials.
+   * @param {Response} res - The Express response object used to send back the response to the client.
+   * @returns {Promise<void>} A promise that resolves with no return value, indicating the response has been sent.
+   */
   public static async login(req: Request, res: Response): Promise<void> {
     const { username, password } = req.body;
 
