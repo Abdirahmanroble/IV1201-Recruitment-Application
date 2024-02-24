@@ -16,7 +16,7 @@ Before you begin, ensure you have the following installed on your system:
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/IV1201-Recruitment-Application.git
+    git clone https://github.com/Abdirahmanroble/IV1201-Recruitment-Application.git
     cd IV1201-Recruitment-Application
     ```
 
