@@ -1,6 +1,5 @@
-import { Model, DataTypes } from "sequelize";
-import db from "../integration/dbConfig";
-import bcrypt from "bcrypt";
+import { Model, DataTypes } from 'sequelize'
+import db from '../integration/dbConfig'
 
 /**
  * Interface for User attributes to ensure type safety.
@@ -39,48 +38,48 @@ User.init(
     person_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
-      primaryKey: true,
+      primaryKey: true
     },
     name: {
       type: new DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     surname: {
       type: new DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     pnr: {
       type: new DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     email: {
       type: new DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     password: {
       type: new DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     username: {
       type: new DataTypes.STRING(255),
-      allowNull: false,
+      allowNull: false
     },
     role_id: {
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: "Role",
-        key: "role_id",
-      },
-    },
+        model: 'Role',
+        key: 'role_id'
+      }
+    }
   },
   {
     sequelize: db,
-    modelName: "User",
-    tableName: "person",
-    timestamps: false,
+    modelName: 'User',
+    tableName: 'person',
+    timestamps: false
   }
-);
+)
 
 // User.beforeSave(async (user, options) => {
 //   if (user.changed("password")) {
@@ -89,4 +88,4 @@ User.init(
 //   }
 // });
 
-export default User;
+export default User

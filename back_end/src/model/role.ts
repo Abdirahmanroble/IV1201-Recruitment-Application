@@ -16,7 +16,9 @@ class Role extends Model<RoleAttributes> {
   public role_id!: number
   public name!: string
 }
-
+/**
+ * Initializes the Role model, defining its schema and configuration.
+ */
 Role.init(
   {
     role_id: {

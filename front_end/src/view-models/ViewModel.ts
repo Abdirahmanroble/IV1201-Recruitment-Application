@@ -104,16 +104,6 @@ export default class ViewModel implements VM {
     }
   }
 
-  /**
-   * Attempts to log out the current user by making a POST request to the backend logout endpoint,
-   * which is expected to clear the authentication cookie.
-   * If the request is successful, it updates the `signedIn` state to false, indicating that the user
-   * is no longer authenticated. It handles any errors by logging them and returning false, indicating
-   * the logout attempt was unsuccessful.
-   *
-   * @returns {Promise<boolean>} A promise that resolves to `true` if the logout was successful, or `false` if
-   *                             the logout failed due to either a non-OK response from the server or a network error.
-   */
   public async logout(): Promise<boolean> {
     try {
       const response = await fetch("http://localhost:3000/logout", {

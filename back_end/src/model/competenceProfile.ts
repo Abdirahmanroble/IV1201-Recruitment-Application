@@ -20,7 +20,12 @@ class CompetenceProfile extends Model<CompetenceProfileAttributes> {
   public competence_id!: number
   public person_id!: number
 }
-
+/**
+ * Initializes the CompetenceProfile model's schema and configuration, defining
+ * each column in the competence_profile table and its properties, including
+ * data types, nullability, auto-increment behavior, and primary key configuration.
+ * It also specifies the table name, disables timestamps, and sets the sequelize instance.
+ */
 CompetenceProfile.init(
   {
     competence_profile_id: {
@@ -36,7 +41,7 @@ CompetenceProfile.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Competence', // This should match the table name for the Competence model
+        model: 'Competence',
         key: 'competence_id'
       }
     },
@@ -44,7 +49,7 @@ CompetenceProfile.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: 'Person', // This should match the table name for the Person model
+        model: 'Person',
         key: 'person_id'
       }
     }

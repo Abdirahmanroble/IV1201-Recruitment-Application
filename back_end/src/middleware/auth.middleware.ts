@@ -1,18 +1,19 @@
-import jwt from "jsonwebtoken";
-import { NextFunction, type Request, type Response } from "express";
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import jwt from 'jsonwebtoken'
+import { type NextFunction, type Request, type Response } from 'express'
 
 /**
  * The secret word used for token encryption.
  * @const {string} secretWord
  */
-const secretWord = "SECRET_WORD";
+const secretWord = 'SECRET_WORD'
 
 /**
  * The maximum age for the token in seconds.
  * This is set to 1 hour (3600 seconds).
  * @const {number} maxAge
  */
-const maxAge = 1 * 3600;
+const maxAge = 1 * 3600
 
 /**
  * Creates a JWT (JSON Web Token) for a given email.
@@ -23,20 +24,19 @@ const maxAge = 1 * 3600;
  */
 const createToken = (email: string): string => {
   return jwt.sign({ email }, secretWord, {
-    expiresIn: maxAge,
-  });
-};
+    expiresIn: maxAge
+  })
+}
 
 type RequestWithUser = Request & {
-  user?: JwtPayload;
-};
+  user?: JwtPayload
+}
 
 // Define a custom type for what you expect in your JWT payload
 interface JwtPayload {
-  id: string;
+  id: string
   // add other payload properties as needed
 }
-
 
 /**
  * Validates the JWT token from request cookies. If valid, attaches the decoded user payload to `req.user`.
@@ -51,22 +51,22 @@ const validateToken = async (
   req: RequestWithUser,
   res: Response,
   next: NextFunction
-) => {
-  const token = req.cookies.jwt;
+): Promise<void> => {
+  const token = req.cookies.jwt
 
-  if (!token) {
-    return res.status(401).send("Access denied. No token provided.");
+  if (token !== null) {
+    res.status(401).send('Access denied. No token provided.')
   }
 
   try {
-    const decoded = jwt.verify(token, secretWord) as JwtPayload;
-    req.user = decoded;
+    const decoded = jwt.verify(token, secretWord) as JwtPayload
+    req.user = decoded
 
-    next();
+    next()
   } catch (error) {
-    res.clearCookie("jwt");
-    res.status(400).send("Invalid token.");
+    res.clearCookie('jwt')
+    res.status(400).send('Invalid token.')
   }
-};
+}
 
-export { maxAge, createToken, validateToken };
+export { maxAge, createToken, validateToken }

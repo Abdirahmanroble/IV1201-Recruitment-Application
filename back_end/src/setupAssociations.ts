@@ -8,7 +8,7 @@ import Application from './model/application'
 User.hasMany(Availability, { foreignKey: 'person_id' })
 Availability.belongsTo(User, { foreignKey: 'person_id' })
 
-User.hasMany(CompetenceProfile, { foreignKey: 'persom_id' })
+User.hasMany(CompetenceProfile, { foreignKey: 'person_id' })
 CompetenceProfile.belongsTo(User, { foreignKey: 'person_id' })
 
 Competence.hasMany(CompetenceProfile, { foreignKey: 'competence_id' })

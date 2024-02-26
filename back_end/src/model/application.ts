@@ -1,6 +1,17 @@
 import { Model, DataTypes } from 'sequelize'
 import db from '../integration/dbConfig'
 // import User from "./user";
+
+/**
+ * Interface for Application model attributes to ensure type safety.
+ * @interface ApplicationAttributes
+ * @property {number} application_id - The primary key of the application.
+ * @property {number} person_id - Foreign key linking to the User model.
+ * @property {number} availability_id - Foreign key linking to the Availability model.
+ * @property {string} status - The status of the application (accepted, rejected, unhandled).
+ * @property {Date} applicationdate - The date when the application was submitted.
+ * @property {boolean} openapplicationstatus - Indicates if the application is still being considered (true) or not (false).
+ */
 export interface ApplicationAttributes {
   application_id: number
   person_id: number
@@ -9,7 +20,12 @@ export interface ApplicationAttributes {
   applicationdate: Date
   openapplicationstatus: boolean
 }
-
+/**
+ * Sequelize model class for Application.
+ * Represents applications made by users within the system, tracking their status,
+ * related user and availability, and other relevant information.
+ * @extends Model<ApplicationAttributes>
+ */
 class Application
   extends Model<ApplicationAttributes>
   implements ApplicationAttributes {
@@ -20,7 +36,10 @@ class Application
   public applicationdate!: Date
   public openapplicationstatus!: boolean
 }
-
+/**
+ * Initializes the Application model, defining its schema and configuration.
+ * This includes setting up fields with their data types, constraints, and relationships to other models.
+ */
 Application.init(
   {
     application_id: {
