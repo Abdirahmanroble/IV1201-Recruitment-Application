@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
 import {
   type Request,
   type Response,
@@ -60,7 +59,7 @@ class ErrorHandling {
 
     const status = customStatus ?? (err instanceof ValidationError ? 500 : 400)
 
-    const message = err.message || 'An unexpected error occurred'
+    const message = (err.message.length > 0) ? 'An unexpected error occurred' : ''
 
     if (message !== '') {
       this.sendHttpResponse(res, status, message)

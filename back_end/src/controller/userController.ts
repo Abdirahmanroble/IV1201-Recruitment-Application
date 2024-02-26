@@ -2,12 +2,12 @@ import { type Request, type Response } from 'express'
 import { ApplicationService } from '../services/applicationService'
 import AuthService from '../services/authService'
 import { createToken } from '../middleware/auth.middleware'
-/* eslint-disable @typescript-eslint/no-extraneous-class, @typescript-eslint/no-unsafe-argument */
 
 /**
  * Controller for user-related operations in an Express application.
  * Provides static methods for handling login, registration, fetching user applications, and logout functionalities.
  */
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class UserController {
   /**
    * Handles user login requests. Authenticates the user with provided credentials,
