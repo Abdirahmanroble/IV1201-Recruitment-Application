@@ -1,4 +1,4 @@
-import { type Request, type Response, type NextFunction } from 'express'
+import { type Request, type Response } from 'express'
 import { ApplicationService } from '../services/applicationService'
 import AuthService from '../services/authService'
 import { createToken } from '../middleware/auth.middleware'
@@ -121,9 +121,7 @@ class UserController {
    * @returns {Promise<void>} A promise that resolves with no return value.
    */
   public static async logout (
-    req: Request,
-    res: Response,
-    next: NextFunction
+    res: Response
   ): Promise<void> {
     res.clearCookie('jwt')
     res.status(200).send('User logged out successfully')
