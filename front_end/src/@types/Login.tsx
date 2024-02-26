@@ -1,20 +1,13 @@
-/**
- * The LoginTypes contains the interfaces describing the properties of the components
- * handling the login.
- */
-
-import ApplicantViewModel from "../view-models/ApplicantViewModel";
+import ViewModel from "../view-models/ViewModel";
 
 export interface LoginBoxProps {
-  onLogin: (email: string, password: string) => void;
+  onLogin: (email: string, password: string) => Promise<boolean>;
 }
 
 export interface ViewProps {
-  onLogin: (email: string, password: string) => void;
+  onLogin: (email: string, password: string) => Promise<boolean>;
 }
 
 export interface ControllerProps {
-  viewModel: ApplicantViewModel;
-  login: () => void;
-  changeState: (viewModel: ApplicantViewModel) => void;
+  viewModel: ViewModel;
 }

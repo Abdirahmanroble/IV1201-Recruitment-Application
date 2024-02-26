@@ -1,41 +1,63 @@
 import { useState } from "react";
-
 import { LoginBoxProps } from "../../@types/Login";
+import FormInput from "../FormInput/FormInput";
 import "./LoginBox.css";
 
 /**
- * LoginBox is a functional component that renders a login form.
- * It allows users to enter their email and password and submit these
- * credentials via the `onLogin` function passed in through props.
+ * Represents a login box component used for user authentication.
  *
- * @param {LoginBoxProps} props - The props for the LoginBox component.
- * @returns {React.ReactElement} The React element that represents the login form.
+ * @param {LoginBoxProps} props - The properties passed to the LoginBox component.
+ * @returns {JSX.Element} The rendered login box component.
  */
-
-function LoginBox(props: LoginBoxProps) {
-  // State hooks for email and password inputs
-
+function LoginBox(props: LoginBoxProps): JSX.Element {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [counter, setCounter] = useState(0);
+  const [success, setSuccess] = useState(false);
+
+  let invalidCredentials = "none",
+    emptyBox = "none";
+  if ((email === "" || password === "") && counter > 0) emptyBox = "block";
+  else if (success === false && counter > 0) invalidCredentials = "block";
+
   return (
     <div className="login-box">
       <div className="login-box-header">USER LOGIN</div>
       <div className="login-box-input">
-        <div>Email:</div>
-        <input
+        <FormInput
+          text="Email:"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
-        <div>Password:</div>
-        <input
+          onChange={setEmail}
+          counter={counter}
+        ></FormInput>
+        <FormInput
+          text="Password:"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
+          onChange={setPassword}
+          counter={counter}
+        ></FormInput>
       </div>
       <div className="login-box-buttons">
-        <button onClick={() => props.onLogin(email, password)}>LOGIN</button>
+        <button
+          onClick={async () => {
+            const userWasLoggedIn = await props.onLogin(email, password);
+            setCounter(counter + 1);
+            setSuccess(userWasLoggedIn);
+          }}
+        >
+          LOGIN
+        </button>
+      </div>
+      <div
+        className="login-box-error"
+        style={{ display: `${invalidCredentials}` }}
+      >
+        Invalid credentials
+      </div>
+      <div className="login-box-error" style={{ display: `${emptyBox}` }}>
+        Please fill in the empty boxes
       </div>
     </div>
   );

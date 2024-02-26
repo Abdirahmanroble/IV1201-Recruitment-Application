@@ -1,0 +1,23 @@
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100vw;
+  height: 10vh;
+
+  position: absolute;
+  top: 90vh;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+
+  background-color: var(--green-primary);
+  font-weight: var(--subtitle-weight);
+}
+
+.footer-title {
+  font-size: 1.2rem;
+  padding-left: 1vw;
+}

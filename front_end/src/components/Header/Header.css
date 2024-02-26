@@ -1,0 +1,47 @@
+.header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100vw;
+  height: 10vh;
+
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+
+  background-color: var(--green-primary);
+  font-weight: var(--subtitle-weight);
+}
+
+.header-title {
+  font-size: 1.2rem;
+  padding-left: 1vw;
+}
+
+.header-paths {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2vw;
+
+  padding-right: 1vw;
+}
+
+.pressed-path {
+  color: var(--white);
+}
+
+.header-logout {
+  background-color: var(--red-secondary);
+  border: 0.1rem solid var(--red-primary);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  color: var(--red-primary);
+  font-weight: var(--title-weight);
+  padding: 1vh;
+  font-size: 0.8rem;
+}

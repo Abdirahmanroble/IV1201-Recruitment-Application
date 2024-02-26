@@ -1,29 +1,99 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { isTokenPresent } from "./utils/auth";
+
+import ViewModel from "./view-models/ViewModel";
+
+import Layout from "./components/Layout/Layout";
 
 import HomeController from "./controllers/HomeController";
+import ListApplicationsController from "./controllers/ListApplicationsController";
 import LoginController from "./controllers/LoginController";
-import ApplicantModel from "./models/ApplicantModel";
-import ApplicantViewModel from "./view-models/ApplicantViewModel";
+import CreateAccountController from "./controllers/CreateAccountController";
 
+import "./App.css";
+
+/**
+ * The main component of the application responsible for rendering different routes
+ * based on the user's authentication status and role.
+ *
+ * @returns The main application component.
+ */
 function App() {
-  const model = new ApplicantModel();
-  const viewModel = new ApplicantViewModel(model);
-
   const [signedIn, setSignedIn] = useState(false);
-  const [stateViewModel, setViewModel] = useState(viewModel);
+  const [viewModel, setViewModel] = useState(new ViewModel());
 
-  if (signedIn)
+  useEffect(() => {
+    const updateAuthState = () => {
+      const tokenExists = isTokenPresent();
+      setSignedIn(tokenExists);
+    };
+
+    updateAuthState();
+
+    const intervalId = setInterval(updateAuthState, 10 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  viewModel.setChangeAuthState((state) => setSignedIn(state));
+  viewModel.setChangeState((model) => setViewModel(model));
+
+  const onLogout = () => {
+    viewModel.logout();
+    window.location.replace("/");
+  };
+
+  if (signedIn && viewModel.getRole() === 2 || viewModel.getRole() === null/**Applicant */)
     return (
       <Router>
         <Routes>
           <Route
             path="/"
             element={
-              <HomeController
-                viewModel={stateViewModel}
-                logout={() => setSignedIn(false)}
-              ></HomeController>
+              <Layout
+                signedIn={true}
+                isApplicant={true}
+                element={
+                  <HomeController viewModel={viewModel}></HomeController>
+                }
+                onLogout={onLogout}
+              ></Layout>
+            }
+          ></Route>
+        </Routes>
+      </Router>
+    );
+  else if (signedIn && viewModel.getRole() === 1 /**Recruiter */)
+    return (
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Layout
+                signedIn={true}
+                isApplicant={false}
+                element={
+                  <HomeController viewModel={viewModel}></HomeController>
+                }
+                onLogout={onLogout}
+              ></Layout>
+            }
+          ></Route>
+          <Route
+            path="/list-applications"
+            element={
+              <Layout
+                signedIn={true}
+                isApplicant={false}
+                element={
+                  <ListApplicationsController
+                    viewModel={viewModel}
+                  ></ListApplicationsController>
+                }
+                onLogout={onLogout}
+              ></Layout>
             }
           ></Route>
         </Routes>
@@ -31,11 +101,38 @@ function App() {
     );
   else
     return (
-      <LoginController
-        viewModel={viewModel}
-        login={() => setSignedIn(true)}
-        changeState={(viewModel) => setViewModel(viewModel)}
-      ></LoginController>
+      <Router>
+        <Routes>
+          <Route
+            path="/*"
+            element={
+              <Layout
+                signedIn={false}
+                isApplicant={false}
+                element={
+                  <LoginController viewModel={viewModel}></LoginController>
+                }
+                onLogout={onLogout}
+              ></Layout>
+            }
+          ></Route>
+          <Route
+            path="/create-account"
+            element={
+              <Layout
+                signedIn={false}
+                isApplicant={false}
+                element={
+                  <CreateAccountController
+                    viewModel={viewModel}
+                  ></CreateAccountController>
+                }
+                onLogout={onLogout}
+              ></Layout>
+            }
+          ></Route>
+        </Routes>
+      </Router>
     );
 }
 

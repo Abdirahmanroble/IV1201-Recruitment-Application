@@ -2,10 +2,10 @@ import { Model, DataTypes } from 'sequelize'
 import db from '../integration/dbConfig'
 
 /**
- * Interface for Person attributes to ensure type safety.
+ * Interface for User attributes to ensure type safety.
  */
-interface PersonAttributes {
-  person_id: number
+interface UserAttributes {
+  person_id?: number
   name: string
   surname: string
   pnr: string
@@ -15,12 +15,12 @@ interface PersonAttributes {
   role_id: number
 }
 /**
- * Sequelize model representing a Person entity in the database.
+ * Sequelize model representing a User entity in the database.
  * This class extends Model from Sequelize, ensuring ORM capabilities for the Person entity,
  * such as automatic table creation (if not exist) and easy querying.
  */
-class Person extends Model<PersonAttributes> {
-  public person_id!: number
+class User extends Model<UserAttributes> {
+  public person_id?: number
   public name!: string
   public surname!: string
   public pnr!: string
@@ -28,15 +28,12 @@ class Person extends Model<PersonAttributes> {
   public password!: string
   public username!: string
   public role_id!: number
-
-  // public readonly createdAt!: Date;
-  // public readonly updatedAt!: Date;
 }
 /**
- * Initializes the Person model with its schema defined in the database.
+ * Initializes the User model with its schema defined in the database.
  * Each field is mapped to a corresponding database column with data types and constraints.
  */
-Person.init(
+User.init(
   {
     person_id: {
       type: DataTypes.INTEGER,
@@ -71,17 +68,24 @@ Person.init(
       type: DataTypes.INTEGER,
       allowNull: true,
       references: {
-        model: 'roles',
-        key: 'id'
+        model: 'Role',
+        key: 'role_id'
       }
     }
   },
   {
     sequelize: db,
-    modelName: 'person',
+    modelName: 'User',
     tableName: 'person',
     timestamps: false
   }
 )
 
-export default Person
+// User.beforeSave(async (user, options) => {
+//   if (user.changed("password")) {
+//     const salt = await bcrypt.genSalt(10); // or another salt round count
+//     user.password = await bcrypt.hash(user.password, salt);
+//   }
+// });
+
+export default User

@@ -1,11 +1,9 @@
-import ApplicantViewModel from "../view-models/ApplicantViewModel";
+import ViewModel from "../view-models/ViewModel";
 
 export interface ViewProps {
-  email: string;
-  onLogout: () => void;
+  username: string;
 }
 
 export interface ControllerProps {
-  viewModel: ApplicantViewModel;
-  logout: () => void;
+  viewModel: ViewModel;
 }

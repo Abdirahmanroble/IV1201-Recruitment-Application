@@ -1,25 +1,23 @@
 import { PureComponent } from "react";
-
 import { ViewProps } from "../../@types/Login";
 import LoginBox from "../../components/LoginBox/LoginBox";
 import "./LoginView.css";
 
 /**
- * LoginView is a React component that renders the login interface.
- * It includes the LoginBox component and a heading.
+ * Represents the view component for the login functionality.
  *
- * @extends PureComponent
+ * @extends PureComponent to optimize rendering performance.
  */
 export default class LoginView extends PureComponent<ViewProps> {
   /**
-   * Render the login view component.
+   * Renders the login view component.
    *
-   * @returns {React.ReactNode} The React element representing the login view.
+   * @returns The rendered login view component.
    */
   render(): React.ReactNode {
     return (
       <div className="login-view">
-        <h1>This is the login view...</h1>
+        <h1>Login</h1>
         <LoginBox onLogin={this.props.onLogin}></LoginBox>
       </div>
     );
