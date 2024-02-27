@@ -121,9 +121,6 @@ class UserValidators {
     }
     this.isNonZeroLengthString(password, 'Password')
     if (pnr && !this.validateSwedishPersonalNumber(pnr)) {
-      // throw new Error(
-      //   'Invalid personal number format. Expected format: YYYYMMDD-XXXX.'
-      // )
       return {
         isValid: false,
         error: {
@@ -191,7 +188,6 @@ class UserValidators {
     }> {
     const authCookie = req.cookies.jwt
     if (!authCookie) {
-      // throw new Error('Invalid Token, Unauthorized  access to log out.')
       return {
         isValid: false,
         error: {

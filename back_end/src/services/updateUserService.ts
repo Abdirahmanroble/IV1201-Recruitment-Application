@@ -32,37 +32,28 @@ class UpdateUserService {
     email,
     password
   }: LoginCredentials): Promise<string> {
-    // Start the transaction
     const transaction = await db.transaction()
     try {
-      // Fetch the user within the transaction context
       const user = await User.findOne({
         where: { person_id },
         transaction
       })
 
       if (user === null) {
-        // Rollback the transaction if the user is not found
         await transaction.rollback()
         return 'User not found'
       }
-
-      // If a password is provided and the user has no password, hash and update it
       if (password !== null && user.password === null) {
         const hashedPassword = await bcrypt.hash(password, 10)
         await user.update({ password: hashedPassword }, { transaction })
       }
 
-      // If an email is provided, update it
       if (email !== null && (user.email === null || user.email !== email)) {
         await user.update({ email }, { transaction })
       }
-
-      // Commit the transaction after all operations are successful
       await transaction.commit()
       return 'User updated successfully'
     } catch (error) {
-      // Rollback the transaction in case of any error
       await transaction.rollback()
       throw new Error('Update failed: ')
     }

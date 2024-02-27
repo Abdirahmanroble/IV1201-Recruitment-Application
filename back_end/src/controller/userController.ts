@@ -118,10 +118,20 @@ class UserController {
     }
   }
 
+  /**
+   * Updates a user's email and password. If the user has no password, it hashes and updates it.
+   * If the user has an email, it updates it.
+   *
+   * @param {Request} req - The Express request object containing the updated user details.
+   * @param {Response} res - The Express response object used for sending back the update confirmation.
+   * @returns {Promise<void>} A promise that resolves with no return value.
+   */
   public static async updateUser (req: Request, res: Response): Promise<void> {
     const userDTO = req.body
     try {
-      const updatedUser = await UpdateUserService.updateUser(userDTO as UserDTO)
+      const updatedUser = await UpdateUserService.updateUser(
+        userDTO as UserDTO
+      )
       res.json({ message: updatedUser })
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -140,9 +150,7 @@ class UserController {
    * @param {NextFunction} next - The next middleware function in the Express request-response cycle.
    * @returns {Promise<void>} A promise that resolves with no return value.
    */
-  public static async logout (
-    res: Response
-  ): Promise<void> {
+  public static async logout (res: Response): Promise<void> {
     res.clearCookie('jwt')
     res.status(200).send('User logged out successfully')
   }
