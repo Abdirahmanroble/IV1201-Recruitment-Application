@@ -10,6 +10,7 @@ import HomeController from "./controllers/HomeController";
 import ListApplicationsController from "./controllers/ListApplicationsController";
 import LoginController from "./controllers/LoginController";
 import CreateAccountController from "./controllers/CreateAccountController";
+import './ii8n/ii8n.ts'
 
 import "./App.css";
 
