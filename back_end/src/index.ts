@@ -15,6 +15,7 @@ import './setupAssociations'
 
 import userRoutes from './routes/userRoutes'
 import listApplicationRoute from './routes/listApplicationRoute'
+import updateUserRoute from './routes/updateUserRoute'
 import cors, { type CorsOptions } from 'cors'
 import ErrorHandling from './errors/errorHandler'
 
@@ -77,6 +78,7 @@ app.get('/', (req: Request, res: Response) => {
 /** Setup application routes by registering route handlers. */
 app.use(userRoutes)
 app.use(listApplicationRoute)
+app.use(updateUserRoute)
 
 /**
  * Initialize and register the error handling middleware as the last middleware

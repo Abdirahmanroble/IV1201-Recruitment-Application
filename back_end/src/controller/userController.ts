@@ -2,7 +2,13 @@ import { type Request, type Response } from 'express'
 import { ApplicationService } from '../services/applicationService'
 import AuthService from '../services/authService'
 import { createToken } from '../middleware/auth.middleware'
+import UpdateUserService from '../services/updateUserService'
 
+interface UserDTO {
+  person_id: number
+  email: string
+  password: string
+}
 /**
  * Controller for user-related operations in an Express application.
  * Provides static methods for handling login, registration, fetching user applications, and logout functionalities.
@@ -103,6 +109,20 @@ class UserController {
     try {
       const applications = await ApplicationService.getAllApplications()
       res.json({ message: 'Applications gotten successfully', applications })
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).send(error.message)
+      } else {
+        res.status(500).send('An unknown error occurred')
+      }
+    }
+  }
+
+  public static async updateUser (req: Request, res: Response): Promise<void> {
+    const userDTO = req.body
+    try {
+      const updatedUser = await UpdateUserService.updateUser(userDTO as UserDTO)
+      res.json({ message: updatedUser })
     } catch (error: unknown) {
       if (error instanceof Error) {
         res.status(500).send(error.message)
