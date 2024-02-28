@@ -62,7 +62,7 @@ class AuthService {
         if (user == null) {
           return null
         }
-        if (user.password === null) {
+        if (user.password.length === 0) {
           return user
         }
         const isPasswordValid = await bcrypt.compare(password, user.password)

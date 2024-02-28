@@ -2,13 +2,7 @@ import { type Request, type Response } from 'express'
 import { ApplicationService } from '../services/applicationService'
 import AuthService from '../services/authService'
 import { createToken } from '../middleware/auth.middleware'
-import UpdateUserService from '../services/updateUserService'
 
-interface UserDTO {
-  person_id: number
-  email: string
-  password: string
-}
 /**
  * Controller for user-related operations in an Express application.
  * Provides static methods for handling login, registration, fetching user applications, and logout functionalities.
@@ -119,30 +113,6 @@ class UserController {
   }
 
   /**
-   * Updates a user's email and password. If the user has no password, it hashes and updates it.
-   * If the user has an email, it updates it.
-   *
-   * @param {Request} req - The Express request object containing the updated user details.
-   * @param {Response} res - The Express response object used for sending back the update confirmation.
-   * @returns {Promise<void>} A promise that resolves with no return value.
-   */
-  public static async updateUser (req: Request, res: Response): Promise<void> {
-    const userDTO = req.body
-    try {
-      const updatedUser = await UpdateUserService.updateUser(
-        userDTO as UserDTO
-      )
-      res.json({ message: updatedUser })
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        res.status(500).send(error.message)
-      } else {
-        res.status(500).send('An unknown error occurred')
-      }
-    }
-  }
-
-  /**
    * Handles user logout requests. Clears the JWT token cookie, effectively logging the user out.
    *
    * @param {Request} req - The Express request object, not used in this method but required for consistency.
@@ -150,7 +120,9 @@ class UserController {
    * @param {NextFunction} next - The next middleware function in the Express request-response cycle.
    * @returns {Promise<void>} A promise that resolves with no return value.
    */
-  public static async logout (res: Response): Promise<void> {
+  public static async logout (
+    res: Response
+  ): Promise<void> {
     res.clearCookie('jwt')
     res.status(200).send('User logged out successfully')
   }
