@@ -118,8 +118,8 @@ class AuthService {
         to_date.setFullYear(to_date.getFullYear() + 1);
         const newAvailability = await Availability.create({
           person_id: user.person_id as number,
-          from_date: new Date(), // Example, set to current date
-          to_date: to_date, // Example, you need to define this
+          from_date: new Date(),
+          to_date: to_date, 
         });
         const newApplication = await Application.create({
           person_id: user.person_id as number,
