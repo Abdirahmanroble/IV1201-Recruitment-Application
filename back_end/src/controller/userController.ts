@@ -35,6 +35,7 @@ class UserController {
         return
       }
       const foundUser = {
+        person_id: user.person_id,
         name: user.name,
         surname: user.surname,
         pnr: user.pnr,
