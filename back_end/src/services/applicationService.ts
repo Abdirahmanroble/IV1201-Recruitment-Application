@@ -42,6 +42,9 @@ export const ApplicationService = {
             'status',
             'openapplicationstatus',
             'applicationdate'
+          ],
+          order: [
+            ['applicationdate', 'DESC'],
           ]
         })
 

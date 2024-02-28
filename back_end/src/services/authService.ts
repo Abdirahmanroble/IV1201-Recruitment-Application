@@ -2,7 +2,8 @@
 import bcrypt from "bcrypt";
 import User from "../model/user";
 import db from "../integration/dbConfig";
-
+import Application from "../model/application";
+import Availability from "../model/availability";
 /**
  * Interface representing login credentials.
  * @interface
@@ -35,6 +36,7 @@ interface registerCredentials {
   password: string;
   role_id: number;
 }
+
 /**
  * Service class for authentication-related operations.
  */
@@ -110,6 +112,21 @@ class AuthService {
           username,
           password: hash,
           role_id: role_id,
+        });
+        const to_date = new Date();
+
+        to_date.setFullYear(to_date.getFullYear() + 1);
+        const newAvailability = await Availability.create({
+          person_id: user.person_id as number,
+          from_date: new Date(), // Example, set to current date
+          to_date: to_date, // Example, you need to define this
+        });
+        const newApplication = await Application.create({
+          person_id: user.person_id as number,
+          availability_id: newAvailability.availability_id,
+          status: "unhandled",
+          applicationdate: newAvailability.from_date,
+          openapplicationstatus: true,
         });
         return user;
       });
