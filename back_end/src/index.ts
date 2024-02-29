@@ -47,7 +47,7 @@ const port = 3000
 app.use(express.json())
 
 /** Define an array of allowed origins for CORS. */
-const allowedOrigins = ['http://localhost:4000', 'http://localhost:5173']
+const allowedOrigins = ['http://localhost:4000', 'http://localhost:5173', 'https://iv1201-recruitment-application.onrender.com/']
 
 /**
  * Configure CORS options, including allowed origins and HTTP methods,
