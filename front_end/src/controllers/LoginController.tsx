@@ -21,10 +21,14 @@ export default class LoginController extends Component<ControllerProps> {
   ): Promise<boolean> => {
     try {
       const success = await this.props.viewModel.login({ email, password });
+      console.log("from login controller: " + success)
       return success;
     } catch (error) {
-      console.error("Login error:", error);
-      return false;
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error("An unknown error occurred.");
+      }
     }
   };
 

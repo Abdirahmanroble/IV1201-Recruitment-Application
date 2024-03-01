@@ -4,7 +4,7 @@ import {
   CreateAccountParams,
   LoginParams,
   LoginResponseBody,
-  RegisterResponseBody,
+  // RegisterResponseBody,
   UserBody,
 } from "../@types/ViewModel";
 
@@ -37,24 +37,29 @@ export default class ViewModel implements VM {
         username: params.email,
         password: params.password,
       });
-
+      console.log(data);
       if (data?.message) {
         databaseBody = data;
         this.setUserBody(databaseBody.foundUser);
         this.changeAuthState(true);
-      } else this.changeAuthState(false);
-
-      console.log(databaseBody); /**Remove later */
+      } else {
+        console.log(data);
+        this.changeAuthState(false);
+      }
+      console.log(databaseBody);
 
       return this.signedIn;
     } catch (error) {
-      console.error("Login request failed:", error);
-      return false;
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error("An unknown error occurred.");
+      }
     }
   }
 
   public async createAccount(params: CreateAccountParams): Promise<boolean> {
-    let databaseBody: RegisterResponseBody = new RegisterResponseBody();
+    //  let databaseBody: RegisterResponseBody = new RegisterResponseBody();
 
     try {
       const data = await this.fetchData(
@@ -71,14 +76,14 @@ export default class ViewModel implements VM {
       );
 
       if (data?.message) {
-        databaseBody = data;
+        //databaseBody = data;
 
-        console.log(databaseBody); /**Remove later */
+        // console.log(databaseBody); /**Remove later */
 
         return true;
       } else return false;
     } catch (error) {
-      console.error("Register request failed:", error);
+      // console.error("Register request failed:", error);
       return false;
     }
   }
@@ -219,12 +224,25 @@ export default class ViewModel implements VM {
           };
 
     const response = await fetch(path, fetchBody);
+    const contentType = response.headers.get("Content-Type");
 
-    if (!response.ok) throw new Error("Network response failure.");
+    let parsedResponse;
+    if (contentType && contentType.includes("application/json")) {
+      parsedResponse = await response.json(); 
+    } else {
+      parsedResponse = await response.text(); 
+    }
 
-    return await response.json();
+    if (!response.ok) {
+      throw new Error(
+        parsedResponse.error ||
+          parsedResponse ||
+          "An error occurred while fetching data."
+      );
+    }
+
+    return parsedResponse;
   };
-
   private setUserBody(user: UserBody) {
     this.setFirstName(user.name);
     this.setLastName(user.surname);
