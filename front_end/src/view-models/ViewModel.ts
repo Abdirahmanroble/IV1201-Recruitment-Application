@@ -4,7 +4,7 @@ import {
   CreateAccountParams,
   LoginParams,
   LoginResponseBody,
-  // RegisterResponseBody,
+  RegisterResponseBody,
   UserBody,
 } from "../@types/ViewModel";
 
@@ -59,7 +59,7 @@ export default class ViewModel implements VM {
   }
 
   public async createAccount(params: CreateAccountParams): Promise<boolean> {
-    //  let databaseBody: RegisterResponseBody = new RegisterResponseBody();
+    let databaseBody: RegisterResponseBody = new RegisterResponseBody();
 
     try {
       const data = await this.fetchData(
@@ -76,15 +76,21 @@ export default class ViewModel implements VM {
       );
 
       if (data?.message) {
-        //databaseBody = data;
-
-        // console.log(databaseBody); /**Remove later */
-
-        return true;
-      } else return false;
+        databaseBody = data;
+        console.log(databaseBody.createdUser)
+        this.setUserBody(databaseBody.createdUser);
+        this.changeAuthState(true);
+      } else {
+        console.log(data);
+        this.changeAuthState(false);
+      }
+      return this.signedIn;
     } catch (error) {
-      // console.error("Register request failed:", error);
-      return false;
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error("An unknown error occurred.");
+      }
     }
   }
 
@@ -113,11 +119,10 @@ export default class ViewModel implements VM {
     try {
       const response = await fetch("http://localhost:3000/logout", {
         method: "POST",
-        credentials: "include", // Necessary to include the cookie in the request.
+        credentials: "include", 
       });
 
       if (!response.ok) {
-        // If the response is not OK, log the error and return false to indicate failure.
         console.error("Logout failed with status:", response.status);
         return false;
       }
@@ -228,9 +233,9 @@ export default class ViewModel implements VM {
 
     let parsedResponse;
     if (contentType && contentType.includes("application/json")) {
-      parsedResponse = await response.json(); 
+      parsedResponse = await response.json();
     } else {
-      parsedResponse = await response.text(); 
+      parsedResponse = await response.text();
     }
 
     if (!response.ok) {

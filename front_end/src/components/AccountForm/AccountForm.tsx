@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AccountFormProps } from "../../@types/CreateAccount";
 import FormInput from "../FormInput/FormInput";
 import "./AccountForm.css";
@@ -18,12 +18,17 @@ function LoginBox(props: AccountFormProps): JSX.Element {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [counter, setCounter] = useState(0);
-  const [success, setSuccess] = useState(false);
+ // const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  let errorDisplay = "none",
-    successDisplay = "none";
-  if (success === false && counter > 0) errorDisplay = "block";
-  else if (success === true && counter > 0) successDisplay = "block";
+  useEffect(() => {
+    console.log("Updated Error Message: " + errorMessage);
+  }, [errorMessage]);
+  let errorDisplay = errorMessage ? "block" : "none";
+//  let successDisplay = "none";
+  //if (success === false && counter > 0) errorDisplay = "block";
+  //else
+ // if (success === true && counter > 0) successDisplay = "block";
 
   return (
     <div className="account-form-container">
@@ -75,16 +80,25 @@ function LoginBox(props: AccountFormProps): JSX.Element {
       <div className="account-form-buttons">
         <button
           onClick={async () => {
-            const userWasCreated = await props.onCreateAccount(
-              firstName,
-              lastName,
-              email,
-              personNumber,
-              username,
-              password
-            );
-            setCounter(counter + 1);
-            setSuccess(userWasCreated);
+            try {
+              const userWasCreated = await props.onCreateAccount(
+                firstName,
+                lastName,
+                email,
+                personNumber,
+                username,
+                password
+              );
+              console.log(userWasCreated)
+              setCounter(counter + 1);
+            //  setSuccess(userWasCreated);
+            } catch (error) {
+              if (error instanceof Error) {
+                setErrorMessage(error.message);
+              } else
+                setErrorMessage("An unknown error occurred, please try again.");
+            }
+            
           }}
         >
           CREATE ACCOUNT
@@ -94,14 +108,14 @@ function LoginBox(props: AccountFormProps): JSX.Element {
         className="account-form-error"
         style={{ display: `${errorDisplay}` }}
       >
-        Please fill in the empty boxes
+       {errorMessage}
       </div>
-      <div
+   {  /* <div
         className="account-form-success"
         style={{ display: `${successDisplay}` }}
       >
         User was created successfully
-      </div>
+        </div>*/}
     </div>
   );
 }
