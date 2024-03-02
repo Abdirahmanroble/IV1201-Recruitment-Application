@@ -31,17 +31,13 @@ function Header(props: HeaderProps): JSX.Element {
     setShowLanguages(false);
   };
 
-  let signingIn = "",
-    creatingAccount = "",
+  let creatingAccount = "",
     home = "",
     listingApplications = "";
 
   switch (currentPath) {
     case "/":
       home = "pressed-path";
-      break;
-    case "/sign-in":
-      signingIn = "pressed-path";
       break;
     case "/create-account":
       creatingAccount = "pressed-path";
