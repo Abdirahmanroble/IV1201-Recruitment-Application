@@ -23,13 +23,16 @@ function Header(props: HeaderProps): JSX.Element {
   };
 
   let signingIn = "",
-    creatingAccount = "",
-    home = "",
-    listingApplications = "";
+      creatingAccount = "",
+      home = "",
+      listingApplications = "";
 
   switch (currentPath) {
     case "/":
       home = "pressed-path";
+      break;
+    case "/sign-in":
+      signingIn = "pressed-path"; // Assuming "/sign-in" is your login route
       break;
     case "/create-account":
       creatingAccount = "pressed-path";
@@ -38,19 +41,22 @@ function Header(props: HeaderProps): JSX.Element {
       listingApplications = "pressed-path";
       break;
     default:
-      signingIn = "pressed-path";
+      break;
   }
 
   return (
     <div className="header-container">
       <div className="header-title">{t('recruitmentApplication')}</div>
       <div className="header-paths">
-        <Link to="/" className={`App-link ${home}`}>{t('home')}</Link>
+        <Link to="/" className={`${home}`}>{t('home')}</Link>
         {!props.signedIn && (
-          <Link to="/create-account" className={`App-link ${creatingAccount}`}>{t('createAccount')}</Link>
+          <>
+            <Link to="/sign-in" className={`${signingIn}`}>{t('login')}</Link>
+            <Link to="/create-account" className={`${creatingAccount}`}>{t('createAccount')}</Link>
+          </>
         )}
         {props.signedIn && !props.isApplicant && (
-          <Link to="/list-applications" className={`App-link ${listingApplications}`}>{t('listApplications')}</Link>
+          <Link to="/list-applications" className={`${listingApplications}`}>{t('listApplications')}</Link>
         )}
         {props.signedIn && (
           <div onClick={props.onLogout} className="header-logout">{t('logout')}</div>
