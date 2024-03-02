@@ -5,15 +5,24 @@ import { useState } from "react";
 import { HeaderProps } from "../../@types/Layout";
 import "./Header.css";
 
+/**
+ * Renders the header component.
+ *
+ * @param {HeaderProps} props - The props for the header component.
+ * @returns {JSX.Element} The rendered header component.
+ */
+
 function Header(props: HeaderProps): JSX.Element {
   const { i18n, t } = useTranslation();
   const currentPath = useLocation().pathname;
   const [showLanguages, setShowLanguages] = useState(false);
 
   const languages: Record<string, string> = {
-    en: 'English',
-    se: 'Svenska',
-    so: 'Soomaali'
+    en: "English",
+    se: "Svenska",
+    so: "Soomaali",
+    sp: "Español",
+    fr: "Français",
     // Add more languages here
   };
 
@@ -31,6 +40,9 @@ function Header(props: HeaderProps): JSX.Element {
     case "/":
       home = "pressed-path";
       break;
+    case "/sign-in":
+      signingIn = "pressed-path";
+      break;
     case "/create-account":
       creatingAccount = "pressed-path";
       break;
@@ -38,28 +50,43 @@ function Header(props: HeaderProps): JSX.Element {
       listingApplications = "pressed-path";
       break;
     default:
-      signingIn = "pressed-path";
+      break;
   }
 
   return (
     <div className="header-container">
-      <div className="header-title">{t('recruitmentApplication')}</div>
+      <div className="header-title">{t("recruitmentApplication")}</div>
       <div className="header-paths">
-        <Link to="/" className={`App-link ${home}`}>{t('home')}</Link>
+        <Link to="/" className={`${home}`}>
+          {t("home")}
+        </Link>
         {!props.signedIn && (
-          <Link to="/create-account" className={`App-link ${creatingAccount}`}>{t('createAccount')}</Link>
+          <>
+            <Link to="/create-account" className={`${creatingAccount}`}>
+              {t("createAccount")}
+            </Link>
+          </>
         )}
         {props.signedIn && !props.isApplicant && (
-          <Link to="/list-applications" className={`App-link ${listingApplications}`}>{t('listApplications')}</Link>
+          <Link to="/list-applications" className={`${listingApplications}`}>
+            {t("listApplications")}
+          </Link>
         )}
         {props.signedIn && (
-          <div onClick={props.onLogout} className="header-logout">{t('logout')}</div>
+          <div onClick={props.onLogout} className="header-logout">
+            {t("logout")}
+          </div>
         )}
         <div className="language-switcher">
-          <span className="material-icons" onClick={() => setShowLanguages(!showLanguages)}>language</span>
+          <span
+            className="material-icons"
+            onClick={() => setShowLanguages(!showLanguages)}
+          >
+            language
+          </span>
           {showLanguages && (
             <ul className="languages-dropdown">
-              {Object.keys(languages).map(langKey => (
+              {Object.keys(languages).map((langKey) => (
                 <li key={langKey} onClick={() => switchLanguage(langKey)}>
                   {languages[langKey]}
                 </li>

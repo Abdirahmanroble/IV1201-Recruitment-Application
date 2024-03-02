@@ -1,33 +1,32 @@
+// ii8n.ts
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import * as translationFiles from './locales';
 
-
-import translationEN from './locales/en/translation.json';
-import translationSE from './locales/se/translation.json';
-import translationSO from './locales/so/translation.json';
-
-
-const resources = {
-  en: {
-    translation: translationEN
-  },
-  se: {
-    translation: translationSE
-  },
-
-  so: {
-    translation: translationSO
-  }
+type NestedTranslation = {
+  [key: string]: string | NestedTranslation;
 };
 
-i18n
-  .use(initReactI18next) 
-  .init({
-    resources,
-    lng: "en", 
-    interpolation: {
-      escapeValue: false 
-    }
-  });
+type TranslationResources = {
+  [lang: string]: {
+    translation: NestedTranslation;
+  };
+};
+
+const resources: TranslationResources = Object.keys(translationFiles).reduce((acc, lang) => {
+  // Assuming each translation file exports an object as default
+  const translation = translationFiles[lang as keyof typeof translationFiles];
+  acc[lang] = { translation: translation };
+  return acc;
+}, {} as TranslationResources);
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: "en", 
+  interpolation: {
+    escapeValue: false 
+  },
+  // Add any additional i18n options here
+});
 
 export default i18n;

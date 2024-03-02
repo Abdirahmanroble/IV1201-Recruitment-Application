@@ -1,0 +1,27 @@
+{
+    "welcomeMessage": "",
+    "login": "",
+    "logout": "",
+    "createAccount": "",
+    "createAccountButton": "",
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "personNumber": "",
+    "username": "",
+    "password": "",
+    "fillEmptyBoxes": "",
+    "userCreatedSuccess": "",
+    "userLogin": "",
+    "invalidCredentials": "",
+    "recruitmentApplication": "",
+    "home": "",
+    "listApplications": "",
+    "switchLanguage": "",
+    "welcome": "",
+    "status": {
+        "accepted": "",
+        "rejected": "",
+        "unhandled": ""
+    }
+}
