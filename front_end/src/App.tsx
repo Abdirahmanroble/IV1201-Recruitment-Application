@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { isTokenPresent } from "./utils/auth";
 
+import './ii8n/ii8n';
 import ViewModel from "./view-models/ViewModel";
 
 import Layout from "./components/Layout/Layout";
@@ -10,7 +11,6 @@ import HomeController from "./controllers/HomeController";
 import ListApplicationsController from "./controllers/ListApplicationsController";
 import LoginController from "./controllers/LoginController";
 import CreateAccountController from "./controllers/CreateAccountController";
-import './ii8n/ii8n.ts'
 
 import "./App.css";
 

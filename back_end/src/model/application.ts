@@ -1,6 +1,5 @@
 import { Model, DataTypes } from 'sequelize'
 import db from '../integration/dbConfig'
-// import User from "./user";
 
 /**
  * Interface for Application model attributes to ensure type safety.
@@ -88,8 +87,5 @@ Application.init(
     timestamps: false
   }
 )
-
-/* Application.belongsTo(User, { foreignKey: "person_id" });
-User.hasMany(Application, { foreignKey: "person_id" }); */
 
 export default Application
