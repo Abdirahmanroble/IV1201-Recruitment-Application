@@ -16,8 +16,7 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
   const [counter, setCounter] = useState(0);
   const [success, setSuccess] = useState(false);
 
-  const { t } = useTranslation(); // Initialize the hook
-
+  const { t } = useTranslation();
 
   let invalidCredentials = "none",
     emptyBox = "none";
@@ -26,17 +25,17 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
 
   return (
     <div className="login-box">
-      <div className="login-box-header">{t('userLogin')}</div> {/* Use translation here */}
+      <div className="login-box-header">{t("userLogin")}</div>
       <div className="login-box-input">
         <FormInput
-          text={t('email')} // Use translation here
+          text={t("email")}
           type="email"
           value={email}
           onChange={setEmail}
           counter={counter}
         />
         <FormInput
-          text={t('password')} // Use translation here
+          text={t("password")}
           type="password"
           value={password}
           onChange={setPassword}
@@ -51,17 +50,17 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
             setSuccess(userWasLoggedIn);
           }}
         >
-          {t('login')} {/* Use translation here */}
+          {t("login")}
         </button>
       </div>
       <div
         className="login-box-error"
         style={{ display: `${invalidCredentials}` }}
       >
-        {t('invalidCredentials')} {/* Use translation here */}
+        {t("invalidCredentials")}
       </div>
       <div className="login-box-error" style={{ display: `${emptyBox}` }}>
-        {t('fillEmptyBoxes')} {/* Use translation here */}
+        {t("fillEmptyBoxes")}
       </div>
     </div>
   );
