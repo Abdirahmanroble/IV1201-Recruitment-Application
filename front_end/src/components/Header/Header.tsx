@@ -1,83 +1,98 @@
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 import { HeaderProps } from "../../@types/Layout";
 import "./Header.css";
 
 /**
- * Represents the header component of the application, providing navigation links and logout functionality.
+ * Renders the header component.
  *
- * @param {HeaderProps} props - The properties passed to the Header component.
+ * @param {HeaderProps} props - The props for the header component.
  * @returns {JSX.Element} The rendered header component.
  */
-function Header(props: HeaderProps): JSX.Element {
-  const currentPath = useLocation().pathname;
 
-  let signingIn = "",
-    creatingAccount = "",
+function Header(props: HeaderProps): JSX.Element {
+  const { i18n, t } = useTranslation();
+  const currentPath = useLocation().pathname;
+  const [showLanguages, setShowLanguages] = useState(false);
+
+  const languages: Record<string, string> = {
+    en: "English",
+    se: "Svenska",
+    so: "Soomaali",
+    sp: "Español",
+    fr: "Français",
+    // Add more languages here
+  };
+
+  const switchLanguage = (languageKey: string) => {
+    i18n.changeLanguage(languageKey);
+    setShowLanguages(false);
+  };
+
+  let creatingAccount = "",
     home = "",
     listingApplications = "";
 
   switch (currentPath) {
-    case "/": {
-      signingIn = "pressed-path";
+    case "/":
       home = "pressed-path";
       break;
-    }
-    case "/create-account": {
+    case "/create-account":
       creatingAccount = "pressed-path";
       break;
-    }
-    case "/list-applications": {
+    case "/list-applications":
       listingApplications = "pressed-path";
       break;
-    }
+    default:
+      break;
   }
 
-  if (!props.signedIn)
-    return (
-      <div className="header-container">
-        <div className="header-title">Recruitment Application</div>
-        <div className="header-paths">
-          <Link to="/" className="App-link">
-            <div className={`${signingIn}`}>Login</div>
+  return (
+    <div className="header-container">
+      <div className="header-title">{t("recruitmentApplication")}</div>
+      <div className="header-paths">
+        <Link to="/" className={`${home}`}>
+          {t("home")}
+        </Link>
+        {!props.signedIn && (
+          <>
+            <Link to="/create-account" className={`${creatingAccount}`}>
+              {t("createAccount")}
+            </Link>
+          </>
+        )}
+        {props.signedIn && !props.isApplicant && (
+          <Link to="/list-applications" className={`${listingApplications}`}>
+            {t("listApplications")}
           </Link>
-          <Link to="/create-account" className="App-link">
-            <div className={`${creatingAccount}`}>Create Account</div>
-          </Link>
-        </div>
-      </div>
-    );
-  else if (props.signedIn && props.isApplicant)
-    return (
-      <div className="header-container">
-        <div className="header-title">Recruitment Application</div>
-        <div className="header-paths">
-          <Link to="/" className="App-link">
-            <div className={`${home}`}>Home</div>
-          </Link>
+        )}
+        {props.signedIn && (
           <div onClick={props.onLogout} className="header-logout">
-            LOGOUT
+            {t("logout")}
           </div>
+        )}
+        <div className="language-switcher">
+          <span
+            className="material-icons"
+            onClick={() => setShowLanguages(!showLanguages)}
+          >
+            language
+          </span>
+          {showLanguages && (
+            <ul className="languages-dropdown">
+              {Object.keys(languages).map((langKey) => (
+                <li key={langKey} onClick={() => switchLanguage(langKey)}>
+                  {languages[langKey]}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
-    );
-  else /**Recruiter */
-    return (
-      <div className="header-container">
-        <div className="header-title">Recruitment Application</div>
-        <div className="header-paths">
-          <Link to="/" className="App-link">
-            <div className={`${home}`}>Home</div>
-          </Link>
-          <Link to="/list-applications" className="App-link">
-            <div className={`${listingApplications}`}>List Applications</div>
-          </Link>
-          <div onClick={props.onLogout} className="header-logout">
-            LOGOUT
-          </div>
-        </div>
-      </div>
-    );
+    </div>
+  );
 }
 
 export default Header;
