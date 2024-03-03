@@ -30,21 +30,21 @@ function LoginBox(props: AccountFormProps): JSX.Element {
       <div className="account-form-header">CREATE ACCOUNT</div>
       <div className="account-form-input">
         <FormInput
-          text="First Name:"
+          text="First Name*:"
           type="text"
           value={firstName}
           onChange={setFirstName}
           counter={counter}
         ></FormInput>
         <FormInput
-          text="Last Name:"
+          text="Last Name*:"
           type="text"
           value={lastName}
           onChange={setLastName}
           counter={counter}
         ></FormInput>
         <FormInput
-          text="Email:"
+          text="Email*:"
           type="email"
           value={email}
           onChange={setEmail}
@@ -55,17 +55,17 @@ function LoginBox(props: AccountFormProps): JSX.Element {
           type="text"
           value={personNumber}
           onChange={setPersonNumber}
-          counter={counter}
+          counter={0}
         ></FormInput>
         <FormInput
-          text="Username:"
+          text="Username*:"
           type="text"
           value={username}
           onChange={setUsername}
           counter={counter}
         ></FormInput>
         <FormInput
-          text="Password:"
+          text="Password*:"
           type="password"
           value={password}
           onChange={setPassword}
@@ -94,7 +94,7 @@ function LoginBox(props: AccountFormProps): JSX.Element {
         className="account-form-error"
         style={{ display: `${errorDisplay}` }}
       >
-        Please fill in the empty boxes
+        {props.errorMsg}
       </div>
       <div
         className="account-form-success"

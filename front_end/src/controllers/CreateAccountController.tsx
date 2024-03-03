@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { ControllerProps } from "../@types/CreateAccount";
 import CreateAccountView from "../views/CreateAccountView/CreateAccountView";
+import ViewModel from "../view-models/ViewModel";
 
 /**
  * Represents the controller component responsible for handling logic related to creating a new account.
@@ -38,7 +39,14 @@ export default class CreateAccountController extends Component<ControllerProps> 
     return success;
   };
 
+  private getCurrentError = () => this.props.viewModel.getCurrentError();
+
   render(): React.ReactNode {
-    return <CreateAccountView onCreateAccount={this.onCreateAccount} />;
+    return (
+      <CreateAccountView
+        onCreateAccount={this.onCreateAccount}
+        getCurrentError={this.getCurrentError}
+      />
+    );
   }
 }

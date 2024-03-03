@@ -19,6 +19,7 @@ export default class ViewModel implements VM {
   private competences: { yearsOfExperience: number; name: string }[] = [];
   private role: number = 0;
   private signedIn: boolean = false;
+  private currentError: number = 0;
 
   public changeAuthState: (state: boolean) => void = (state: boolean) => {
     console.log(state);
@@ -76,9 +77,12 @@ export default class ViewModel implements VM {
         console.log(databaseBody); /**Remove later */
 
         return true;
+      } else if (data?.error) {
+        this.setCurrentError(data.error.errorCode);
+        return false;
       } else return false;
     } catch (error) {
-      console.error("Register request failed:", error);
+      this.setCurrentError(0);
       return false;
     }
   }
@@ -164,6 +168,11 @@ export default class ViewModel implements VM {
     this.changeState(this);
   }
 
+  public setCurrentError(currentError: number) {
+    this.currentError = currentError;
+    this.changeState(this);
+  }
+
   public setChangeAuthState(changeAuthState: (state: boolean) => void) {
     this.changeAuthState = (state: boolean) => {
       changeAuthState(state);
@@ -201,6 +210,10 @@ export default class ViewModel implements VM {
 
   public getRole(): number {
     return this.role;
+  }
+
+  public getCurrentError(): number {
+    return this.currentError;
   }
 
   private fetchData = async (path: string, method: string, body: Object) => {

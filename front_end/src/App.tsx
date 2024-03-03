@@ -44,7 +44,7 @@ function App() {
     window.location.replace("/");
   };
 
-  if (signedIn && viewModel.getRole() === 2 || viewModel.getRole() === null/**Applicant */)
+  if (signedIn && viewModel.getRole() === 2 || viewModel.getRole() === null /**Applicant */)
     return (
       <Router>
         <Routes>

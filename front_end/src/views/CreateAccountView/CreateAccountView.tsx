@@ -1,6 +1,7 @@
 import { PureComponent } from "react";
 import { ViewProps } from "../../@types/CreateAccount";
 import CreateAccountForm from "../../components/AccountForm/AccountForm";
+import Error from "../../errors/Error";
 import "./CreateAccountView.css";
 
 /**
@@ -20,6 +21,7 @@ export default class CreateAccountView extends PureComponent<ViewProps> {
         <h1>Create Account</h1>
         <CreateAccountForm
           onCreateAccount={this.props.onCreateAccount}
+          errorMsg={Error.readErrorMsg(this.props.getCurrentError())}
         ></CreateAccountForm>
       </div>
     );
