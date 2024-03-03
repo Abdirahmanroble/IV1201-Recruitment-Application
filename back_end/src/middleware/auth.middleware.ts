@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions, @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import jwt from 'jsonwebtoken'
 import { type NextFunction, type Request, type Response } from 'express'
 
@@ -54,7 +54,7 @@ const validateToken = async (
 ): Promise<void> => {
   const token = req.cookies.jwt
 
-  if (!token) {
+  if (token !== null) {
     res.status(401).send('Access denied. No token provided.')
   }
 

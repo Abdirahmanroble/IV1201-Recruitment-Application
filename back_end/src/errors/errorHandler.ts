@@ -1,28 +1,17 @@
-/* eslint-disable @typescript-eslint/strict-boolean-expressions */
-import { type Request, type Response, type NextFunction, type Application } from 'express'
+import {
+  type Request,
+  type Response,
+  type NextFunction,
+  type Application
+} from 'express'
 import Logger from '../util/Logger'
 import { ValidationError } from 'sequelize'
-
 /**
  * ErrorHandling class for managing application-wide error handling in an Express application.
  * It utilizes a Logger instance to log exceptions and provides a middleware to handle errors
  * by sending a standardized response or passing the error along if the response headers have already been sent.
  */
 class ErrorHandling {
-  /**
-   * Logger instance for logging exceptions.
-   * @private
-   */
-  private readonly logger: Logger
-
-  /**
-   * Initializes a new instance of the ErrorHandling class.
-   * Constructs a new Logger instance for use in error handling.
-   */
-  constructor () {
-    this.logger = new Logger()
-  }
-
   /**
    * Error handling middleware function.
    * Logs the received error using the Logger instance, checks if response headers have already been sent,
@@ -34,13 +23,14 @@ class ErrorHandling {
    * @param next - The next function to pass control to the next middleware.
    * @returns {void}
    */
-  public handleError (
+  public static handleError (
     err: Error,
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunction,
+    customStatus?: number
   ): void {
-    this.logger.logException(err)
+    Logger.logException(err, { file: 'ErrorHandling.ts', reason: 'Something went wrong from routes' })
 
     if (res.headersSent) {
       next(err)
@@ -49,14 +39,19 @@ class ErrorHandling {
 
     // res.status(500).send({ error: "Operation failed." })
 
-    const status = err instanceof ValidationError ? 400 : 500
-    const message = err.message || 'An unexpected error occurred'
+    const status = customStatus ?? (err instanceof ValidationError ? 500 : 400)
+
+    const message = err.message.length > 0 ? err.message : 'An unexpected error occurred'
 
     if (message !== '') {
       this.sendHttpResponse(res, status, message)
     } else {
       // Handle the case where 'message' is an empty string
-      this.sendHttpResponse(res, status, 'Error occurred, but no message provided.')
+      this.sendHttpResponse(
+        res,
+        status,
+        'Error occurred, but no message provided.'
+      )
     }
   }
 
@@ -68,8 +63,9 @@ class ErrorHandling {
    * @returns {void}
    */
   public register (app: Application): void {
-    app.use((err: Error, req: Request, res: Response, next: NextFunction) => { this.handleError(err, req, res, next) }
-    )
+    app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+      ErrorHandling.handleError(err, req, res, next)
+    })
   }
 
   /**
@@ -80,17 +76,16 @@ class ErrorHandling {
    * @param status - The HTTP status code for the response.
    * @param body - The response body content. If undefined, sends an empty response.
    */
-  private sendHttpResponse (res: Response, status: number, body?: string): void {
-    // Assuming Validators.isIntegerBetween is a method that throws an error if the validation fails
-    // Validators.isIntegerBetween(status, 200, 501);
-
-    if (body !== undefined && body !== '') {
-      res.status(status).end()
-      return
+  private static sendHttpResponse (
+    res: Response,
+    status: number,
+    body?: string
+  ): void {
+    if (status < 400) {
+      res.status(status).json({ success: body })
+    } else {
+      res.status(status).json({ error: body })
     }
-
-    const key = status < 400 ? 'success' : 'error'
-    res.status(status).json({ [key]: body })
   }
 }
 

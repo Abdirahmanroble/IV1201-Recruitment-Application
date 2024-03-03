@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-extraneous-class, @typescript-eslint/strict-boolean-expressions, @typescript-eslint/prefer-nullish-coalescing, @typescript-eslint/naming-convention */
-
+/* eslint-disable @typescript-eslint/naming-convention */
 import bcrypt from 'bcrypt'
 import User from '../model/user'
 import db from '../integration/dbConfig'
@@ -39,6 +38,7 @@ interface registerCredentials {
 /**
  * Service class for authentication-related operations.
  */
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 class AuthService {
   /**
    * Authenticates a user using their username (or email) and password.
@@ -54,14 +54,15 @@ class AuthService {
   }: LoginCredentials): Promise<User | null> {
     try {
       return await db.transaction(async () => {
-        const user: User | null =
-          (await User.findOne({ where: { username } })) ||
-          (await User.findOne({ where: { email: username } }))
+        let user = await User.findOne({ where: { username } })
+        if (user == null) {
+          user = await User.findOne({ where: { email: username } })
+        }
 
-        if (!user) {
+        if (user == null) {
           return null
         }
-        if (!user.password) {
+        if (user.password.length === 0) {
           return user
         }
         const isPasswordValid = await bcrypt.compare(password, user.password)
