@@ -2,6 +2,15 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import * as translationFiles from './locales';
 
+
+
+
+/**
+ * Represents a collection of translation resources for different languages.
+ * @typedef {Object} TranslationResources
+ * @property {Object} lang - An object containing translation resources for each language.
+ */
+
 type NestedTranslation = {
   [key: string]: string | NestedTranslation;
 };

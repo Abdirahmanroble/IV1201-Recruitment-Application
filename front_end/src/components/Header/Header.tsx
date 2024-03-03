@@ -31,19 +31,19 @@ function Header(props: HeaderProps): JSX.Element {
     setShowLanguages(false);
   };
 
-  let creatingAccount = "",
+  let createAccount = "",
     home = "",
-    listingApplications = "";
+    listApplications = "";
 
   switch (currentPath) {
     case "/":
       home = "pressed-path";
       break;
     case "/create-account":
-      creatingAccount = "pressed-path";
+      createAccount = "pressed-path";
       break;
     case "/list-applications":
-      listingApplications = "pressed-path";
+      listApplications = "pressed-path";
       break;
     default:
       break;
@@ -59,13 +59,13 @@ function Header(props: HeaderProps): JSX.Element {
         {!props.signedIn && (
           <>
             <Link to="/create-account" className="App-link">
-              <div>{t("createAccount")}</div>
+              <div className={createAccount}>{t("createAccount")}</div>
             </Link>
           </>
         )}
         {props.signedIn && !props.isApplicant && (
           <Link to="/list-applications" className="App-link">
-            <div>{t("listApplications")}</div>
+            <div className={listApplications}>{t("listApplications")}</div>
             </Link>
         )}
         {props.signedIn && (
