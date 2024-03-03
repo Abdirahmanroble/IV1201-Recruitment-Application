@@ -34,7 +34,7 @@ class UserValidators {
         error: { errorCode: 101, message: 'Please provide either an email/username or a password.', status: 400 }
       }
     }
-    if (username && validator.isEmpty(username)) {
+    if (!username) {
       // throw new Error("Username cannot be empty.")
       return {
         isValid: false,
@@ -55,7 +55,7 @@ class UserValidators {
         }
       }
     }
-    return { isValid: true, error: { errorCode: 104, message: '', status: 200 } }
+    return { isValid: true, error: { errorCode: 0, message: '', status: 200 } }
   }
 
   /**
@@ -113,7 +113,7 @@ class UserValidators {
       }
     }
 
-    return { isValid: true, error: { errorCode: 204, message: '', status: 200 } }
+    return { isValid: true, error: { errorCode: 0, message: '', status: 200 } }
   }
 
   /**
@@ -132,7 +132,7 @@ class UserValidators {
         error: { errorCode: 301, message: 'Invalid Token, Unauthorized access to log out.', status: 400 }
       }
     }
-    return { isValid: true, error: { errorCode: 302, message: '', status: 200 } }
+    return { isValid: true, error: { errorCode: 0, message: '', status: 200 } }
   }
 
   /**

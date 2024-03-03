@@ -41,3 +41,10 @@
   font-weight: var(--bold-weight);
   font-size: 0.8rem;
 }
+
+.login-form-error {
+  color: var(--red-primary);
+  font-weight: var(--bold-weight);
+  font-size: 0.8rem;
+  text-align: center;
+}

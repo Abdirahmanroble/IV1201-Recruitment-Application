@@ -25,7 +25,7 @@ class UserController {
       const user = await AuthService.login({ username, password })
 
       if (user === null || user === undefined) {
-        res.status(401).send('Invalid credentials')
+        res.status(401).send({ error: { errorCode: 1, message: 'Invalid credentials' } }) /** Remove later */
         return
       }
       const foundUser = {

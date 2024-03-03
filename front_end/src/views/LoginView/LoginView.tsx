@@ -18,7 +18,10 @@ export default class LoginView extends PureComponent<ViewProps> {
     return (
       <div className="login-view">
         <h1>Login</h1>
-        <LoginBox onLogin={this.props.onLogin}></LoginBox>
+        <LoginBox
+          onLogin={this.props.onLogin}
+          getCurrentError={this.props.getCurrentError}
+        ></LoginBox>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AccountFormProps } from "../../@types/CreateAccount";
 import FormInput from "../FormInput/FormInput";
+import Error from "../../errors/Error";
 import "./AccountForm.css";
 
 /**
@@ -94,7 +95,7 @@ function LoginBox(props: AccountFormProps): JSX.Element {
         className="account-form-error"
         style={{ display: `${errorDisplay}` }}
       >
-        {props.errorMsg}
+        {Error.readErrorMsg(props.getCurrentError())}
       </div>
       <div
         className="account-form-success"

@@ -42,7 +42,10 @@ class ErrorHandling {
    * @returns {void}
    */
   public static handleError (
-    err: Error,
+    err: Error & {
+      status?: number
+      errorCode?: number
+    },
     req: Request,
     res: Response,
     next: NextFunction,
@@ -61,14 +64,16 @@ class ErrorHandling {
 
     const message = err.message.length > 0 ? err.message : 'An unexpected error occurred'
 
+    const body = { errorCode: err.errorCode ? err.errorCode : -1 , errorMsg: message }
+
     if (message !== '') {
-      this.sendHttpResponse(res, status, message)
+      this.sendHttpResponse(res, status, body)
     } else {
       // Handle the case where 'message' is an empty string
       this.sendHttpResponse(
         res,
         status,
-        'Error occurred, but no message provided.'
+       { errorCode: -1, errorMsg: 'Error occurred, but no message provided.' }
       )
     }
   }
@@ -97,7 +102,7 @@ class ErrorHandling {
   private static sendHttpResponse (
     res: Response,
     status: number,
-    body?: string
+    body?: { errorCode: number, errorMsg: string }
   ): void {
     if (status < 400) {
       res.status(status).json({ success: body })

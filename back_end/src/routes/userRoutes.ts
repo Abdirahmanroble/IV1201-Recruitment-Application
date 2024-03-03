@@ -28,8 +28,10 @@ router.post('/login', (req: Request, res: Response, next: NextFunction) => {
         // Create an error object with a status property and throw it to be caught by the catch block
         const error = new Error(validationResult.error.message) as Error & {
           status?: number
+          errorCode?: number
         }
         error.status = validationResult.error.status
+        error.errorCode = validationResult.error.errorCode
         throw error
       }
       // If validation is successful, proceed with login
@@ -75,8 +77,10 @@ router.post('/register', (req: Request, res: Response, next: NextFunction) => {
         // Create an error object with a status property and throw it to be caught by the catch block
         const error = new Error(validationResult.error.message) as Error & {
           status?: number
+          errorCode?: number
         }
         error.status = validationResult.error.status
+        error.errorCode = validationResult.error.errorCode
         throw error
       }
       void UserController.register(req, res)
@@ -114,8 +118,10 @@ router.post('/logout', (req: Request, res: Response, next: NextFunction) => {
         // Create an error object with a status property and throw it to be caught by the catch block
         const error = new Error(validationResult.error.message) as Error & {
           status?: number
+          errorCode?: number
         }
         error.status = validationResult.error.status
+        error.errorCode = validationResult.error.errorCode
         throw error
       }
       void UserController.logout(res)

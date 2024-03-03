@@ -31,8 +31,6 @@ export default class ViewModel implements VM {
   };
 
   public async login(params: LoginParams): Promise<boolean> {
-    let databaseBody: LoginResponseBody = new LoginResponseBody();
-
     try {
       const data = await this.fetchData("http://localhost:3000/login", "POST", {
         username: params.email,
@@ -40,16 +38,15 @@ export default class ViewModel implements VM {
       });
 
       if (data?.message) {
-        databaseBody = data;
-        this.setUserBody(databaseBody.foundUser);
+        this.setUserBody(data.foundUser);
         this.changeAuthState(true);
-      } else this.changeAuthState(false);
-
-      console.log(databaseBody); /**Remove later */
-
+      } else if (data?.error) {
+        this.setCurrentError(+data.error.errorCode); /** string to number */
+        this.changeAuthState(false);
+      } else throw new Error("Unknown error");
       return this.signedIn;
     } catch (error) {
-      console.error("Login request failed:", error);
+      this.setCurrentError(-1);
       return false;
     }
   }
@@ -73,16 +70,13 @@ export default class ViewModel implements VM {
 
       if (data?.message) {
         databaseBody = data;
-
-        console.log(databaseBody); /**Remove later */
-
         return true;
       } else if (data?.error) {
-        this.setCurrentError(data.error.errorCode);
+        this.setCurrentError(+data.error.errorCode); /** string to number */
         return false;
-      } else return false;
+      } else throw new Error("Unknown error");
     } catch (error) {
-      this.setCurrentError(0);
+      this.setCurrentError(-1);
       return false;
     }
   }
@@ -232,8 +226,6 @@ export default class ViewModel implements VM {
           };
 
     const response = await fetch(path, fetchBody);
-
-    if (!response.ok) throw new Error("Network response failure.");
 
     return await response.json();
   };

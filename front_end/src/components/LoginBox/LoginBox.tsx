@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { LoginBoxProps } from "../../@types/Login";
 import FormInput from "../FormInput/FormInput";
+import Error from "../../errors/Error";
 import "./LoginBox.css";
 
 /**
@@ -15,10 +16,8 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
   const [counter, setCounter] = useState(0);
   const [success, setSuccess] = useState(false);
 
-  let invalidCredentials = "none",
-    emptyBox = "none";
-  if ((email === "" || password === "") && counter > 0) emptyBox = "block";
-  else if (success === false && counter > 0) invalidCredentials = "block";
+  let errorDisplay = "none";
+  if (success === false && counter > 0) errorDisplay = "block";
 
   return (
     <div className="login-box">
@@ -50,14 +49,8 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
           LOGIN
         </button>
       </div>
-      <div
-        className="login-box-error"
-        style={{ display: `${invalidCredentials}` }}
-      >
-        Invalid credentials
-      </div>
-      <div className="login-box-error" style={{ display: `${emptyBox}` }}>
-        Please fill in the empty boxes
+      <div className="login-form-error" style={{ display: `${errorDisplay}` }}>
+        {Error.readErrorMsg(props.getCurrentError())}
       </div>
     </div>
   );

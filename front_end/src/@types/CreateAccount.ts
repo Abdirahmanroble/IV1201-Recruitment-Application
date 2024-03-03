@@ -17,7 +17,7 @@ export interface AccountFormProps {
     username: string,
     password: string
   ) => Promise<boolean>;
-  errorMsg: string;
+  getCurrentError: () => number;
 }
 
 export interface ViewProps {
