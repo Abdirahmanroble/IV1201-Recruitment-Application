@@ -19,16 +19,18 @@ export default class ListApplicationsView extends PureComponent<ViewProps> {
       <div className="list-applications-view">
         <h1>List Applications</h1>
         {/* Map through the applications array and render an ApplicationCard for each application */}
-        {this.props.applications.map((application, key) => {
-          return (
-            <ApplicationCard
-              name={application.fullName}
-              date={application.applicationDate}
-              status={application.status}
-              key={key}
-            ></ApplicationCard>
-          );
-        })}
+        <div className="list-applications-applications">
+          {this.props.applications.map((application, key) => {
+            return (
+              <ApplicationCard
+                name={application.fullName}
+                date={application.applicationDate}
+                status={application.status}
+                key={key}
+              ></ApplicationCard>
+            );
+          })}
+        </div>
       </div>
     );
   }

@@ -3,8 +3,6 @@ import {
   ApplicationsResponseBody,
   CreateAccountParams,
   LoginParams,
-  LoginResponseBody,
-  RegisterResponseBody,
   UserBody,
 } from "../@types/ViewModel";
 
