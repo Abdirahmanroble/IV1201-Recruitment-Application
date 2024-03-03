@@ -2,6 +2,7 @@ import { type Request, type Response } from 'express'
 import { ApplicationService } from '../services/applicationService'
 import AuthService from '../services/authService'
 import { createToken } from '../middleware/auth.middleware'
+import Logger from '../util/Logger'
 
 /**
  * Controller for user-related operations in an Express application.
@@ -26,6 +27,7 @@ class UserController {
 
       if (user === null || user === undefined) {
         res.status(401).send('Invalid credentials')
+        Logger.logException(new Error('Something wrong with the inputs'), { file: 'UserController.ts', reason: 'Invalid credentials' })
         return
       }
       const foundUser = {
@@ -41,8 +43,11 @@ class UserController {
       res.cookie('jwt', token, { httpOnly: true })
 
       res.json({ message: 'Login successful', foundUser })
+      Logger.log('info', 'Login successful', { file: 'UserController.ts', reason: 'User logged in successfully.' })
     } catch (error) {
       res.status(500).send('error logging in')
+      Logger.logException(new Error('Something went wrong with the login'),
+        { file: 'UserController.ts', reason: 'Login was unsuccessful.' })
     }
   }
 
@@ -63,6 +68,7 @@ class UserController {
       const user = await AuthService.register(userDTO)
       if (user === null || user === undefined) {
         res.status(401).send('Invalid credentials')
+        Logger.logException(new Error('Something wrong with the inputs'), { file: 'UserController.ts', reason: 'Invalid credentials' })
         return
       }
       if (typeof user === 'string') {
@@ -82,8 +88,11 @@ class UserController {
         res.cookie('jwt', token, { httpOnly: true })
 
         res.json({ message: 'Register successful', createdUser })
+        Logger.log('info', 'Register successful', { file: 'UserController.ts', reason: 'Registration was successful.' })
       }
     } catch (error) {
+      Logger.logException(new Error('Something went wrong with the registration'),
+        { file: 'UserController.ts', reason: 'Registration was unsuccessful.' })
       res.status(500).send(error)
     }
   }
@@ -103,11 +112,14 @@ class UserController {
     try {
       const applications = await ApplicationService.getAllApplications()
       res.json({ message: 'Applications gotten successfully', applications })
+      Logger.log('info', 'Applications gotten successfully', { file: 'UserController.ts', reason: 'Sent all applications' })
     } catch (error: unknown) {
       if (error instanceof Error) {
         res.status(500).send(error.message)
       } else {
         res.status(500).send('An unknown error occurred')
+        Logger.logException(new Error('An unknown error occurred'),
+          { file: 'UserController.ts', reason: 'Error in getting user applications' })
       }
     }
   }
@@ -125,6 +137,7 @@ class UserController {
   ): Promise<void> {
     res.clearCookie('jwt')
     res.status(200).send('User logged out successfully')
+    Logger.log('info', 'User has been logged out', { file: 'UserController.ts', reason: 'Logged Out' })
   }
 }
 export default UserController

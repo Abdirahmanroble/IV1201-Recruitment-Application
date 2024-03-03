@@ -3,6 +3,7 @@ import UserController from '../controller/userController'
 import { validationResult } from 'express-validator'
 import UserValidators from '../util/Validators'
 import ErrorHandling from '../errors/errorHandler'
+import Logger from '../util/Logger'
 
 /* Initialize the router object from Express */
 const router = Router()
@@ -30,6 +31,7 @@ router.post('/login', (req: Request, res: Response, next: NextFunction) => {
           status?: number
         }
         error.status = validationResult.error.status
+        Logger.logException(error, { file: 'UserRoutes.ts', reason: 'UserLoginValidationFailed' })
         throw error
       }
       // If validation is successful, proceed with login
@@ -77,6 +79,7 @@ router.post('/register', (req: Request, res: Response, next: NextFunction) => {
           status?: number
         }
         error.status = validationResult.error.status
+        Logger.logException(error, { file: 'UserRoutes.ts', reason: 'UserRegisterValidationFailed' })
         throw error
       }
       void UserController.register(req, res)
@@ -106,6 +109,7 @@ router.post('/register', (req: Request, res: Response, next: NextFunction) => {
 router.post('/logout', (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
+    Logger.logException(new Error('Something work with the request'), { file: 'UserRoutes.ts', reason: 'UserLoginValidationFailed' })
     return res.status(400).json({ errors: errors.array() })
   }
   UserValidators.validateLogout(req)
@@ -116,6 +120,7 @@ router.post('/logout', (req: Request, res: Response, next: NextFunction) => {
           status?: number
         }
         error.status = validationResult.error.status
+        Logger.logException(error, { file: 'UserRoutes.ts', reason: 'UserLogoutValidationFailed' })
         throw error
       }
       void UserController.logout(res)

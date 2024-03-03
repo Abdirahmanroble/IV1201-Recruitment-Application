@@ -31,7 +31,8 @@
     "rimraf": "^5.0.5",
     "sequelize": "^6.37.1",
     "verror": "^1.10.1",
-    "wait-for": "^2.1.1"
+    "wait-for": "^2.1.1",
+    "winston": "^3.11.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
