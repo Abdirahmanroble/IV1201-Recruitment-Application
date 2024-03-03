@@ -52,8 +52,6 @@ export default class ViewModel implements VM {
   }
 
   public async createAccount(params: CreateAccountParams): Promise<boolean> {
-    let databaseBody: RegisterResponseBody = new RegisterResponseBody();
-
     try {
       const data = await this.fetchData(
         "http://localhost:3000/register",
@@ -69,7 +67,6 @@ export default class ViewModel implements VM {
       );
 
       if (data?.message) {
-        databaseBody = data;
         return true;
       } else if (data?.error) {
         this.setCurrentError(+data.error.errorCode); /** string to number */
