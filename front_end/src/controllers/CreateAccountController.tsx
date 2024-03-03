@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { ControllerProps } from "../@types/CreateAccount";
 import CreateAccountView from "../views/CreateAccountView/CreateAccountView";
-import ViewModel from "../view-models/ViewModel";
 
 /**
  * Represents the controller component responsible for handling logic related to creating a new account.
