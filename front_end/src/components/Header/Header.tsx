@@ -53,20 +53,20 @@ function Header(props: HeaderProps): JSX.Element {
     <div className="header-container">
       <div className="header-title">{t("recruitmentApplication")}</div>
       <div className="header-paths">
-        <Link to="/" className={`${home}`}>
-          {t("home")}
+        <Link to="/" className="App-link">
+          <div className={home}>{t("home")}</div>
         </Link>
         {!props.signedIn && (
           <>
-            <Link to="/create-account" className={`${creatingAccount}`}>
-              {t("createAccount")}
+            <Link to="/create-account" className="App-link">
+              <div>{t("createAccount")}</div>
             </Link>
           </>
         )}
         {props.signedIn && !props.isApplicant && (
-          <Link to="/list-applications" className={`${listingApplications}`}>
-            {t("listApplications")}
-          </Link>
+          <Link to="/list-applications" className="App-link">
+            <div>{t("listApplications")}</div>
+            </Link>
         )}
         {props.signedIn && (
           <div onClick={props.onLogout} className="header-logout">

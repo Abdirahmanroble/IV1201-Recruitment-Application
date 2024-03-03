@@ -52,7 +52,7 @@
 
 .languages-dropdown {
   position: absolute;
-  top: 100%; /* Positioned right below the language-switcher */
+  top: 170%; /* Positioned right below the language-switcher */
   right: 0;
   background-color: white;
   border: 1px solid #ddd;
@@ -70,5 +70,5 @@
 }
 
 .languages-dropdown li:hover {
-  background-color: #f7f7f7;
+  background-color: #ccdbd0;
 }
