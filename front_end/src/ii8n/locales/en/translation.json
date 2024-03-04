@@ -30,5 +30,6 @@
   "invalidEmail": "Please enter a valid email",
   "invalidPersonNumber": "Please enter a valid person number (YYYYMMDD-XXX)",
   "missingCookie": "Unauthorized access to logout",
-  "unknownError": "Please try again"
-}
+  "unknownError": "Please try again",
+  "Group 5" : "Group 5"
+  }

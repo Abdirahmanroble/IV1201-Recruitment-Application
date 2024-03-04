@@ -30,5 +30,7 @@
   "invalidEmail": "Ange en giltig E-postadress",
   "invalidPersonNumber": "Ange ett giltigt personnummer (YYYYMMDD-XXX)",
   "missingCookie": "Saknar auktorisation för tillgång till utloggning",
-  "unknownError": "Var vänlig försök igen"
-}
+  "unknownError": "Var vänlig försök igen",
+  "Group 5" : "Grupp 5"
+  }
+
