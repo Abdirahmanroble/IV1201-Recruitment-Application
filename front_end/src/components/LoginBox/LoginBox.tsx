@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { LoginBoxProps } from "../../@types/Login";
 import FormInput from "../FormInput/FormInput";
+import readErrorMsg from "../../errors/Error";
 import { useTranslation } from "react-i18next";
 import "./LoginBox.css";
 
@@ -18,10 +19,8 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
 
   const { t } = useTranslation();
 
-  let invalidCredentials = "none",
-    emptyBox = "none";
-  if ((email === "" || password === "") && counter > 0) emptyBox = "block";
-  else if (success === false && counter > 0) invalidCredentials = "block";
+  let errorDisplay = "none";
+  if (success === false && counter > 0) errorDisplay = "block";
 
   return (
     <div className="login-box">
@@ -53,14 +52,8 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
           {t("login")}
         </button>
       </div>
-      <div
-        className="login-box-error"
-        style={{ display: `${invalidCredentials}` }}
-      >
-        {t("invalidCredentials")}
-      </div>
-      <div className="login-box-error" style={{ display: `${emptyBox}` }}>
-        {t("fillEmptyBoxes")}
+      <div className="login-form-error" style={{ display: `${errorDisplay}` }}>
+        {readErrorMsg(props.getCurrentError())}
       </div>
     </div>
   );

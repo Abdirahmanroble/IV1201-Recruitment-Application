@@ -29,8 +29,10 @@ router.post('/login', (req: Request, res: Response, next: NextFunction) => {
         // Create an error object with a status property and throw it to be caught by the catch block
         const error = new Error(validationResult.error.message) as Error & {
           status?: number
+          errorCode?: number
         }
         error.status = validationResult.error.status
+        error.errorCode = validationResult.error.errorCode
         Logger.logException(error, { file: 'UserRoutes.ts', reason: 'UserLoginValidationFailed' })
         throw error
       }
@@ -77,8 +79,10 @@ router.post('/register', (req: Request, res: Response, next: NextFunction) => {
         // Create an error object with a status property and throw it to be caught by the catch block
         const error = new Error(validationResult.error.message) as Error & {
           status?: number
+          errorCode?: number
         }
         error.status = validationResult.error.status
+        error.errorCode = validationResult.error.errorCode
         Logger.logException(error, { file: 'UserRoutes.ts', reason: 'UserRegisterValidationFailed' })
         throw error
       }
@@ -118,8 +122,10 @@ router.post('/logout', (req: Request, res: Response, next: NextFunction) => {
         // Create an error object with a status property and throw it to be caught by the catch block
         const error = new Error(validationResult.error.message) as Error & {
           status?: number
+          errorCode?: number
         }
         error.status = validationResult.error.status
+        error.errorCode = validationResult.error.errorCode
         Logger.logException(error, { file: 'UserRoutes.ts', reason: 'UserLogoutValidationFailed' })
         throw error
       }

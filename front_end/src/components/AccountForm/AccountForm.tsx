@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AccountFormProps } from "../../@types/CreateAccount";
 import FormInput from "../FormInput/FormInput";
+import readErrorMsg from "../../errors/Error";
 import { useTranslation } from "react-i18next";
 import "./AccountForm.css";
 
@@ -23,7 +24,6 @@ function LoginBox(props: AccountFormProps): JSX.Element {
 
   const { t } = useTranslation();
 
-
   let errorDisplay = "none",
     successDisplay = "none";
   if (success === false && counter > 0) errorDisplay = "block";
@@ -31,45 +31,45 @@ function LoginBox(props: AccountFormProps): JSX.Element {
 
   return (
     <div className="account-form-container">
-      <div className="account-form-header">{t('createAccount')}</div>
+      <div className="account-form-header">{t("createAccount")}</div>
       <div className="account-form-input">
         <FormInput
-          text={t('firstName')}
+          text={t("firstName") + "*"}
           type="text"
           value={firstName}
           onChange={setFirstName}
           counter={counter}
         />
         <FormInput
-          text={t('lastName')}
+          text={t("lastName") + "*"}
           type="text"
           value={lastName}
           onChange={setLastName}
           counter={counter}
         />
         <FormInput
-          text={t('email')}
+          text={t("email") + "*"}
           type="email"
           value={email}
           onChange={setEmail}
           counter={counter}
         />
         <FormInput
-          text={t('personNumber')}
+          text={t("personNumber")}
           type="text"
           value={personNumber}
           onChange={setPersonNumber}
-          counter={counter}
+          counter={0}
         />
         <FormInput
-          text={t('username')}
+          text={t("username") + "*"}
           type="text"
           value={username}
           onChange={setUsername}
           counter={counter}
         />
         <FormInput
-          text={t('password')}
+          text={t("password") + "*"}
           type="password"
           value={password}
           onChange={setPassword}
@@ -91,20 +91,14 @@ function LoginBox(props: AccountFormProps): JSX.Element {
             setSuccess(userWasCreated);
           }}
         >
-          {t('createAccountButton')}
+          {t("createAccountButton")}
         </button>
       </div>
-      <div
-        className="account-form-error"
-        style={{ display: errorDisplay }}
-      >
-        {t('fillEmptyBoxes')}
+      <div className="account-form-error" style={{ display: errorDisplay }}>
+        {readErrorMsg(props.getCurrentError())}
       </div>
-      <div
-        className="account-form-success"
-        style={{ display: successDisplay }}
-      >
-        {t('userCreatedSuccess')}
+      <div className="account-form-success" style={{ display: successDisplay }}>
+        {t("userCreatedSuccess")}
       </div>
     </div>
   );

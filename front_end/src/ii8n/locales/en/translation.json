@@ -10,10 +10,8 @@
   "personNumber": "Person Number:",
   "username": "Username:",
   "password": "Password:",
-  "fillEmptyBoxes": "Please fill in the empty boxes",
   "userCreatedSuccess": "User was created successfully",
   "userLogin": "User login",
-  "invalidCredentials": "Invalid credentials",
   "recruitmentApplication": "Recruitment Application",
   "home": "Home",
   "listApplications": "List Applications",
@@ -24,5 +22,14 @@
     "rejected": "Rejected",
     "unhandled": "Unhandled"
   },
+  "missingUsernamePassword": "Please enter username and password",
+  "missingUsername": "Please enter username",
+  "invalidUsername": "Username must be an alphanumeric or an email",
+  "invalidCredentials": "Invalid credentials",
+  "missingData": "Please enter the required data",
+  "invalidEmail": "Please enter a valid email",
+  "invalidPersonNumber": "Please enter a valid person number (YYYYMMDD-XXX)",
+  "missingCookie": "Unauthorized access to logout",
+  "unknownError": "Please try again",
   "Group 5" : "Group 5"
-}
+  }

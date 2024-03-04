@@ -4,3 +4,18 @@
   align-items: center;
   gap: 1vh;
 }
+
+.list-applications-applications {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
+
+  height: 70vh;
+
+  overflow: scroll;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

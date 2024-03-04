@@ -10,10 +10,8 @@
   "personNumber": "Personnummer:",
   "username": "Användarnamn:",
   "password": "Lösenord:",
-  "fillEmptyBoxes": "Vänligen fyll i alla fält",
   "userCreatedSuccess": "Användaren skapades framgångsrikt",
   "userLogin": "Användarinloggning",
-  "invalidCredentials": "Ogiltiga uppgifter",
   "recruitmentApplication": "Rekryteringsapplikation",
   "home": "Hem",
   "listApplications": "Lista ansökningar",
@@ -24,6 +22,15 @@
     "rejected": "Avvisad",
     "unhandled": "Obehandlad"
   },
-
+  "missingUsernamePassword": "Ange användarnamn och lösenord",
+  "missingUsername": "Ange användarnamn",
+  "invalidUsername": "Användarnamnet måste vara av alfanumerisk typ eller vara en E-postadress",
+  "invalidCredentials": "Ogiltiga inloggningsuppgifter",
+  "missingData": "Ange nödvändig data",
+  "invalidEmail": "Ange en giltig E-postadress",
+  "invalidPersonNumber": "Ange ett giltigt personnummer (YYYYMMDD-XXX)",
+  "missingCookie": "Saknar auktorisation för tillgång till utloggning",
+  "unknownError": "Var vänlig försök igen",
   "Group 5" : "Grupp 5"
-}
+  }
+

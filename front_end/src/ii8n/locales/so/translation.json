@@ -10,10 +10,8 @@
   "personNumber": "Lambarka Qofka:",
   "username": "Magaca Isticmaalaha:",
   "password": "Furaha:",
-  "fillEmptyBoxes": "Fadlan buuxi sanduuqyada madhan",
   "userCreatedSuccess": "Isticmaalaha si guul leh ayaa loo abuuray",
   "userLogin": "Galitaanka Isticmaalaha",
-  "invalidCredentials": "Aqoonsiga aan saxda ahayn",
   "recruitmentApplication": "Codsiga Qorista Shaqaalaha",
   "home": "Bogga Hore",
   "listApplications": "Liiska Codsiga",
@@ -25,6 +23,14 @@
     "unhandled": "Lama Daaweeyay"
   },
 
-  "Group 5" : "Kooxda 5"
-
+  "missingUsernamePassword": "Fadlan geli magaca isticmaale iyo furaha",
+  "missingUsername": "Fadlan geli magaca isticmaale",
+  "invalidUsername": "Magaca isticmaalaha waa inuu noqdaa alfanumerik ama email",
+  "invalidCredentials": "Aqoonsiga aan saxda ahayn",
+  "missingData": "Fadlan geli xogta loo baahan yahay",
+  "invalidEmail": "Fadlan geli email sax ah",
+  "invalidPersonNumber": "Fadlan geli lambarka qofka sax ah (YYYYMMDD-XXX)",
+  "missingCookie": "Gelitaanka aan la oggolayn si loo baxo",
+  "unknownError": "Fadlan isku day mar kale",
+  "Group 5": "Kooxda 5"
 }

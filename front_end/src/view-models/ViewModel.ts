@@ -4,8 +4,6 @@ import {
   ApplicationsResponseBody,
   CreateAccountParams,
   LoginParams,
-  LoginResponseBody,
-  RegisterResponseBody,
   UserBody,
 } from "../@types/ViewModel";
 
@@ -20,6 +18,7 @@ export default class ViewModel implements VM {
   private competences: { yearsOfExperience: number; name: string }[] = [];
   private role: number = 0;
   private signedIn: boolean = false;
+  private currentError: number = 0;
 
   public changeAuthState: (state: boolean) => void = (state: boolean) => {
     console.log(state);
@@ -31,35 +30,37 @@ export default class ViewModel implements VM {
   };
 
   public async login(params: LoginParams): Promise<boolean> {
-    let databaseBody: LoginResponseBody = new LoginResponseBody();
-
     try {
-      const data = await this.fetchData("https://iv1201-recruitment-application-backend.onrender.com/login", "POST", {
+      const data = await this.fetchData("http://localhost:3000/login", "POST", {
         username: params.email,
         password: params.password,
       });
 
       if (data?.message) {
-        databaseBody = data;
-        this.setUserBody(databaseBody.foundUser);
-        this.changeAuthState(true);
-      } else this.changeAuthState(false);
-
-      console.log(databaseBody); /**Remove later */
-
+        if (+data.responseCode === 100) {
+          /** invalid credentials */
+          this.setCurrentError(100);
+          this.changeAuthState(false);
+        } else {
+          /** valid credentials */
+          this.setUserBody(data.foundUser);
+          this.changeAuthState(true);
+        }
+      } else if (data?.error) {
+        this.setCurrentError(+data.error.errorCode); /** string to number */
+        this.changeAuthState(false);
+      } else throw new Error("Unknown error");
       return this.signedIn;
     } catch (error) {
-      console.error("Login request failed:", error);
+      this.setCurrentError(-1);
       return false;
     }
   }
 
   public async createAccount(params: CreateAccountParams): Promise<boolean> {
-    let databaseBody: RegisterResponseBody = new RegisterResponseBody();
-
     try {
       const data = await this.fetchData(
-        "https://iv1201-recruitment-application-backend.onrender.com/register",
+        "http://localhost:3000/register",
         "POST",
         {
           name: params.firstName,
@@ -72,14 +73,13 @@ export default class ViewModel implements VM {
       );
 
       if (data?.message) {
-        databaseBody = data;
-
-        console.log(databaseBody); /**Remove later */
-
         return true;
-      } else return false;
+      } else if (data?.error) {
+        this.setCurrentError(+data.error.errorCode); /** string to number */
+        return false;
+      } else throw new Error("Unknown error");
     } catch (error) {
-      console.error("Register request failed:", error);
+      this.setCurrentError(-1);
       return false;
     }
   }
@@ -89,7 +89,7 @@ export default class ViewModel implements VM {
 
     try {
       const data = await this.fetchData(
-        "https://iv1201-recruitment-application-backend.onrender.com/applications",
+        "http://localhost:3000/applications",
         "GET",
         {}
       );
@@ -107,7 +107,7 @@ export default class ViewModel implements VM {
 
   public async logout(): Promise<boolean> {
     try {
-      const response = await fetch("https://iv1201-recruitment-application-backend.onrender.com/logout", {
+      const response = await fetch("http://localhost:3000/logout", {
         method: "POST",
         credentials: "include", // Necessary to include the cookie in the request.
       });
@@ -165,6 +165,11 @@ export default class ViewModel implements VM {
     this.changeState(this);
   }
 
+  public setCurrentError(currentError: number) {
+    this.currentError = currentError;
+    this.changeState(this);
+  }
+
   public setChangeAuthState(changeAuthState: (state: boolean) => void) {
     this.changeAuthState = (state: boolean) => {
       changeAuthState(state);
@@ -204,6 +209,10 @@ export default class ViewModel implements VM {
     return this.role;
   }
 
+  public getCurrentError(): number {
+    return this.currentError;
+  }
+
   private fetchData = async (path: string, method: string, body: Object) => {
     const fetchBody: RequestInit =
       method === "POST"
@@ -220,8 +229,6 @@ export default class ViewModel implements VM {
           };
 
     const response = await fetch(path, fetchBody);
-
-    if (!response.ok) throw new Error("Network response failure.");
 
     return await response.json();
   };

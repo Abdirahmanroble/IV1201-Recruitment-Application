@@ -20,6 +20,7 @@ export default class CreateAccountView extends PureComponent<ViewProps> {
         <h1>Create Account</h1>
         <CreateAccountForm
           onCreateAccount={this.props.onCreateAccount}
+          getCurrentError={this.props.getCurrentError}
         ></CreateAccountForm>
       </div>
     );
