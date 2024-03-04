@@ -1,0 +1,27 @@
+{
+  "welcomeMessage": "Welcome to Our Application",
+  "login": "Login",
+  "logout": "Logout",
+  "createAccount": "Create Account",
+  "createAccountButton": "Create Account",
+  "firstName": "First Name:",
+  "lastName": "Last Name:",
+  "email": "Email:",
+  "personNumber": "Person Number:",
+  "username": "Username:",
+  "password": "Password:",
+  "fillEmptyBoxes": "Please fill in the empty boxes",
+  "userCreatedSuccess": "User was created successfully",
+  "userLogin": "User login",
+  "invalidCredentials": "Invalid credentials",
+  "recruitmentApplication": "Recruitment Application",
+  "home": "Home",
+  "listApplications": "List Applications",
+  "switchLanguage": "Switch Language",
+  "welcome": "Welcome",
+  "status": {
+    "accepted": "Accepted",
+    "rejected": "Rejected",
+    "unhandled": "Unhandled"
+  }
+}

@@ -1,0 +1,27 @@
+{
+    "welcomeMessage": "Bienvenue sur Notre Application",
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "createAccount": "Créer un Compte",
+    "createAccountButton": "Créer un Compte",
+    "firstName": "Prénom:",
+    "lastName": "Nom de Famille:",
+    "email": "E-mail:",
+    "personNumber": "Numéro de Personne:",
+    "username": "Nom d'Utilisateur:",
+    "password": "Mot de Passe:",
+    "fillEmptyBoxes": "Veuillez remplir les cases vides",
+    "userCreatedSuccess": "Utilisateur créé avec succès",
+    "userLogin": "Connexion de l'Utilisateur",
+    "invalidCredentials": "Identifiants Invalides",
+    "recruitmentApplication": "Demande de Recrutement",
+    "home": "Accueil",
+    "listApplications": "Lister les Demandes",
+    "switchLanguage": "Changer de Langue",
+    "welcome": "Bienvenue",
+    "status": {
+        "accepted": "Accepté",
+        "rejected": "Rejeté",
+        "unhandled": "Non traité"
+    }
+}

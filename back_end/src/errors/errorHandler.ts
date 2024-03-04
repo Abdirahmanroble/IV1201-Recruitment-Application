@@ -6,30 +6,12 @@ import {
 } from 'express'
 import Logger from '../util/Logger'
 import { ValidationError } from 'sequelize'
-
 /**
  * ErrorHandling class for managing application-wide error handling in an Express application.
  * It utilizes a Logger instance to log exceptions and provides a middleware to handle errors
  * by sending a standardized response or passing the error along if the response headers have already been sent.
  */
 class ErrorHandling {
-  // static handleError(arg0: Error, req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction, status: any) {
-  //   throw new Error("Method not implemented.")
-  // }
-  /**
-   * Logger instance for logging exceptions.
-   * @private
-   */
-  private static logger: Logger
-
-  /**
-   * Initializes a new instance of the ErrorHandling class.
-   * Constructs a new Logger instance for use in error handling.
-   */
-  constructor () {
-    ErrorHandling.logger = new Logger()
-  }
-
   /**
    * Error handling middleware function.
    * Logs the received error using the Logger instance, checks if response headers have already been sent,
@@ -51,7 +33,7 @@ class ErrorHandling {
     next: NextFunction,
     customStatus?: number
   ): void {
-    this.logger.logException(err)
+    Logger.logException(err, { file: 'ErrorHandling.ts', reason: 'Something went wrong from routes' })
 
     if (res.headersSent) {
       next(err)

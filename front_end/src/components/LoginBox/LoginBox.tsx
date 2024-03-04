@@ -2,6 +2,7 @@ import { useState } from "react";
 import { LoginBoxProps } from "../../@types/Login";
 import FormInput from "../FormInput/FormInput";
 import Error from "../../errors/Error";
+import { useTranslation } from "react-i18next";
 import "./LoginBox.css";
 
 /**
@@ -21,22 +22,22 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
 
   return (
     <div className="login-box">
-      <div className="login-box-header">USER LOGIN</div>
+      <div className="login-box-header">{t("userLogin")}</div>
       <div className="login-box-input">
         <FormInput
-          text="Email:"
+          text={t("email")}
           type="email"
           value={email}
           onChange={setEmail}
           counter={counter}
-        ></FormInput>
+        />
         <FormInput
-          text="Password:"
+          text={t("password")}
           type="password"
           value={password}
           onChange={setPassword}
           counter={counter}
-        ></FormInput>
+        />
       </div>
       <div className="login-box-buttons">
         <button
@@ -46,11 +47,12 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
             setSuccess(userWasLoggedIn);
           }}
         >
-          LOGIN
+          {t("login")}
         </button>
       </div>
       <div className="login-form-error" style={{ display: `${errorDisplay}` }}>
         {Error.readErrorMsg(props.getCurrentError())}
+        {/* {t('fillEmptyBoxes')} */}
       </div>
     </div>
   );
