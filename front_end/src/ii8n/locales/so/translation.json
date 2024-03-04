@@ -22,13 +22,15 @@
     "rejected": "La Diiday",
     "unhandled": "Lama Daaweeyay"
   },
-  "missingUsernamePassword": "Please enter username and password",
-  "missingUsername": "Please enter username",
-  "invalidUsername": "Username must be an alphanumeric or an email",
-  "invalidCredentials": "Invalid credentials",
-  "missingData": "Please enter the required data",
-  "invalidEmail": "Please enter a valid email",
-  "invalidPersonNumber": "Please enter a valid person number (YYYYMMDD-XXX)",
-  "missingCookie": "Unauthorized access to logout",
-  "unknownError": "Please try again"
+
+  "missingUsernamePassword": "Fadlan geli magaca isticmaale iyo furaha",
+  "missingUsername": "Fadlan geli magaca isticmaale",
+  "invalidUsername": "Magaca isticmaalaha waa inuu noqdaa alfanumerik ama email",
+  "invalidCredentials": "Aqoonsiga aan saxda ahayn",
+  "missingData": "Fadlan geli xogta loo baahan yahay",
+  "invalidEmail": "Fadlan geli email sax ah",
+  "invalidPersonNumber": "Fadlan geli lambarka qofka sax ah (YYYYMMDD-XXX)",
+  "missingCookie": "Gelitaanka aan la oggolayn si loo baxo",
+  "unknownError": "Fadlan isku day mar kale",
+  "Group 5": "Kooxda 5"
 }

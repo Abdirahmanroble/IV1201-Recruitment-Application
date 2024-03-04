@@ -22,13 +22,16 @@
     "rejected": "Rejeté",
     "unhandled": "Non traité"
   },
-  "missingUsernamePassword": "Please enter username and password",
-  "missingUsername": "Please enter username",
-  "invalidUsername": "Username must be an alphanumeric or an email",
-  "invalidCredentials": "Invalid credentials",
-  "missingData": "Please enter the required data",
-  "invalidEmail": "Please enter a valid email",
-  "invalidPersonNumber": "Please enter a valid person number (YYYYMMDD-XXX)",
-  "missingCookie": "Unauthorized access to logout",
-  "unknownError": "Please try again"
+
+  "missingUsernamePassword": "Veuillez saisir le nom d'utilisateur et le mot de passe",
+  "missingUsername": "Veuillez saisir le nom d'utilisateur",
+  "invalidUsername": "Le nom d'utilisateur doit être alphanumérique ou un email",
+  "invalidCredentials": "Identifiants invalides",
+  "missingData": "Veuillez entrer les données requises",
+  "invalidEmail": "Veuillez saisir un email valide",
+  "invalidPersonNumber": "Veuillez saisir un numéro de personne valide (AAAAMMJJ-XXX)",
+  "missingCookie": "Accès non autorisé à la déconnexion",
+  "unknownError": "Veuillez réessayer",
+
+  "Group 5": "Groupe 5"
 }
