@@ -3,7 +3,13 @@ import ApplicationCard from "../../components/ApplicationCard/ApplicationCard";
 import { useTranslation } from "react-i18next";
 import "./ListApplicationsView.css";
 
-const ListApplicationsView: React.FC<ViewProps> = (props) => {
+/**
+ * Represents the view component for listing applications.
+ *
+ * @param props The props passed to the component.
+ * @returns The rendered list applications view component.
+ */
+const ListApplicationsView = (props: ViewProps): React.ReactNode => {
   const { t } = useTranslation();
 
   return (
