@@ -37,8 +37,15 @@ export default class ViewModel implements VM {
       });
 
       if (data?.message) {
-        this.setUserBody(data.foundUser);
-        this.changeAuthState(true);
+        if (+data.responseCode === 100) {
+          /** invalid credentials */
+          this.setCurrentError(100);
+          this.changeAuthState(false);
+        } else {
+          /** valid credentials */
+          this.setUserBody(data.foundUser);
+          this.changeAuthState(true);
+        }
       } else if (data?.error) {
         this.setCurrentError(+data.error.errorCode); /** string to number */
         this.changeAuthState(false);

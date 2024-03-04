@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LoginBoxProps } from "../../@types/Login";
 import FormInput from "../FormInput/FormInput";
-import Error from "../../errors/Error";
+import readErrorMsg from "../../errors/Error";
 import { useTranslation } from "react-i18next";
 import "./LoginBox.css";
 
@@ -53,8 +53,7 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
         </button>
       </div>
       <div className="login-form-error" style={{ display: `${errorDisplay}` }}>
-        {Error.readErrorMsg(props.getCurrentError())}
-        {/* {t('fillEmptyBoxes')} */}
+        {readErrorMsg(props.getCurrentError())}
       </div>
     </div>
   );

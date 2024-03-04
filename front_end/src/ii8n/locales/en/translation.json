@@ -21,5 +21,14 @@
     "accepted": "Accepted",
     "rejected": "Rejected",
     "unhandled": "Unhandled"
-  }
+  },
+  "missingUsernamePassword": "Please enter username and password",
+  "missingUsername": "Please enter username",
+  "invalidUsername": "Username must be an alphanumeric or an email",
+  "invalidCredentials": "Invalid credentials",
+  "missingData": "Please enter the required data",
+  "invalidEmail": "Please enter a valid email",
+  "invalidPersonNumber": "Please enter a valid person number (YYYYMMDD-XXX)",
+  "missingCookie": "Unauthorized access to logout",
+  "unknownError": "Please try again"
 }

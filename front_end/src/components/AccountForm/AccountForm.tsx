@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { AccountFormProps } from "../../@types/CreateAccount";
 import FormInput from "../FormInput/FormInput";
-import Error from "../../errors/Error";
+import readErrorMsg from "../../errors/Error";
 import { useTranslation } from "react-i18next";
 import "./AccountForm.css";
 
@@ -34,21 +34,21 @@ function LoginBox(props: AccountFormProps): JSX.Element {
       <div className="account-form-header">{t("createAccount")}</div>
       <div className="account-form-input">
         <FormInput
-          text={t("firstName")}
+          text={t("firstName") + "*"}
           type="text"
           value={firstName}
           onChange={setFirstName}
           counter={counter}
         />
         <FormInput
-          text={t("lastName")}
+          text={t("lastName") + "*"}
           type="text"
           value={lastName}
           onChange={setLastName}
           counter={counter}
         />
         <FormInput
-          text={t("email")}
+          text={t("email") + "*"}
           type="email"
           value={email}
           onChange={setEmail}
@@ -62,14 +62,14 @@ function LoginBox(props: AccountFormProps): JSX.Element {
           counter={0}
         />
         <FormInput
-          text={t("username")}
+          text={t("username") + "*"}
           type="text"
           value={username}
           onChange={setUsername}
           counter={counter}
         />
         <FormInput
-          text={t("password")}
+          text={t("password") + "*"}
           type="password"
           value={password}
           onChange={setPassword}
@@ -95,8 +95,7 @@ function LoginBox(props: AccountFormProps): JSX.Element {
         </button>
       </div>
       <div className="account-form-error" style={{ display: errorDisplay }}>
-        {Error.readErrorMsg(props.getCurrentError())}
-        {/* {t('fillEmptyBoxes')} */}
+        {readErrorMsg(props.getCurrentError())}
       </div>
       <div className="account-form-success" style={{ display: successDisplay }}>
         {t("userCreatedSuccess")}
