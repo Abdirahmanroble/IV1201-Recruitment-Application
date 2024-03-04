@@ -31,10 +31,14 @@ export default class ViewModel implements VM {
 
   public async login(params: LoginParams): Promise<boolean> {
     try {
-      const data = await this.fetchData("http://localhost:3000/login", "POST", {
-        username: params.email,
-        password: params.password,
-      });
+      const data = await this.fetchData(
+        "https://iv1201-recruitment-application.onrender.com/login",
+        "POST",
+        {
+          username: params.email,
+          password: params.password,
+        }
+      );
 
       if (data?.message) {
         if (+data.responseCode === 100) {
@@ -60,7 +64,7 @@ export default class ViewModel implements VM {
   public async createAccount(params: CreateAccountParams): Promise<boolean> {
     try {
       const data = await this.fetchData(
-        "http://localhost:3000/register",
+        "https://iv1201-recruitment-application.onrender.com/register",
         "POST",
         {
           name: params.firstName,
@@ -89,32 +93,31 @@ export default class ViewModel implements VM {
 
     try {
       const data = await this.fetchData(
-        "http://localhost:3000/applications",
+        "https://iv1201-recruitment-application.onrender.com/applications",
         "GET",
         {}
       );
 
       if (data?.message) databaseBody = data;
 
-      console.log(databaseBody); /**Remove later */
-
       return { applications: databaseBody.applications };
     } catch (error) {
-      console.error("Applications request failed:", error);
       return { applications: databaseBody.applications };
     }
   }
 
   public async logout(): Promise<boolean> {
     try {
-      const response = await fetch("http://localhost:3000/logout", {
-        method: "POST",
-        credentials: "include", // Necessary to include the cookie in the request.
-      });
+      const response = await fetch(
+        "https://iv1201-recruitment-application.onrender.com/logout",
+        {
+          method: "POST",
+          credentials: "include", // Necessary to include the cookie in the request.
+        }
+      );
 
       if (!response.ok) {
         // If the response is not OK, log the error and return false to indicate failure.
-        console.error("Logout failed with status:", response.status);
         return false;
       }
 
@@ -123,7 +126,6 @@ export default class ViewModel implements VM {
       this.signedIn = false;
       return true;
     } catch (error) {
-      console.error("Logout request failed:", error);
       return false;
     }
   }
