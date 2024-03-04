@@ -32,6 +32,8 @@
   "invalidPersonNumber": "Veuillez saisir un numéro de personne valide (AAAAMMJJ-XXX)",
   "missingCookie": "Accès non autorisé à la déconnexion",
   "unknownError": "Veuillez réessayer",
-
-  "Group 5": "Groupe 5"
+  "Group 5": "Groupe 5",
+  "updatePasswordHeader": "Mettre à jour le mot de passe",
+  "updatePasswordSuccess": "Le mot de passe a été mis à jour avec succès",
+  "updatePasswordFailure": "Échec de la mise à jour du mot de passe"
 }

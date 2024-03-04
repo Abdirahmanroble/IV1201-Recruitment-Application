@@ -31,5 +31,8 @@
   "invalidPersonNumber": "Please enter a valid person number (YYYYMMDD-XXX)",
   "missingCookie": "Unauthorized access to logout",
   "unknownError": "Please try again",
-  "Group 5" : "Group 5"
-  }
+  "Group 5": "Group 5",
+  "updatePasswordHeader": "Update Password",
+  "updatePasswordSuccess": "Password was updated successfully",
+  "updatePasswordFailure": "Failed to update password"
+}

@@ -32,5 +32,8 @@
   "invalidPersonNumber": "Fadlan geli lambarka qofka sax ah (YYYYMMDD-XXX)",
   "missingCookie": "Gelitaanka aan la oggolayn si loo baxo",
   "unknownError": "Fadlan isku day mar kale",
-  "Group 5": "Kooxda 5"
+  "Group 5": "Kooxda 5",
+  "updatePasswordHeader": "Cusboonaysii Furaha",
+  "updatePasswordSuccess": "Furaha ayaa si guul leh loo cusboonaysiiyay",
+  "updatePasswordFailure": "Ku guuldareystay in la cusboonaysiiyo furaha"
 }

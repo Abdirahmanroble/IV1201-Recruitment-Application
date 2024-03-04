@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { isTokenPresent } from "./utils/auth";
 
-import './ii8n/ii8n';
 import ViewModel from "./view-models/ViewModel";
 
 import Layout from "./components/Layout/Layout";
@@ -11,7 +10,9 @@ import HomeController from "./controllers/HomeController";
 import ListApplicationsController from "./controllers/ListApplicationsController";
 import LoginController from "./controllers/LoginController";
 import CreateAccountController from "./controllers/CreateAccountController";
+import UpdatePasswordView from "./views/UpdatePasswordView/UpdatePasswordView";
 
+import "./ii8n/ii8n";
 import "./App.css";
 
 /**
@@ -45,7 +46,10 @@ function App() {
     window.location.replace("/");
   };
 
-  if (signedIn && viewModel.getRole() === 2 || viewModel.getRole() === null /**Applicant */)
+  if (
+    (signedIn && viewModel.getRole() === 2) ||
+    viewModel.getRole() === null /**Applicant */
+  )
     return (
       <Router>
         <Routes>
@@ -128,6 +132,17 @@ function App() {
                     viewModel={viewModel}
                   ></CreateAccountController>
                 }
+                onLogout={onLogout}
+              ></Layout>
+            }
+          ></Route>
+          <Route
+            path="/update-password"
+            element={
+              <Layout
+                signedIn={false}
+                isApplicant={false}
+                element={<UpdatePasswordView></UpdatePasswordView>}
                 onLogout={onLogout}
               ></Layout>
             }

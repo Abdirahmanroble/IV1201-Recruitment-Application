@@ -31,6 +31,8 @@
   "invalidPersonNumber": "Ange ett giltigt personnummer (YYYYMMDD-XXX)",
   "missingCookie": "Saknar auktorisation för tillgång till utloggning",
   "unknownError": "Var vänlig försök igen",
-  "Group 5" : "Grupp 5"
-  }
-
+  "Group 5": "Grupp 5",
+  "updatePasswordHeader": "Uppdatera Lösenord",
+  "updatePasswordSuccess": "Lösenordet uppdaterades framgångsrikt",
+  "updatePasswordFailure": "Misslyckades med att uppdatera lösenordet"
+}
