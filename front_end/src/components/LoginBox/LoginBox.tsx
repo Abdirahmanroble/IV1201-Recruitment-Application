@@ -17,6 +17,8 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
   const [counter, setCounter] = useState(0);
   const [success, setSuccess] = useState(false);
 
+  const { t } = useTranslation();
+
   let errorDisplay = "none";
   if (success === false && counter > 0) errorDisplay = "block";
 
