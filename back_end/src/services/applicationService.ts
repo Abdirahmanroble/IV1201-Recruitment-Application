@@ -44,7 +44,7 @@ export const ApplicationService = {
             'applicationdate'
           ],
           order: [
-            ['applicationdate', 'DESC'],
+            ['applicationdate', 'DESC']
           ]
         })
 
