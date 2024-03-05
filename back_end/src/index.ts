@@ -1,11 +1,8 @@
-import express, {
-  type Express,
-  type Response,
-  type Request
-} from 'express'
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import express, { type Express, type Response, type Request } from 'express'
 import db from './integration/dbConfig'
 
-import './model/user'
+import User from './model/user'
 import './model/availability'
 import './model/competence'
 import './model/competenceProfile'
@@ -17,8 +14,9 @@ import userRoutes from './routes/userRoutes'
 import listApplicationRoute from './routes/listApplicationRoute'
 import cors, { type CorsOptions } from 'cors'
 import ErrorHandling from './errors/errorHandler'
-import path from 'path'
 import updateUserRoute from './routes/updateUserRoute'
+import nodemailer from 'nodemailer'
+import jwt from 'jsonwebtoken'
 /**
  * Tests the database connection.
  * Logs a success message if connection is established,
@@ -48,7 +46,11 @@ const port = 3000
 app.use(express.json())
 
 /** Define an array of allowed origins for CORS. */
-const allowedOrigins = ['http://localhost:4000', 'http://localhost:5173', 'https://iv1201-recruitment-application.onrender.com']
+const allowedOrigins = [
+  'http://localhost:4000',
+  'http://localhost:5173',
+  'https://iv1201-recruitment-application.onrender.com'
+]
 
 /**
  * Configure CORS options, including allowed origins and HTTP methods,
@@ -80,14 +82,41 @@ app.use(userRoutes)
 app.use(listApplicationRoute)
 app.use(updateUserRoute)
 
-// Serve static files from the frontend's build output directory
-// This assumes that the frontend's build output directory is `front_end/dist`
-// and is placed at the same level as the backend directory in the final deployment package
-app.use(express.static(path.join(__dirname, '../../front_end/dist')))
+app.post('/send-confirmation', async (req: Request, res: Response) => {
+  console.log('the  email is ', req.body.email)
 
-// Catch-all handler to serve index.html from the frontend build for any other routes
-app.get('*', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '../../front_end/dist', 'index.html'))
+  const user = await User.findOne({ where: { email: req.body.email } })
+  // Generate test SMTP service account from ethereal.email
+  const testAccount = await nodemailer.createTestAccount()
+
+  // Create a transporter object using the default SMTP transport
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: testAccount.user, // generated ethereal user
+      pass: testAccount.pass // generated ethereal password
+    }
+  })
+
+  const token = jwt.sign({ id: user?.person_id }, 'Secret', { expiresIn: '1h' })
+
+  const url = `http://localhost:3000/send-confirmation/${token}`
+
+  // Send mail with defined transport object
+  const info = await transporter.sendMail({
+    from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    to: req.body.email, // list of receivers
+    subject: 'Confirmation Email', // Subject line
+    text: 'Hello world?', // plain text body
+    html: `The link: <a href="${url}">${url}</a>` // html body
+  })
+
+  console.log('Message sent: %s', info.messageId)
+  console.log('Preview URL: %s', url)
+
+  res.send({ message: 'Email sent!', url })
 })
 
 /**
