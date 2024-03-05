@@ -18,7 +18,7 @@ import listApplicationRoute from './routes/listApplicationRoute'
 import cors, { type CorsOptions } from 'cors'
 import ErrorHandling from './errors/errorHandler'
 import path from 'path'
-
+import updateUserRoute from './routes/updateUserRoute'
 /**
  * Tests the database connection.
  * Logs a success message if connection is established,
@@ -78,6 +78,7 @@ app.get('/', (req: Request, res: Response) => {
 /** Setup application routes by registering route handlers. */
 app.use(userRoutes)
 app.use(listApplicationRoute)
+app.use(updateUserRoute)
 
 // Serve static files from the frontend's build output directory
 // This assumes that the frontend's build output directory is `front_end/dist`
