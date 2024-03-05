@@ -32,7 +32,7 @@ export default class ViewModel implements VM {
   public async login(params: LoginParams): Promise<boolean> {
     try {
       const data = await this.fetchData(
-        "http://localhost:3000/login",
+        "https://iv1201-recruitment-application-backend.onrender.com/login",
         "POST",
         {
           username: params.email,
@@ -64,7 +64,7 @@ export default class ViewModel implements VM {
   public async createAccount(params: CreateAccountParams): Promise<boolean> {
     try {
       const data = await this.fetchData(
-        "http://localhost:3000/register",
+        "https://iv1201-recruitment-application-backend.onrender.com/register",
         "POST",
         {
           name: params.firstName,
@@ -93,7 +93,7 @@ export default class ViewModel implements VM {
 
     try {
       const data = await this.fetchData(
-        "http://localhost:3000/applications",
+        "https://iv1201-recruitment-application-backend.onrender.com/applications",
         "GET",
         {}
       );
@@ -109,7 +109,7 @@ export default class ViewModel implements VM {
   public async logout(): Promise<boolean> {
     try {
       const response = await fetch(
-        "http://localhost:3000/logout",
+        "https://iv1201-recruitment-application-backend.onrender.com/logout",
         {
           method: "POST",
           credentials: "include", // Necessary to include the cookie in the request.
