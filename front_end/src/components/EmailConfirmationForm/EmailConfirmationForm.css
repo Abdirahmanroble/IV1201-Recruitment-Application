@@ -1,0 +1,52 @@
+.update-password-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+  
+    width: 18vw;
+    height: 30vh;
+  
+    background-color: var(--green-secondary);
+    border: 0.1rem solid var(--green-primary);
+    border-radius: 0.75rem;
+  }
+  
+  .update-password-box-header {
+    font-weight: var(--bold-weight);
+    text-align: center;
+  }
+  
+  .update-password-box-input {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+  }
+  
+  .update-password-box-buttons {
+    display: flex;
+    flex-direction: column;
+  
+    width: 12vw;
+  }
+  
+  .update-password-box-buttons button {
+    background-color: var(--white);
+    border: 0.1rem solid var(--green-primary);
+    border-radius: 0.75rem;
+    cursor: pointer;
+  }
+  
+  .update-password-box-error {
+    color: var(--red-primary);
+    font-weight: var(--bold-weight);
+    font-size: 0.8rem;
+  }
+  
+  .update-password-form-error {
+    color: var(--red-primary);
+    font-weight: var(--bold-weight);
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  

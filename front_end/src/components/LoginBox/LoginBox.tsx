@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { LoginBoxProps } from "../../@types/Login";
 import FormInput from "../FormInput/FormInput";
 import readErrorMsg from "../../errors/Error";
 import { useTranslation } from "react-i18next";
 import "./LoginBox.css";
+import { EmailConfirmationBoxProps } from "../../@types/EmailConfirmation";
 
 /**
  * Represents a login box component used for user authentication.
@@ -11,11 +13,13 @@ import "./LoginBox.css";
  * @param {LoginBoxProps} props - The properties passed to the LoginBox component.
  * @returns {JSX.Element} The rendered login box component.
  */
-function LoginBox(props: LoginBoxProps): JSX.Element {
+function LoginBox(props: LoginBoxProps, prop: EmailConfirmationBoxProps): JSX.Element {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [counter, setCounter] = useState(0);
   const [success, setSuccess] = useState(false);
+
+
 
   const { t } = useTranslation();
 
@@ -42,6 +46,16 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
         />
       </div>
       <div className="login-box-buttons">
+      <button
+          onClick={ () => {
+            const emailConfirmationReset = prop.onEmailConfirmation(email);
+            // setCounter(counter + 1)
+            // setSuccess(emailConfirmationReset);
+            // window.location.href = "/email-confirmation";
+          }}
+        >
+          {t("reset")}
+        </button>
         <button
           onClick={async () => {
             const userWasLoggedIn = await props.onLogin(email, password);
