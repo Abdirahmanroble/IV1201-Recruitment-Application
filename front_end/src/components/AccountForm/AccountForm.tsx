@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AccountFormProps } from "../../@types/CreateAccount";
 import FormInput from "../FormInput/FormInput";
 import readErrorMsg from "../../errors/Error";
@@ -21,7 +21,6 @@ function LoginBox(props: AccountFormProps): JSX.Element {
   const [password, setPassword] = useState("");
   const [counter, setCounter] = useState(0);
   const [success, setSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const { t } = useTranslation();
 
@@ -80,25 +79,16 @@ function LoginBox(props: AccountFormProps): JSX.Element {
       <div className="account-form-buttons">
         <button
           onClick={async () => {
-            try {
-              const userWasCreated = await props.onCreateAccount(
-                firstName,
-                lastName,
-                email,
-                personNumber,
-                username,
-                password
-              );
-              console.log(userWasCreated)
-              setCounter(counter + 1);
-            //  setSuccess(userWasCreated);
-            } catch (error) {
-              if (error instanceof Error) {
-                setErrorMessage(error.message);
-              } else
-                setErrorMessage("An unknown error occurred, please try again.");
-            }
-            
+            const userWasCreated = await props.onCreateAccount(
+              firstName,
+              lastName,
+              email,
+              personNumber,
+              username,
+              password
+            );
+            setCounter(counter + 1);
+            setSuccess(userWasCreated);
           }}
         >
           {t("createAccountButton")}

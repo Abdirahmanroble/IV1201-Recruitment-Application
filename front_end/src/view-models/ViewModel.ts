@@ -31,11 +31,15 @@ export default class ViewModel implements VM {
 
   public async login(params: LoginParams): Promise<boolean> {
     try {
-      const data = await this.fetchData("http://localhost:3000/login", "POST", {
-        username: params.email,
-        password: params.password,
-      });
-      console.log(data);
+      const data = await this.fetchData(
+        "http://localhost:3000/login",
+        "POST",
+        {
+          username: params.email,
+          password: params.password,
+        }
+      );
+
       if (data?.message) {
         if (+data.responseCode === 100) {
           /** invalid credentials */
@@ -96,24 +100,24 @@ export default class ViewModel implements VM {
 
       if (data?.message) databaseBody = data;
 
-      console.log(databaseBody); /**Remove later */
-
       return { applications: databaseBody.applications };
     } catch (error) {
-      console.error("Applications request failed:", error);
       return { applications: databaseBody.applications };
     }
   }
 
   public async logout(): Promise<boolean> {
     try {
-      const response = await fetch("http://localhost:3000/logout", {
-        method: "POST",
-        credentials: "include", 
-      });
+      const response = await fetch(
+        "http://localhost:3000/logout",
+        {
+          method: "POST",
+          credentials: "include", // Necessary to include the cookie in the request.
+        }
+      );
 
       if (!response.ok) {
-        console.error("Logout failed with status:", response.status);
+        // If the response is not OK, log the error and return false to indicate failure.
         return false;
       }
 
@@ -122,7 +126,6 @@ export default class ViewModel implements VM {
       this.signedIn = false;
       return true;
     } catch (error) {
-      console.error("Logout request failed:", error);
       return false;
     }
   }
@@ -228,10 +231,10 @@ export default class ViewModel implements VM {
           };
 
     const response = await fetch(path, fetchBody);
-    const contentType = response.headers.get("Content-Type");
 
     return await response.json();
   };
+
   private setUserBody(user: UserBody) {
     this.setFirstName(user.name);
     this.setLastName(user.surname);
