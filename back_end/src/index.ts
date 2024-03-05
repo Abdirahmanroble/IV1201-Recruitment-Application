@@ -48,6 +48,7 @@ app.use(express.json())
 /** Define an array of allowed origins for CORS. */
 const allowedOrigins = [
   'http://localhost:4000',
+  'http://localhost:4001',
   'http://localhost:5173',
   'https://iv1201-recruitment-application.onrender.com'
 ]
@@ -101,8 +102,10 @@ app.post('/send-confirmation', async (req: Request, res: Response) => {
   })
 
   const token = jwt.sign({ id: user?.person_id }, 'Secret', { expiresIn: '1h' })
+  const id = user?.person_id
 
-  const url = `http://localhost:3000/send-confirmation/${token}`
+
+  const url = `http://localhost:4000/update-password/${token}`
 
   // Send mail with defined transport object
   const info = await transporter.sendMail({
@@ -116,7 +119,7 @@ app.post('/send-confirmation', async (req: Request, res: Response) => {
   console.log('Message sent: %s', info.messageId)
   console.log('Preview URL: %s', url)
 
-  res.send({ message: 'Email sent!', url })
+  res.send({ message: 'Email sent!', url, id, info })
 })
 
 /**
