@@ -19,18 +19,11 @@ export default class LoginController extends Component<ControllerProps> {
     email: string,
     password: string
   ): Promise<boolean> => {
-    try {
-      const success = await this.props.viewModel.login({ email, password });
-      console.log("from login controller: " + success)
-      return success;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      } else {
-        throw new Error("An unknown error occurred.");
-      }
-    }
+    const success = await this.props.viewModel.login({ email, password });
+    return success;
   };
+
+  private getCurrentError = () => this.props.viewModel.getCurrentError();
 
   /**
    * Renders the login controller component.
@@ -38,6 +31,11 @@ export default class LoginController extends Component<ControllerProps> {
    * @returns {React.ReactNode} The rendered login controller component.
    */
   render(): React.ReactNode {
-    return <LoginView onLogin={this.onLogin} />;
+    return (
+      <LoginView
+        onLogin={this.onLogin}
+        getCurrentError={this.getCurrentError}
+      />
+    );
   }
 }

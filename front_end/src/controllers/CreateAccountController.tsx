@@ -46,7 +46,14 @@ export default class CreateAccountController extends Component<ControllerProps> 
     }
   };
 
+  private getCurrentError = () => this.props.viewModel.getCurrentError();
+
   render(): React.ReactNode {
-    return <CreateAccountView onCreateAccount={this.onCreateAccount} />;
+    return (
+      <CreateAccountView
+        onCreateAccount={this.onCreateAccount}
+        getCurrentError={this.getCurrentError}
+      />
+    );
   }
 }

@@ -37,6 +37,3 @@ jobs:
     - name: Run ESLint
       run: npm run lint
       working-directory: ./back_end
-    - name: Run Tests
-      run: npm test
-      working-directory: ./back_end

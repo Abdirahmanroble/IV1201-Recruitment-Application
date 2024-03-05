@@ -3,12 +3,13 @@ import { ApplicationService } from "../services/applicationService";
 import AuthService from "../services/authService";
 import { createToken } from "../middleware/auth.middleware";
 import UpdateUserService from "../services/updateUserService";
-
 interface UserDTO {
   person_id: number;
   email: string;
   password: string;
 }
+import Logger from '../util/Logger'
+
 /**
  * Controller for user-related operations in an Express application.
  * Provides static methods for handling login, registration, fetching user applications, and logout functionalities.
@@ -31,8 +32,9 @@ class UserController {
       const user = await AuthService.login({ username, password });
 
       if (user === null || user === undefined) {
-        res.status(401).send("Invalid credentials");
-        return;
+        res.status(401).send({ message: 'Invalid credentials', responseCode: 100 }) /** Remove later */
+        Logger.logException(new Error('Something wrong with the inputs'), { file: 'UserController.ts', reason: 'Invalid credentials' })
+        return
       }
       const needsPasswordUpdate = user.password === null;
       const foundUser = {
@@ -49,11 +51,16 @@ class UserController {
       res.cookie("jwt", token, { httpOnly: true });
       if (needsPasswordUpdate) {
         res.json({ message: "Login successful", foundUser, needsPasswordUpdate });
+        Logger.log('info', 'Login successful', { file: 'UserController.ts', reason: 'User logged in successfully.' })
       } else {
         res.json({ message: "Login successful", foundUser, needsPasswordUpdate });
+        Logger.log('info', 'Login successful', { file: 'UserController.ts', reason: 'User logged in successfully.' })
       }
+    
     } catch (error) {
       res.status(500).send("error logging in");
+      Logger.logException(new Error('Something went wrong with the login'),
+        { file: 'UserController.ts', reason: 'Login was unsuccessful.' })
     }
   }
 
@@ -75,6 +82,9 @@ class UserController {
       if (user === null || user === undefined) {
         res.status(401).send("Invalid credentials");
         return;
+        res.status(401).send('Invalid credentials')
+        Logger.logException(new Error('Something wrong with the inputs'), { file: 'UserController.ts', reason: 'Invalid credentials' })
+        return
       }
       if (typeof user === "string") {
         res.status(401).send(user);
@@ -94,8 +104,11 @@ class UserController {
 
         res.json({ message: "Register successful", createdUser });
       }
+    
     } catch (error) {
-      res.status(500).send(error);
+      Logger.logException(new Error('Something went wrong with the registration'),
+        { file: 'UserController.ts', reason: 'Registration was unsuccessful.' })
+      res.status(500).send(error)
     }
   }
 
@@ -112,8 +125,9 @@ class UserController {
     res: Response
   ): Promise<void> {
     try {
-      const applications = await ApplicationService.getAllApplications();
-      res.json({ message: "Applications gotten successfully", applications });
+      const applications = await ApplicationService.getAllApplications()
+      res.json({ message: 'Applications gotten successfully', applications })
+      Logger.log('info', 'Applications gotten successfully', { file: 'UserController.ts', reason: 'Sent all applications' })
     } catch (error: unknown) {
       if (error instanceof Error) {
         res.status(500).send(error.message);
@@ -143,6 +157,9 @@ class UserController {
         res.status(500).send(error.message);
       } else {
         res.status(500).send("An unknown error occurred");
+        res.status(500).send('An unknown error occurred')
+        Logger.logException(new Error('An unknown error occurred'),
+          { file: 'UserController.ts', reason: 'Error in getting user applications' })
       }
     }
   }
@@ -155,9 +172,12 @@ class UserController {
    * @param {NextFunction} next - The next middleware function in the Express request-response cycle.
    * @returns {Promise<void>} A promise that resolves with no return value.
    */
-  public static async logout(res: Response): Promise<void> {
-    res.clearCookie("jwt");
-    res.status(200).send("User logged out successfully");
+  public static async logout (
+    res: Response
+  ): Promise<void> {
+    res.clearCookie('jwt')
+    res.status(200).send('User logged out successfully')
+    Logger.log('info', 'User has been logged out', { file: 'UserController.ts', reason: 'Logged Out' })
   }
 }
 export default UserController;

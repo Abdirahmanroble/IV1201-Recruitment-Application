@@ -1,0 +1,37 @@
+{
+  "welcomeMessage": "Bienvenue sur Notre Application",
+  "login": "Connexion",
+  "logout": "Déconnexion",
+  "createAccount": "Créer un Compte",
+  "createAccountButton": "Créer un Compte",
+  "firstName": "Prénom:",
+  "lastName": "Nom de Famille:",
+  "email": "E-mail:",
+  "personNumber": "Numéro de Personne:",
+  "username": "Nom d'Utilisateur:",
+  "password": "Mot de Passe:",
+  "userCreatedSuccess": "Utilisateur créé avec succès",
+  "userLogin": "Connexion de l'Utilisateur",
+  "recruitmentApplication": "Demande de Recrutement",
+  "home": "Accueil",
+  "listApplications": "Lister les Demandes",
+  "switchLanguage": "Changer de Langue",
+  "welcome": "Bienvenue",
+  "status": {
+    "accepted": "Accepté",
+    "rejected": "Rejeté",
+    "unhandled": "Non traité"
+  },
+
+  "missingUsernamePassword": "Veuillez saisir le nom d'utilisateur et le mot de passe",
+  "missingUsername": "Veuillez saisir le nom d'utilisateur",
+  "invalidUsername": "Le nom d'utilisateur doit être alphanumérique ou un email",
+  "invalidCredentials": "Identifiants invalides",
+  "missingData": "Veuillez entrer les données requises",
+  "invalidEmail": "Veuillez saisir un email valide",
+  "invalidPersonNumber": "Veuillez saisir un numéro de personne valide (AAAAMMJJ-XXX)",
+  "missingCookie": "Accès non autorisé à la déconnexion",
+  "unknownError": "Veuillez réessayer",
+
+  "Group 5": "Groupe 5"
+}

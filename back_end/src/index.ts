@@ -15,9 +15,9 @@ import './setupAssociations'
 
 import userRoutes from './routes/userRoutes'
 import listApplicationRoute from './routes/listApplicationRoute'
-import updateUserRoute from './routes/updateUserRoute'
 import cors, { type CorsOptions } from 'cors'
 import ErrorHandling from './errors/errorHandler'
+import path from 'path'
 
 /**
  * Tests the database connection.
@@ -48,7 +48,7 @@ const port = 3000
 app.use(express.json())
 
 /** Define an array of allowed origins for CORS. */
-const allowedOrigins = ['http://localhost:4000', 'http://localhost:5173']
+const allowedOrigins = ['http://localhost:4000', 'http://localhost:5173', 'https://iv1201-recruitment-application.onrender.com']
 
 /**
  * Configure CORS options, including allowed origins and HTTP methods,
@@ -78,7 +78,16 @@ app.get('/', (req: Request, res: Response) => {
 /** Setup application routes by registering route handlers. */
 app.use(userRoutes)
 app.use(listApplicationRoute)
-app.use(updateUserRoute)
+
+// Serve static files from the frontend's build output directory
+// This assumes that the frontend's build output directory is `front_end/dist`
+// and is placed at the same level as the backend directory in the final deployment package
+app.use(express.static(path.join(__dirname, '../../front_end/dist')))
+
+// Catch-all handler to serve index.html from the frontend build for any other routes
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '../../front_end/dist', 'index.html'))
+})
 
 /**
  * Initialize and register the error handling middleware as the last middleware

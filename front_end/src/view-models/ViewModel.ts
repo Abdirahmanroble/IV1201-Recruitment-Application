@@ -1,10 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import {
   ApplicationsPromiseBody,
   ApplicationsResponseBody,
   CreateAccountParams,
   LoginParams,
-  LoginResponseBody,
-  RegisterResponseBody,
   UserBody,
 } from "../@types/ViewModel";
 
@@ -19,6 +18,7 @@ export default class ViewModel implements VM {
   private competences: { yearsOfExperience: number; name: string }[] = [];
   private role: number = 0;
   private signedIn: boolean = false;
+  private currentError: number = 0;
 
   public changeAuthState: (state: boolean) => void = (state: boolean) => {
     console.log(state);
@@ -30,8 +30,6 @@ export default class ViewModel implements VM {
   };
 
   public async login(params: LoginParams): Promise<boolean> {
-    let databaseBody: LoginResponseBody = new LoginResponseBody();
-
     try {
       const data = await this.fetchData("http://localhost:3000/login", "POST", {
         username: params.email,
@@ -39,28 +37,27 @@ export default class ViewModel implements VM {
       });
       console.log(data);
       if (data?.message) {
-        databaseBody = data;
-        this.setUserBody(databaseBody.foundUser);
-        this.changeAuthState(true);
-      } else {
-        console.log(data);
+        if (+data.responseCode === 100) {
+          /** invalid credentials */
+          this.setCurrentError(100);
+          this.changeAuthState(false);
+        } else {
+          /** valid credentials */
+          this.setUserBody(data.foundUser);
+          this.changeAuthState(true);
+        }
+      } else if (data?.error) {
+        this.setCurrentError(+data.error.errorCode); /** string to number */
         this.changeAuthState(false);
-      }
-      console.log(databaseBody);
-
+      } else throw new Error("Unknown error");
       return this.signedIn;
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      } else {
-        throw new Error("An unknown error occurred.");
-      }
+      this.setCurrentError(-1);
+      return false;
     }
   }
 
   public async createAccount(params: CreateAccountParams): Promise<boolean> {
-    let databaseBody: RegisterResponseBody = new RegisterResponseBody();
-
     try {
       const data = await this.fetchData(
         "http://localhost:3000/register",
@@ -76,21 +73,14 @@ export default class ViewModel implements VM {
       );
 
       if (data?.message) {
-        databaseBody = data;
-        console.log(databaseBody.createdUser)
-        this.setUserBody(databaseBody.createdUser);
-        this.changeAuthState(true);
-      } else {
-        console.log(data);
-        this.changeAuthState(false);
-      }
-      return this.signedIn;
+        return true;
+      } else if (data?.error) {
+        this.setCurrentError(+data.error.errorCode); /** string to number */
+        return false;
+      } else throw new Error("Unknown error");
     } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(error.message);
-      } else {
-        throw new Error("An unknown error occurred.");
-      }
+      this.setCurrentError(-1);
+      return false;
     }
   }
 
@@ -174,6 +164,11 @@ export default class ViewModel implements VM {
     this.changeState(this);
   }
 
+  public setCurrentError(currentError: number) {
+    this.currentError = currentError;
+    this.changeState(this);
+  }
+
   public setChangeAuthState(changeAuthState: (state: boolean) => void) {
     this.changeAuthState = (state: boolean) => {
       changeAuthState(state);
@@ -213,6 +208,10 @@ export default class ViewModel implements VM {
     return this.role;
   }
 
+  public getCurrentError(): number {
+    return this.currentError;
+  }
+
   private fetchData = async (path: string, method: string, body: Object) => {
     const fetchBody: RequestInit =
       method === "POST"
@@ -231,22 +230,7 @@ export default class ViewModel implements VM {
     const response = await fetch(path, fetchBody);
     const contentType = response.headers.get("Content-Type");
 
-    let parsedResponse;
-    if (contentType && contentType.includes("application/json")) {
-      parsedResponse = await response.json();
-    } else {
-      parsedResponse = await response.text();
-    }
-
-    if (!response.ok) {
-      throw new Error(
-        parsedResponse.error ||
-          parsedResponse ||
-          "An error occurred while fetching data."
-      );
-    }
-
-    return parsedResponse;
+    return await response.json();
   };
   private setUserBody(user: UserBody) {
     this.setFirstName(user.name);
