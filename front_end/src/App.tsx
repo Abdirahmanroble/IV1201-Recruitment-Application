@@ -14,6 +14,7 @@ import UpdatePasswordView from "./views/UpdatePasswordView/UpdatePasswordView";
 
 import "./ii8n/ii8n";
 import "./App.css";
+import EmailConfirmationController from "./controllers/EmailConfirmationController";
 
 /**
  * The main component of the application responsible for rendering different routes
@@ -137,7 +138,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/update-password"
+            path="/update-password/:token?"
             element={
               <Layout
                 signedIn={false}
@@ -147,6 +148,12 @@ function App() {
               ></Layout>
             }
           ></Route>
+          <Route path="/send-confirmation" element={<Layout
+                signedIn={false}
+                isApplicant={false}
+                element={<EmailConfirmationController viewModel={viewModel}></EmailConfirmationController>}
+                onLogout={onLogout}
+              ></Layout>} />
         </Routes>
       </Router>
     );

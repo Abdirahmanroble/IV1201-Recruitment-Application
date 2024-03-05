@@ -7,7 +7,7 @@ import EmailConfirmationView from "../views/EmailConfirmationView/EmailConfirmat
  *
  * @extends Component for class-based component implementation.
  */
-export default class LoginController extends Component<ControllerProps> {
+export default class EmailConfirmationController extends Component<ControllerProps> {
   /**
    * Asynchronous function to handle the login process.
    *
@@ -21,8 +21,6 @@ export default class LoginController extends Component<ControllerProps> {
     const success = await this.props.viewModel.emailConfirmation({ email });
     return success;
   };
-
-//   private getCurrentError = () => this.props.viewModel.getCurrentError();
 
   /**
    * Renders the login controller component.

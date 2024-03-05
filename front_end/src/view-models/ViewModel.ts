@@ -61,29 +61,32 @@ export default class ViewModel implements VM {
   public async emailConfirmation(params: EmailParams): Promise<boolean> {
     try {
       const data = await this.fetchData(
-        "http://localhost:3000/email-confirmation",
+        "http://localhost:3000/send-confirmation",
         "POST",
         {
-          username: params.email,
+          email: params.email,
         }
       )
 
       console.log(data)
-      // if (data?.message) {
-      //   if (+data.responseCode === 100) {
-      //     /** invalid credentials */
-      //     this.setCurrentError(100)
-      //     // this.changeAuthState(false)
-      //   } else {
-      //     /** valid credentials */
-      //     this.setUserBody(data.foundUser)
-      //     // this.changeAuthState(true)
-      //   }
-      // } else if (data?.error) {
-      //   this.setCurrentError(+data.error.errorCode) /** string to number */
-      //   // this.changeAuthState(false)
-      // } else throw new Error("Unknown error")
-      return data.success
+      this.email = data.email
+       
+      console.log(this.email)
+      if (data?.message) {
+        if (+data.responseCode === 100) {
+          /** invalid credentials */
+          this.setCurrentError(100)
+          // this.changeAuthState(false)
+        } else {
+          /** valid credentials */
+          this.setUserBody(data.foundUser)
+          // this.changeAuthState(true)
+        }
+      } else if (data?.error) {
+        this.setCurrentError(+data.error.errorCode) /** string to number */
+        // this.changeAuthState(false)
+      } else throw new Error("Unknown error")
+      return true
     } catch (error) {
       this.setCurrentError(-1)
       return false
