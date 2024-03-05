@@ -103,6 +103,7 @@ class UserController {
         res.cookie("jwt", token, { httpOnly: true });
 
         res.json({ message: "Register successful", createdUser });
+        Logger.log('info', 'Register successful', { file: 'UserController.ts', reason: 'User registered successfully.' })
       }
     
     } catch (error) {
@@ -133,6 +134,8 @@ class UserController {
         res.status(500).send(error.message);
       } else {
         res.status(500).send("An unknown error occurred");
+        Logger.logException(new Error('An unknown error occurred'),
+          { file: 'UserController.ts', reason: 'Error in getting user applications' })
       }
     }
   }
