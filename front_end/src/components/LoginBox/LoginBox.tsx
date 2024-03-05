@@ -6,7 +6,6 @@ import readErrorMsg from "../../errors/Error"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom"
 import "./LoginBox.css"
-import { EmailConfirmationBoxProps } from "../../@types/EmailConfirmation"
 
 /**
  * Represents a login box component used for user authentication.
@@ -16,7 +15,6 @@ import { EmailConfirmationBoxProps } from "../../@types/EmailConfirmation"
  */
 function LoginBox(
   props: LoginBoxProps,
-  prop: EmailConfirmationBoxProps
 ): JSX.Element {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
