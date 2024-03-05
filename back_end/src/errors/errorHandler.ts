@@ -33,7 +33,10 @@ class ErrorHandling {
     next: NextFunction,
     customStatus?: number
   ): void {
-    Logger.logException(err, { file: 'ErrorHandling.ts', reason: 'Something went wrong from routes' })
+    Logger.logException(err, {
+      file: 'ErrorHandling.ts',
+      reason: 'Something went wrong from routes'
+    })
 
     if (res.headersSent) {
       next(err)
@@ -44,19 +47,22 @@ class ErrorHandling {
 
     const status = customStatus ?? (err instanceof ValidationError ? 500 : 400)
 
-    const message = err.message.length > 0 ? err.message : 'An unexpected error occurred'
-
-    const body = { errorCode: err.errorCode ? err.errorCode : -1 , errorMsg: message }
+    const message =
+      err.message.length > 0 ? err.message : 'An unexpected error occurred'
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    const body = {
+      errorCode: err.errorCode ? err.errorCode : -1,
+      errorMsg: message
+    }
 
     if (message !== '') {
       this.sendHttpResponse(res, status, body)
     } else {
       // Handle the case where 'message' is an empty string
-      this.sendHttpResponse(
-        res,
-        status,
-       { errorCode: -1, errorMsg: 'Error occurred, but no message provided.' }
-      )
+      this.sendHttpResponse(res, status, {
+        errorCode: -1,
+        errorMsg: 'Error occurred, but no message provided.'
+      })
     }
   }
 

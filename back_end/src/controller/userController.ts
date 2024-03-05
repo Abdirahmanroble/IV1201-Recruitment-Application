@@ -2,7 +2,13 @@ import { type Request, type Response } from 'express'
 import { ApplicationService } from '../services/applicationService'
 import AuthService from '../services/authService'
 import { createToken } from '../middleware/auth.middleware'
+import UpdateUserService from '../services/updateUserService'
 import Logger from '../util/Logger'
+interface UserDTO {
+  person_id: number
+  email: string
+  password: string
+}
 
 /**
  * Controller for user-related operations in an Express application.
@@ -30,7 +36,9 @@ class UserController {
         Logger.logException(new Error('Something wrong with the inputs'), { file: 'UserController.ts', reason: 'Invalid credentials' })
         return
       }
+      const needsPasswordUpdate = user.password === null
       const foundUser = {
+        person_id: user.person_id,
         name: user.name,
         surname: user.surname,
         pnr: user.pnr,
@@ -41,9 +49,13 @@ class UserController {
 
       const token = createToken(foundUser.email)
       res.cookie('jwt', token, { httpOnly: true })
-
-      res.json({ message: 'Login successful', foundUser })
-      Logger.log('info', 'Login successful', { file: 'UserController.ts', reason: 'User logged in successfully.' })
+      if (needsPasswordUpdate) {
+        res.json({ message: 'Login successful', foundUser, needsPasswordUpdate })
+        Logger.log('info', 'Login successful', { file: 'UserController.ts', reason: 'User logged in successfully.' })
+      } else {
+        res.json({ message: 'Login successful', foundUser, needsPasswordUpdate })
+        Logger.log('info', 'Login successful', { file: 'UserController.ts', reason: 'User logged in successfully.' })
+      }
     } catch (error) {
       res.status(500).send('error logging in')
       Logger.logException(new Error('Something went wrong with the login'),
@@ -68,6 +80,7 @@ class UserController {
       const user = await AuthService.register(userDTO)
       if (user === null || user === undefined) {
         res.status(401).send('Invalid credentials')
+        res.status(401).send('Invalid credentials')
         Logger.logException(new Error('Something wrong with the inputs'), { file: 'UserController.ts', reason: 'Invalid credentials' })
         return
       }
@@ -88,7 +101,7 @@ class UserController {
         res.cookie('jwt', token, { httpOnly: true })
 
         res.json({ message: 'Register successful', createdUser })
-        Logger.log('info', 'Register successful', { file: 'UserController.ts', reason: 'Registration was successful.' })
+        Logger.log('info', 'Register successful', { file: 'UserController.ts', reason: 'User registered successfully.' })
       }
     } catch (error) {
       Logger.logException(new Error('Something went wrong with the registration'),
@@ -117,6 +130,33 @@ class UserController {
       if (error instanceof Error) {
         res.status(500).send(error.message)
       } else {
+        res.status(500).send('An unknown error occurred')
+        Logger.logException(new Error('An unknown error occurred'),
+          { file: 'UserController.ts', reason: 'Error in getting user applications' })
+      }
+    }
+  }
+
+  /**
+   * Updates a user's email and password. If the user has no password, it hashes and updates it.
+   * If the user has an email, it updates it.
+   *
+   * @param {Request} req - The Express request object containing the updated user details.
+   * @param {Response} res - The Express response object used for sending back the update confirmation.
+   * @returns {Promise<void>} A promise that resolves with no return value.
+   */
+  public static async updateUser (req: Request, res: Response): Promise<void> {
+    const userDTO = req.body
+    try {
+      const updatedUser = await UpdateUserService.updateUser(
+        userDTO as UserDTO
+      )
+      res.json({ message: updatedUser })
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).send(error.message)
+      } else {
+        res.status(500).send('An unknown error occurred')
         res.status(500).send('An unknown error occurred')
         Logger.logException(new Error('An unknown error occurred'),
           { file: 'UserController.ts', reason: 'Error in getting user applications' })
