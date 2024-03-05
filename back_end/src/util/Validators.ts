@@ -25,7 +25,7 @@ class UserValidators {
     password?: string
   }): Promise<{
       isValid: boolean
-      error?: { message: string, status: number }
+      error?: { errorCode: number, message: string, status: number }
     }> {
     // console.log("We are here")
     const { username, password } = data
@@ -35,16 +35,21 @@ class UserValidators {
       return {
         isValid: false,
         error: {
+          errorCode: 101,
           message: 'Please provide either an email/username or a password.',
           status: 400
         }
       }
     }
-    if (username && validator.isEmpty(username)) {
+    if (!username) {
       // throw new Error("Username cannot be empty.")
       return {
         isValid: false,
-        error: { message: 'Username cannot be empty.', status: 400 }
+        error: {
+          errorCode: 102,
+          message: 'Username cannot be empty.',
+          status: 400
+        }
       }
     }
     if (username) {
@@ -58,6 +63,7 @@ class UserValidators {
         return {
           isValid: false,
           error: {
+            errorCode: 103,
             message:
               'Username must be a valid email or an alphanumeric username.',
             status: 400
@@ -65,7 +71,7 @@ class UserValidators {
         }
       }
     }
-    return { isValid: true, error: { message: '', status: 200 } }
+    return { isValid: true, error: { errorCode: 0, message: '', status: 200 } }
   }
 
   /**
@@ -91,7 +97,7 @@ class UserValidators {
     pnr: string
   }): Promise<{
       isValid: boolean
-      error?: { message: string, status: number }
+      error?: { errorCode: number, message: string, status: number }
     }> {
     const { name, surname, username, email, password, pnr } = data
 
@@ -102,6 +108,7 @@ class UserValidators {
       return {
         isValid: false,
         error: {
+          errorCode: 201,
           message:
             'Name, surname, username, email, and password are required for registration.',
           status: 400
@@ -116,14 +123,22 @@ class UserValidators {
       // throw new Error('Invalid email format.')
       return {
         isValid: false,
-        error: { message: 'Invalid email format.', status: 400 }
+        error: {
+          errorCode: 202,
+          message: 'Invalid email format.',
+          status: 400
+        }
       }
     }
     this.isNonZeroLengthString(password, 'Password')
     if (pnr && !this.validateSwedishPersonalNumber(pnr)) {
+      // throw new Error(
+      //   'Invalid personal number format. Expected format: YYYYMMDD-XXXX.'
+      // )
       return {
         isValid: false,
         error: {
+          errorCode: 203,
           message:
             'Invalid personal number format. Expected format: YYYYMMDD-XXXX.',
           status: 400
@@ -131,7 +146,7 @@ class UserValidators {
       }
     }
 
-    return { isValid: true, error: { message: '', status: 200 } }
+    return { isValid: true, error: { errorCode: 0, message: '', status: 200 } }
   }
 
   /**
@@ -184,19 +199,21 @@ class UserValidators {
     req: Request
   ): Promise<{
       isValid: boolean
-      error?: { message: string, status: number }
+      error?: { errorCode: number, message: string, status: number }
     }> {
     const authCookie = req.cookies.jwt
     if (!authCookie) {
+      // throw new Error('Invalid Token, Unauthorized  access to log out.')
       return {
         isValid: false,
         error: {
-          message: 'Invalid Token, Unauthorized  access to log out.',
+          errorCode: 301,
+          message: 'Invalid Token, Unauthorized access to log out.',
           status: 400
         }
       }
     }
-    return { isValid: true, error: { message: '', status: 200 } }
+    return { isValid: true, error: { errorCode: 0, message: '', status: 200 } }
   }
 
   /**

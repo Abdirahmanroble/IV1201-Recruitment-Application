@@ -27,7 +27,6 @@
   flex-direction: row;
   align-items: center;
   gap: 2vw;
-
   padding-right: 1vw;
 }
 
@@ -44,4 +43,32 @@
   font-weight: var(--title-weight);
   padding: 1vh;
   font-size: 0.8rem;
+}
+
+.language-switcher {
+  position: relative;
+  cursor: pointer;
+}
+
+.languages-dropdown {
+  position: absolute;
+  top: 170%; /* Positioned right below the language-switcher */
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0;
+  margin-top: 5px; /* Give some space between the switcher and dropdown */
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.languages-dropdown li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.languages-dropdown li:hover {
+  background-color: #ccdbd0;
 }

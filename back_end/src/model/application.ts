@@ -1,6 +1,5 @@
 import { Model, DataTypes } from 'sequelize'
 import db from '../integration/dbConfig'
-// import User from "./user";
 
 /**
  * Interface for Application model attributes to ensure type safety.
@@ -13,7 +12,7 @@ import db from '../integration/dbConfig'
  * @property {boolean} openapplicationstatus - Indicates if the application is still being considered (true) or not (false).
  */
 export interface ApplicationAttributes {
-  application_id: number
+  application_id?: number
   person_id: number
   availability_id: number
   status: string
@@ -88,8 +87,5 @@ Application.init(
     timestamps: false
   }
 )
-
-/* Application.belongsTo(User, { foreignKey: "person_id" });
-User.hasMany(Application, { foreignKey: "person_id" }); */
 
 export default Application

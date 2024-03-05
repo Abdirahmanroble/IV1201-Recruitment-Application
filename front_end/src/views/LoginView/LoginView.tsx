@@ -1,25 +1,25 @@
-import { PureComponent } from "react";
 import { ViewProps } from "../../@types/Login";
+import { useTranslation } from "react-i18next";
 import LoginBox from "../../components/LoginBox/LoginBox";
 import "./LoginView.css";
 
 /**
- * Represents the view component for the login functionality.
+ * Represents the view component for logging in.
  *
- * @extends PureComponent to optimize rendering performance.
+ * @param props The props passed to the component.
+ * @returns The rendered login view component.
  */
-export default class LoginView extends PureComponent<ViewProps> {
-  /**
-   * Renders the login view component.
-   *
-   * @returns The rendered login view component.
-   */
-  render(): React.ReactNode {
-    return (
-      <div className="login-view">
-        <h1>Login</h1>
-        <LoginBox onLogin={this.props.onLogin}></LoginBox>
-      </div>
-    );
-  }
-}
+const LoginView = (props: ViewProps): React.ReactNode => {
+  const { t } = useTranslation();
+  return (
+    <div className="login-view">
+      <h1>{t("login")}</h1>
+      <LoginBox
+        onLogin={props.onLogin}
+        getCurrentError={props.getCurrentError}
+      ></LoginBox>
+    </div>
+  );
+};
+
+export default LoginView;

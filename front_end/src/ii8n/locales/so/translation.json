@@ -1,0 +1,36 @@
+{
+  "welcomeMessage": "Ku soo dhawoow Codsiga Shaqada",
+  "login": "Gal",
+  "logout": "Ka Bax",
+  "createAccount": "Abuur Koonto",
+  "createAccountButton": "Abuur Koonto",
+  "firstName": "Magaca Hore:",
+  "lastName": "Magaca Dambe:",
+  "email": "Iimaylka:",
+  "personNumber": "Lambarka Qofka:",
+  "username": "Magaca Isticmaalaha:",
+  "password": "Furaha:",
+  "userCreatedSuccess": "Isticmaalaha si guul leh ayaa loo abuuray",
+  "userLogin": "Galitaanka Isticmaalaha",
+  "recruitmentApplication": "Codsiga Qorista Shaqaalaha",
+  "home": "Bogga Hore",
+  "listApplications": "Liiska Codsiga",
+  "switchLanguage": "Beddel Luqadda",
+  "welcome": "Ku Soo Dhawow",
+  "status": {
+    "accepted": "La Aqbalay",
+    "rejected": "La Diiday",
+    "unhandled": "Lama Daaweeyay"
+  },
+
+  "missingUsernamePassword": "Fadlan geli magaca isticmaale iyo furaha",
+  "missingUsername": "Fadlan geli magaca isticmaale",
+  "invalidUsername": "Magaca isticmaalaha waa inuu noqdaa alfanumerik ama email",
+  "invalidCredentials": "Aqoonsiga aan saxda ahayn",
+  "missingData": "Fadlan geli xogta loo baahan yahay",
+  "invalidEmail": "Fadlan geli email sax ah",
+  "invalidPersonNumber": "Fadlan geli lambarka qofka sax ah (YYYYMMDD-XXX)",
+  "missingCookie": "Gelitaanka aan la oggolayn si loo baxo",
+  "unknownError": "Fadlan isku day mar kale",
+  "Group 5": "Kooxda 5"
+}

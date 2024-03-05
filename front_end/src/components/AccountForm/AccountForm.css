@@ -14,6 +14,7 @@
 
 .account-form-header {
   font-weight: var(--bold-weight);
+  text-align: center;
 }
 
 .account-form-input {
@@ -40,10 +41,12 @@
   color: var(--red-primary);
   font-weight: var(--bold-weight);
   font-size: 0.8rem;
+  text-align: center;
 }
 
 .account-form-success {
   color: var(--green-primary);
   font-weight: var(--bold-weight);
   font-size: 0.8rem;
+  text-align: center;
 }

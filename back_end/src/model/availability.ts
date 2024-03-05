@@ -10,7 +10,7 @@ import db from '../integration/dbConfig'
  * @property {number} person_id - Identifier for the person to whom the availability belongs.
  */
 interface AvailabilityAttributes {
-  availability_id: number
+  availability_id?: number
   from_date: Date
   to_date: Date
   person_id: number

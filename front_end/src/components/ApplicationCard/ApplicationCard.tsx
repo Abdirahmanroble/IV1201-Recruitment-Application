@@ -1,4 +1,5 @@
 import { ApplicationCardProps } from "../../@types/ListApplications";
+import { useTranslation } from "react-i18next";
 import "./ApplicationCard.css";
 
 /**
@@ -12,11 +13,11 @@ import "./ApplicationCard.css";
  */
 function ApplicationCard(props: ApplicationCardProps): JSX.Element {
   let color = "";
+  const { t } = useTranslation();
 
   if (props.status === "accepted") color = "green";
   else if (props.status === "rejected") color = "red";
   else if (props.status === "unhandled") color = "orange";
-
   return (
     <div
       className="application-card-container"
@@ -31,7 +32,9 @@ function ApplicationCard(props: ApplicationCardProps): JSX.Element {
         <div className="application-card-date">{props.date}</div>
       </div>
 
-      <div className="application-card-status">{props.status}</div>
+      <div className="application-card-status">
+        {t(`status.${props.status}`)}
+      </div>
     </div>
   );
 }

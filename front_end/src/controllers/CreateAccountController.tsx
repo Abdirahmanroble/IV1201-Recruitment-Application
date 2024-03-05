@@ -27,18 +27,33 @@ export default class CreateAccountController extends Component<ControllerProps> 
     username: string,
     password: string
   ): Promise<boolean> => {
-    const success: boolean = await this.props.viewModel.createAccount({
-      firstName,
-      lastName,
-      email,
-      personNumber,
-      username,
-      password,
-    });
-    return success;
+    try {
+      const success: boolean = await this.props.viewModel.createAccount({
+        firstName,
+        lastName,
+        email,
+        personNumber,
+        username,
+        password,
+      });
+      return success;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      } else {
+        throw new Error("An unknown error occurred.");
+      }
+    }
   };
 
+  private getCurrentError = () => this.props.viewModel.getCurrentError();
+
   render(): React.ReactNode {
-    return <CreateAccountView onCreateAccount={this.onCreateAccount} />;
+    return (
+      <CreateAccountView
+        onCreateAccount={this.onCreateAccount}
+        getCurrentError={this.getCurrentError}
+      />
+    );
   }
 }
