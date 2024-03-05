@@ -2,7 +2,8 @@
 import bcrypt from 'bcrypt'
 import User from '../model/user'
 import db from '../integration/dbConfig'
-
+import Application from '../model/application'
+import Availability from '../model/availability'
 /**
  * Interface representing login credentials.
  * @interface
@@ -35,6 +36,7 @@ interface registerCredentials {
   password: string
   role_id: number
 }
+
 /**
  * Service class for authentication-related operations.
  */
@@ -62,7 +64,7 @@ class AuthService {
         if (user == null) {
           return null
         }
-        if (user.password.length === 0) {
+        if (user.password === null) {
           return user
         }
         const isPasswordValid = await bcrypt.compare(password, user.password)
@@ -101,6 +103,7 @@ class AuthService {
         if (userExists !== null) {
           return 'User already exists'
         }
+        const role_id = 2
         const user = await User.create({
           name,
           surname,
@@ -110,6 +113,25 @@ class AuthService {
           password: hash,
           role_id
         })
+        if (user.person_id == null) {
+          throw new Error('Failed to create user properly, person_id is missing.')
+        }
+        const to_date = new Date()
+
+        to_date.setFullYear(to_date.getFullYear() + 1)
+        const newAvailability = await Availability.create({
+          person_id: user.person_id,
+          from_date: new Date(),
+          to_date
+        })
+        const newApplication = await Application.create({
+          person_id: user.person_id,
+          availability_id: newAvailability.availability_id,
+          status: 'unhandled',
+          applicationdate: newAvailability.from_date,
+          openapplicationstatus: true
+        })
+        console.log(newApplication)
         return user
       })
     } catch (error) {

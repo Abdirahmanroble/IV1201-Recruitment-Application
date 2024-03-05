@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { isTokenPresent } from "./utils/auth";
 
+import './ii8n/ii8n';
 import ViewModel from "./view-models/ViewModel";
 
 import Layout from "./components/Layout/Layout";
@@ -44,7 +45,7 @@ function App() {
     window.location.replace("/");
   };
 
-  if (signedIn && viewModel.getRole() === 2 || viewModel.getRole() === null/**Applicant */)
+  if (signedIn && viewModel.getRole() === 2 || viewModel.getRole() === null /**Applicant */)
     return (
       <Router>
         <Routes>

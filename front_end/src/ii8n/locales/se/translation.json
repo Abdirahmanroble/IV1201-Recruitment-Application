@@ -1,0 +1,36 @@
+{
+  "welcomeMessage": "Välkommen",
+  "login": "Logga in",
+  "logout": "Logga ut",
+  "createAccount": "Skapa Konto",
+  "createAccountButton": "SKAPA KONTO",
+  "firstName": "Förnamn:",
+  "lastName": "Efternamn:",
+  "email": "E-post:",
+  "personNumber": "Personnummer:",
+  "username": "Användarnamn:",
+  "password": "Lösenord:",
+  "userCreatedSuccess": "Användaren skapades framgångsrikt",
+  "userLogin": "Användarinloggning",
+  "recruitmentApplication": "Rekryteringsapplikation",
+  "home": "Hem",
+  "listApplications": "Lista ansökningar",
+  "switchLanguage": "Byt språk",
+  "welcome": "Välkommen",
+  "status": {
+    "accepted": "Godkänd",
+    "rejected": "Avvisad",
+    "unhandled": "Obehandlad"
+  },
+  "missingUsernamePassword": "Ange användarnamn och lösenord",
+  "missingUsername": "Ange användarnamn",
+  "invalidUsername": "Användarnamnet måste vara av alfanumerisk typ eller vara en E-postadress",
+  "invalidCredentials": "Ogiltiga inloggningsuppgifter",
+  "missingData": "Ange nödvändig data",
+  "invalidEmail": "Ange en giltig E-postadress",
+  "invalidPersonNumber": "Ange ett giltigt personnummer (YYYYMMDD-XXX)",
+  "missingCookie": "Saknar auktorisation för tillgång till utloggning",
+  "unknownError": "Var vänlig försök igen",
+  "Group 5" : "Grupp 5"
+  }
+
