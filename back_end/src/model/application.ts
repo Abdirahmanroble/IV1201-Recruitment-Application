@@ -12,7 +12,7 @@ import db from '../integration/dbConfig'
  * @property {boolean} openapplicationstatus - Indicates if the application is still being considered (true) or not (false).
  */
 export interface ApplicationAttributes {
-  application_id: number
+  application_id?: number
   person_id: number
   availability_id: number
   status: string
