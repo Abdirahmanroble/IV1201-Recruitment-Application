@@ -5,6 +5,7 @@ import db from '../integration/dbConfig'
 import Logger from '../util/Logger'
 import { secretWord } from "../middleware/auth.middleware"
 import jwt, { JsonWebTokenError, JwtPayload } from 'jsonwebtoken'
+import IntegrationValidators from '../util/integrationValidators'
 
 /**
  * Interface representing login credentials.
@@ -31,6 +32,13 @@ class UpdateUserService {
      * @throws {Error} Throws an error if there is a problem during the update process.
      */
   public static async updateUser(token: string, newPassword: string): Promise<string> {
+
+    const validation = IntegrationValidators.validateUpdateUserRequest(token, newPassword);
+    if (!validation.isValid) {
+      Logger.logException(new Error(validation.message ?? 'Invalid request body'), { file: '', reason: '' })
+      throw new Error(validation.message ?? "Invalid request data.");
+    }
+
     const transaction = await db.transaction();
     try {
       const payload = jwt.verify(token, secretWord) as JwtPayload;
@@ -80,6 +88,14 @@ class UpdateUserService {
    * @throws {Error} If there's a problem with the database transaction or if the user lookup fails unexpectedly.
    */
   public static async getUsersByEmail (email: string): Promise<User | null> {
+    
+    const validation = IntegrationValidators.validateEmailForUserRetrieval(email);
+    if (!validation.isValid) {
+      Logger.logException(new Error(validation.message ?? "Invalid email address"), 
+        { file: 'updateUserService.ts', reason: 'Something is wrong with the email' })
+      throw new Error(validation.message ?? "Invalid email address.");
+    }
+
     try {
       return await db.transaction(async () => {
         const user = await User.findOne({ where: { email } })

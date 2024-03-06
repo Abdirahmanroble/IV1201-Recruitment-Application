@@ -5,6 +5,7 @@ import db from '../integration/dbConfig'
 import Application from '../model/application'
 import Availability from '../model/availability'
 import Logger from '../util/Logger'
+import IntegrationValidators from '../util/integrationValidators'
 /**
  * Interface representing login credentials.
  * @interface
@@ -55,6 +56,12 @@ class AuthService {
     username,
     password
   }: LoginCredentials): Promise<User | null> {
+    const validation = await IntegrationValidators.validateLoginData({ username, password });
+    if (!validation.isValid) {
+      Logger.logException(new Error(validation.error?.message ?? 'Something  went wrong while validating the data'), 
+        { file: 'authService.ts', reason: 'Something went wrong with the data before checking to the database' });
+      throw new Error(validation.error?.message ?? "Invalid login data.");
+    }
     try {
       return await db.transaction(async () => {
         let user = await User.findOne({ where: { username } })
@@ -98,6 +105,15 @@ class AuthService {
     password,
     role_id
   }: registerCredentials): Promise<User | string> {
+    
+    // Integration Validators
+    const validation = await IntegrationValidators.validateRegistrationData({ name, surname, pnr, email, username, password,  });
+    if (!validation.isValid) {
+      Logger.logException(new Error(validation.error?.message ?? 'Something  went wrong while validating the data'), 
+        { file: 'authService.ts', reason: 'Something went wrong with the data before checking to the database' });
+      throw new Error(validation.error?.message ?? "Invalid login data.");
+    }
+    
     try {
       return await db.transaction(async () => {
         const hash = await bcrypt.hash(password, 10)
@@ -116,6 +132,8 @@ class AuthService {
           role_id
         })
         if (user.person_id == null) {
+          Logger.logException(new Error('Failed to create user properly, person_id is missing.'), 
+            { file: 'authService.ts', reason: 'Could not register user' }); 
           throw new Error('Failed to create user properly, person_id is missing.')
         }
         const to_date = new Date()
@@ -137,7 +155,8 @@ class AuthService {
         return user
       })
     } catch (error) {
-      Logger.logException(new Error('Register failed'), { file: 'authService.ts', reason: 'Could not register user' }) 
+      Logger.logException(new Error('Register failed'), 
+        { file: 'authService.ts', reason: 'Could not register user' }) 
       throw new Error('An unexpected error occurred while trying to register the user')
     }
   }
