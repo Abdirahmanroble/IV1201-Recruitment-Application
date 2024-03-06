@@ -36,7 +36,7 @@ export default class ViewModel implements VM {
         username: params.email,
         password: params.password,
       })
-
+      console.log(data)
       if (data?.message) {
         if (+data.responseCode === 100) {
           /** invalid credentials */
@@ -67,8 +67,6 @@ export default class ViewModel implements VM {
       );
         console.log(response);
       if (response?.message && response.id) {
-        this.setEmail(params.email)
-        this.setPersonNumber(response.id)
         console.log("Email sent successfully.");
         return true;
       } else {
@@ -83,26 +81,36 @@ export default class ViewModel implements VM {
   
   public async updatePassword(token: string, newPassword: string): Promise<boolean> {
     try {
-      const response = await this.fetchData(
-        'http://localhost:3000/update-user', // Ensure this matches your endpoint
-        'POST',
-        { token, password: newPassword }
-      );
+        const response = await this.fetchData(
+            'http://localhost:3000/update-user', // Ensure this matches your endpoint
+            'POST',
+            { token, password: newPassword }
+        );
 
-      console.log(token, newPassword, response);
-  
-      if (response.success) {
-        console.log("Password updated successfully.");
-        return true;
-      } else {
-        console.error("Failed to update password", response.error);
-        return false;
-      }
+        // Check for the response code from your backend and handle accordingly
+        console.log(response);
+        if (response.success) {
+            console.log("Password updated successfully.");
+            // Handle successful password update (perhaps clear any existing errors)
+            this.setCurrentError(0);
+            return true;
+        } else {
+            // If the backend sends an error response with an error code, use it
+            const errorCode = response.error.errorCode;
+            console.log(errorCode)
+            this.setCurrentError(errorCode);
+            console.error("Failed to update password:", response.error?.message);
+            return false;
+        }
     } catch (error) {
-      console.error("Update password error:", error);
-      return false;
+        // Handle any other errors that may occur during the fetch
+        this.setCurrentError(-11111);
+        console.error("Update password error:", error);
+        return false;
     }
-  }
+}
+
+
   
   
 

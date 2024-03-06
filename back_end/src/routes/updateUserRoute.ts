@@ -20,7 +20,6 @@ router.post(
       return res.status(400).json({ errors: errors.array() })
     }
     UserValidators.validateUpdateUserData({
-      email: req.body.username,
       password: req.body.password,
     })
       .then((validationResult) => {

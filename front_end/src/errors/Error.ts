@@ -31,11 +31,18 @@ class Error {
   public static get UNKNOWN_ERROR(): string {
     return "unknownError";
   }
+
+  public static get UPDATE_PASSWORD(): string {
+    return "updatePassword";
+  } /** Error code: -1 */
 }
 
 function readErrorMsg(errorCode: number): string {
   const { t } = useTranslation();
   switch (errorCode) {
+    case -1: {
+      return t(Error.UPDATE_PASSWORD);
+    }
     case 100: {
       return t(Error.LOGIN_INVALID_CREDENTIALS);
     }
