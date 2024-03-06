@@ -35,5 +35,13 @@
   "Group 5": "Groupe 5",
   "updatePasswordHeader": "Mettre à jour le mot de passe",
   "updatePasswordSuccess": "Le mot de passe a été mis à jour avec succès",
-  "updatePasswordFailure": "Échec de la mise à jour du mot de passe"
+  "updatePasswordFailure": "Échec de la mise à jour du mot de passe",
+  "confirmEmail": "Confirmer l'email",
+  "confirmEmailSuccess": "Vérifiez votre boîte de réception pour mettre à jour votre mot de passe",
+  "confirmEmailFailure": "Email invalide",
+  "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+  "passwordIsEmpty": "Le mot de passe ne peut pas être vide",
+  "invalidEmailFormat": "Veuillez entrer un email valide",
+  "passwordsDoNotMatch": "La confirmation ne correspond pas au mot de passe",
+  "reset": "Réinitialiser le mot de passe"
 }

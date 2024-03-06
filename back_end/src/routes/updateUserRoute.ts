@@ -26,8 +26,10 @@ router.post(
         if (!validationResult.isValid && validationResult.error != null) {
           const error = new Error(validationResult.error.message) as Error & {
             status?: number
+            errorCode?: number
           }
           error.status = validationResult.error.status
+          error.errorCode = validationResult.error.errorCode
           Logger.logException(error, {
             file: "UpdateUserRoute.ts",
             reason: "UpdateUserValidationFailed",
@@ -72,8 +74,10 @@ router.post(
         if (!validationResult.isValid && validationResult.error != null) {
           const error = new Error(validationResult.error.message) as Error & {
             status?: number
+            errorCode?: number
           }
           error.status = validationResult.error.status
+          error.errorCode = validationResult.error.errorCode
           Logger.logException(error, {
             file: "UpdateUserRoute.ts",
             reason: "UpdateUserValidationFailed",

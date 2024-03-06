@@ -34,5 +34,13 @@
   "Group 5": "Grupo 5",
   "updatePasswordHeader": "Actualizar Contraseña",
   "updatePasswordSuccess": "La contraseña se actualizó correctamente",
-  "updatePasswordFailure": "Error al actualizar la contraseña"
+  "updatePasswordFailure": "Error al actualizar la contraseña",
+  "confirmEmail": "Confirmar correo electrónico",
+  "confirmEmailSuccess": "Revisa tu bandeja de entrada para actualizar tu contraseña",
+  "confirmEmailFailure": "Correo electrónico no válido",
+  "passwordTooShort": "La contraseña debe tener al menos 8 caracteres",
+  "passwordIsEmpty": "La contraseña no puede estar vacía",
+  "invalidEmailFormat": "Por favor, introduce un correo electrónico válido",
+  "passwordsDoNotMatch": "La confirmación no coincide con la contraseña",
+  "reset": "Restablecer contraseña"
 }

@@ -1,6 +1,5 @@
-.home-view {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
+.email-confirmation-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

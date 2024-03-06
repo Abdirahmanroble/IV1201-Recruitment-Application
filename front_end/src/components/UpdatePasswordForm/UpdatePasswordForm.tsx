@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FormInput from "../FormInput/FormInput";
+import readErrorMsg, { Error } from "../../errors/Error";
 import { useTranslation } from "react-i18next";
 import "./UpdatePasswordForm.css";
 import { UpdatePasswordFormProps } from "../../@types/UpdatePassword";
@@ -9,7 +10,7 @@ import { UpdatePasswordFormProps } from "../../@types/UpdatePassword";
  * and password confirmation. It provides feedback to the user after an attempt to update the password,
  * displaying either a success or an error message.
  *
- * @param {UpdatePasswordFormProps} props - The properties required by the UpdatePasswordForm component, 
+ * @param {UpdatePasswordFormProps} props - The properties required by the UpdatePasswordForm component,
  * including the onUpdatePassword function which is called when the user submits the form.
  * @returns {JSX.Element} - The rendered form component for password update.
  */
@@ -18,14 +19,16 @@ function UpdatePasswordForm(props: UpdatePasswordFormProps): JSX.Element {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [counter, setCounter] = useState(0);
   const [success, setSuccess] = useState(false);
+  const [mismatch, setMismatch] = useState(false);
 
   const { t } = useTranslation();
 
   let errorDisplay = "none",
+    mismatchDisplay = "none",
     successDisplay = "none";
-  if (success === false && counter > 0) errorDisplay = "block";
+  if (mismatch) mismatchDisplay = "block";
+  else if (success === false && counter > 0) errorDisplay = "block";
   else if (success === true && counter > 0) successDisplay = "block";
-
 
   return (
     <div className="update-password-box">
@@ -51,16 +54,28 @@ function UpdatePasswordForm(props: UpdatePasswordFormProps): JSX.Element {
       <div className="update-password-box-buttons">
         <button
           onClick={async () => {
-            const passwordWasUpdated = await props.onUpdatePassword(password, passwordConfirmation)
-            setCounter(counter + 1);
-            setSuccess(passwordWasUpdated);
+            if (password === passwordConfirmation) {
+              mismatchDisplay = "none";
+              const passwordWasUpdated = await props.onUpdatePassword(
+                password,
+                passwordConfirmation
+              );
+              setCounter(counter + 1);
+              setSuccess(passwordWasUpdated);
+              setMismatch(false);
+            } else {
+              setMismatch(true);
+            }
           }}
         >
           {t("updatePasswordHeader")}
         </button>
       </div>
       <div className="account-form-error" style={{ display: errorDisplay }}>
-        {t("updatePasswordFailure")}
+        {readErrorMsg(props.getCurrentError())}
+      </div>
+      <div className="account-form-error" style={{ display: mismatchDisplay }}>
+        {t(Error.PASSWORDS_DO_NOT_MATCH)}
       </div>
       <div className="account-form-success" style={{ display: successDisplay }}>
         {t("updatePasswordSuccess")}

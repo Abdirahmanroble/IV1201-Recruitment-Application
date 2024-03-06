@@ -11,13 +11,18 @@ import { UpdatePasswordViewProps } from "../../@types/UpdatePassword";
  * @param {UpdatePasswordViewProps} props - The properties passed to the update password view component.
  * @returns {React.ReactNode} The `UpdatePasswordView` component.
  */
-const UpdatePasswordView = (props: UpdatePasswordViewProps): React.ReactNode => {
+const UpdatePasswordView = (
+  props: UpdatePasswordViewProps
+): React.ReactNode => {
   const { t } = useTranslation();
 
   return (
     <div className="update-password-view">
       <h1>{t("updatePasswordHeader")}</h1>
-      <UpdatePasswordForm onUpdatePassword={props.onUpdatePassword}></UpdatePasswordForm>
+      <UpdatePasswordForm
+        onUpdatePassword={props.onUpdatePassword}
+        getCurrentError={props.getCurrentError}
+      ></UpdatePasswordForm>
     </div>
   );
 };

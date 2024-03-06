@@ -16,7 +16,6 @@ import "./App.css";
 import EmailConfirmationController from "./controllers/EmailConfirmationController";
 import UpdatePasswordController from "./controllers/UpdatePasswordController";
 
-
 /**
  * The main component of the application responsible for rendering different routes
  * based on the user's authentication status and role.
@@ -27,7 +26,6 @@ function App() {
   const [signedIn, setSignedIn] = useState(false);
   const [viewModel, setViewModel] = useState(new ViewModel());
   // const [match, setMatch] = useState('');
-
 
   useEffect(() => {
     const updateAuthState = () => {
@@ -146,9 +144,11 @@ function App() {
               <Layout
                 signedIn={false}
                 isApplicant={false}
-                element={<UpdatePasswordController 
-                  viewModel={viewModel}
-                ></UpdatePasswordController>}
+                element={
+                  <UpdatePasswordController
+                    viewModel={viewModel}
+                  ></UpdatePasswordController>
+                }
                 onLogout={onLogout}
               ></Layout>
             }
@@ -174,4 +174,3 @@ function App() {
 }
 
 export default App;
-

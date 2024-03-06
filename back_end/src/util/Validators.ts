@@ -165,7 +165,7 @@ class UserValidators {
       return {
         isValid: false,
         error: {
-          errorCode: 10,
+          errorCode: 401,
           message: "Password must be at least 8 characters long.",
           status: 400,
         },
@@ -176,7 +176,7 @@ class UserValidators {
       return {
         isValid: false,
         error: {
-          errorCode: 11,
+          errorCode: 402,
           message: "Password cannot be empty.",
           status: 400,
         },
@@ -199,16 +199,16 @@ class UserValidators {
    */
   static async validateUpdateUserEmail(data: { email?: string }): Promise<{
     isValid: boolean;
-    error?: { message: string; status: number };
+    error?: { errorCode: number, message: string; status: number };
   }> {
     if (data.email && !validator.isEmail(data.email)) {
       return {
         isValid: false,
-        error: { message: "Invalid email format.", status: 400 },
+        error: { errorCode: 501, message: "Invalid email format.", status: 400 },
       };
     }
 
-    return { isValid: true, error: { message: "", status: 200 } };
+    return { isValid: true, error: { errorCode: 0, message: "", status: 200 } };
   }
 
   /**

@@ -34,5 +34,13 @@
   "Group 5": "Grupp 5",
   "updatePasswordHeader": "Uppdatera Lösenord",
   "updatePasswordSuccess": "Lösenordet uppdaterades framgångsrikt",
-  "updatePasswordFailure": "Misslyckades med att uppdatera lösenordet"
+  "updatePasswordFailure": "Misslyckades med att uppdatera lösenordet",
+  "confirmEmail": "Bekräfta E-post",
+  "confirmEmailSuccess": "Kontrollera din inkorg för att uppdatera ditt lösenord",
+  "confirmEmailFailure": "Ogiltig E-post",
+  "passwordTooShort": "Lösenordet måste bestå av minst 8 tecken",
+  "passwordIsEmpty": "Lösenordet kan inte vara tomt",
+  "invalidEmailFormat": "Vänligen ange en giltig E-postadress",
+  "passwordsDoNotMatch": "Bekräftelsen matchar inte lösenordet",
+  "reset": "Återställ Lösenord"
 }
