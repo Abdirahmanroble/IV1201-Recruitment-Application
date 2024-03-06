@@ -257,7 +257,7 @@ class UserController {
         body: emailHTML
       }
   
-      res.send({ message: "Email sent!", url, id, info: infoMail })
+      res.send({ message: "Email sent!", url, id, info: infoMail, token })
     } catch (error) {
       console.error("Email confirmation error:", error);
       res.status(500).send("An error occurred while sending the email.")

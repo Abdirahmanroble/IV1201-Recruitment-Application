@@ -10,12 +10,12 @@ import HomeController from "./controllers/HomeController";
 import ListApplicationsController from "./controllers/ListApplicationsController";
 import LoginController from "./controllers/LoginController";
 import CreateAccountController from "./controllers/CreateAccountController";
-import UpdatePasswordView from "./views/UpdatePasswordView/UpdatePasswordView";
 
 import "./ii8n/ii8n";
 import "./App.css";
 import EmailConfirmationController from "./controllers/EmailConfirmationController";
 import UpdatePasswordController from "./controllers/UpdatePasswordController";
+
 
 /**
  * The main component of the application responsible for rendering different routes
@@ -26,6 +26,8 @@ import UpdatePasswordController from "./controllers/UpdatePasswordController";
 function App() {
   const [signedIn, setSignedIn] = useState(false);
   const [viewModel, setViewModel] = useState(new ViewModel());
+  // const [match, setMatch] = useState('');
+
 
   useEffect(() => {
     const updateAuthState = () => {
@@ -144,7 +146,9 @@ function App() {
               <Layout
                 signedIn={false}
                 isApplicant={false}
-                element={<UpdatePasswordController  />}
+                element={<UpdatePasswordController 
+                  viewModel={viewModel}
+                ></UpdatePasswordController>}
                 onLogout={onLogout}
               ></Layout>
             }
@@ -170,3 +174,4 @@ function App() {
 }
 
 export default App;
+

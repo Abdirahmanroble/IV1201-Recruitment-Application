@@ -1,27 +1,33 @@
-// UpdatePasswordController.tsx
+import { ControllerProps } from '../@types/UpdatePassword';
+import UpdatePasswordView from '../views/UpdatePasswordView/UpdatePasswordView';
 import { useParams } from 'react-router-dom';
-import UpdatePasswordForm from '../components/UpdatePasswordForm/UpdatePasswordForm'; // Your form component path
-import ViewModel from '../view-models/ViewModel'; // Your ViewModel path
 
-const UpdatePasswordController = () => {
-  const { token } = useParams(); // Make sure the route parameter name matches
-  const viewModel = new ViewModel(); // Or get the instance from context/props if you're using a singleton
+/**
+ * `UpdatePasswordController` manages the password update using a token from URL parameters.
+ * It renders the `UpdatePasswordView` component with a handler to process password updates.
+ * 
+ * @param {ControllerProps} props - The properties passed to the controller, including the view model.
+ * @returns {JSX.Element} A rendered view component to update the user's password.
+ */
+const UpdatePasswordController = (props: ControllerProps) => {
+  const { token } = useParams();
 
-  const handleUpdatePassword = async (newPassword: string) => {
-    // Call the ViewModel's updatePassword method
+  /**
+   * Asynchronous function to handle password update process.
+   *
+   * @param {string} newPassword - The new password.
+   */
+  const handleUpdatePassword = async (newPassword: string):  Promise<boolean> => {
     if (token) {
-    const success = await viewModel.updatePassword(token, newPassword);
-    if (success) {
-      // Handle the successful password update, e.g., redirect or show a success message
-      console.log('Password updated successfully');
-    } else {
-      // Handle the unsuccessful attempt, e.g., show an error message
-      console.error('Failed to update password');
+      const success = await props.viewModel.updatePassword(token, newPassword);
+      return success;
     }
-    }
+    
+    // If there's no token, the function resolves to `false`, indicating failure.
+    return false;
   };
 
-  return <UpdatePasswordForm onUpdatePassword={handleUpdatePassword} />;
+  return <UpdatePasswordView onUpdatePassword={handleUpdatePassword} />;
 };
 
 export default UpdatePasswordController;
