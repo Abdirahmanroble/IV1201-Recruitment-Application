@@ -189,6 +189,35 @@ class UserValidators {
   }
 
   /**
+   * Validates the email provided in the data object.
+   * 
+   * This function checks if the provided email address has a valid format
+   * according to the validator's isEmail function. It returns an object containing
+   * a boolean indicating validity and, in case of invalidity, an error object with a message and status.
+   * 
+   * @param {Object} data - An object containing the email to validate.
+   * @param {string} [data.email] - The email address to validate.
+   * @returns {Promise<{ isValid: boolean, error?: { message: string, status: number } }>}
+   * A promise that resolves to an object indicating whether the email is valid and any error information.
+   */
+  static async validateUpdateUserEmail (data: {
+    email?: string
+  }): Promise<{
+      isValid: boolean
+      error?: { message: string, status: number }
+    }> {
+    if (data.email && !validator.isEmail(data.email)) {
+      return {
+        isValid: false,
+        error: { message: 'Invalid email format.', status: 400 }
+      }
+    }
+
+    return { isValid: true, error: { message: '', status: 200 } }
+  }
+
+
+  /**
    * Validates the logout request by checking for a valid authentication cookie.
    * Throws an error if the authentication cookie is missing, indicating an unauthorized logout attempt.
    *

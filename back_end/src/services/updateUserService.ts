@@ -2,6 +2,7 @@
 import bcrypt from 'bcrypt'
 import User from '../model/user'
 import db from '../integration/dbConfig'
+import Logger from '../util/Logger'
 
 /**
  * Interface representing login credentials.
@@ -58,5 +59,36 @@ class UpdateUserService {
       throw new Error('Update failed: ')
     }
   }
+
+  /**
+   * Retrieves a user from the database by their email address.
+   * 
+   * This function performs a database transaction to look up a user by their email.
+   * If a user is found with a null password, the user object is still returned,
+   * which could indicate a user that has not yet completed the registration process.
+   * 
+   * @param {string} email - The email address to search for in the user database.
+   * @returns {Promise<User | null>} - A promise that resolves with the User object if found, or null if no user is found.
+   * @throws {Error} If there's a problem with the database transaction or if the user lookup fails unexpectedly.
+   */
+  public static async getUsersByEmail (email: string): Promise<User | null> {
+    try {
+      return await db.transaction(async () => {
+        const user = await User.findOne({ where: { email } })
+
+        if (user == null) {
+          return null
+        }
+        if (user.password === null) {
+          return user
+        }
+        return user
+      })
+    } catch (err) {
+      Logger.logException(new Error('Login failed'), { file: 'authService.ts', reason: 'Could not find user' }) 
+      throw new Error('An unexpected error occurred while trying to register the user')
+    }
+  }
 }
+
 export default UpdateUserService

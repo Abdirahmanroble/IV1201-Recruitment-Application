@@ -2,7 +2,6 @@
 import express, { type Express, type Response, type Request } from 'express'
 import db from './integration/dbConfig'
 
-import User from './model/user'
 import './model/availability'
 import './model/competence'
 import './model/competenceProfile'
@@ -15,8 +14,6 @@ import listApplicationRoute from './routes/listApplicationRoute'
 import cors, { type CorsOptions } from 'cors'
 import ErrorHandling from './errors/errorHandler'
 import updateUserRoute from './routes/updateUserRoute'
-import nodemailer from 'nodemailer'
-import jwt from 'jsonwebtoken'
 /**
  * Tests the database connection.
  * Logs a success message if connection is established,
@@ -82,45 +79,6 @@ app.get('/', (req: Request, res: Response) => {
 app.use(userRoutes)
 app.use(listApplicationRoute)
 app.use(updateUserRoute)
-
-app.post('/send-confirmation', async (req: Request, res: Response) => {
-  console.log('the  email is ', req.body.email)
-
-  const user = await User.findOne({ where: { email: req.body.email } })
-  // Generate test SMTP service account from ethereal.email
-  const testAccount = await nodemailer.createTestAccount()
-
-  // Create a transporter object using the default SMTP transport
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-      user: testAccount.user, // generated ethereal user
-      pass: testAccount.pass // generated ethereal password
-    }
-  })
-
-  const token = jwt.sign({ id: user?.person_id }, 'Secret', { expiresIn: '1h' })
-  const id = user?.person_id
-
-
-  const url = `http://localhost:4000/update-password/${token}`
-
-  // Send mail with defined transport object
-  const info = await transporter.sendMail({
-    from: '"Fred Foo 👻" <foo@example.com>', // sender address
-    to: req.body.email, // list of receivers
-    subject: 'Confirmation Email', // Subject line
-    text: 'Hello world?', // plain text body
-    html: `The link: <a href="${url}">${url}</a>` // html body
-  })
-
-  console.log('Message sent: %s', info.messageId)
-  console.log('Preview URL: %s', url)
-
-  res.send({ message: 'Email sent!', url, id, info })
-})
 
 /**
  * Initialize and register the error handling middleware as the last middleware

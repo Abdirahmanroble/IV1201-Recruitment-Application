@@ -4,6 +4,7 @@ import User from '../model/user'
 import db from '../integration/dbConfig'
 import Application from '../model/application'
 import Availability from '../model/availability'
+import Logger from '../util/Logger'
 /**
  * Interface representing login credentials.
  * @interface
@@ -75,7 +76,8 @@ class AuthService {
         }
       })
     } catch (error) {
-      throw new Error('Login failed')
+      Logger.logException(new Error('Login failed'), { file: 'authService.ts', reason: 'Could not find user' }) 
+      throw new Error('An unexpected error occurred while trying to authenticate the user')
     }
   }
 
@@ -135,7 +137,8 @@ class AuthService {
         return user
       })
     } catch (error) {
-      throw new Error('Register failed')
+      Logger.logException(new Error('Register failed'), { file: 'authService.ts', reason: 'Could not register user' }) 
+      throw new Error('An unexpected error occurred while trying to register the user')
     }
   }
 }
