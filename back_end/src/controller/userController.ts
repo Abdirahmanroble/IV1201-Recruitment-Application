@@ -185,10 +185,10 @@ class UserController {
    * @returns {Promise<void>} A promise that resolves with no return value.
    */
   public static async updateUser(req: Request, res: Response): Promise<void> {
-    const userDTO = req.body
+    const { token, password } = req.body;
     try {
-      const updatedUser = await UpdateUserService.updateUser(userDTO as UserDTO)
-      res.json({ message: updatedUser })
+      const updateMessage = await UpdateUserService.updateUser(token, password);
+      res.json({ message: updateMessage });
     } catch (error: unknown) {
       if (error instanceof Error) {
         res.status(500).send(error.message)

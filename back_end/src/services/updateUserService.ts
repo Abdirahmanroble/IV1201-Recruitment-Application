@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt'
 import User from '../model/user'
 import db from '../integration/dbConfig'
 import Logger from '../util/Logger'
+import { secretWord } from "../middleware/auth.middleware"
+import jwt, { JsonWebTokenError, JwtPayload } from 'jsonwebtoken'
 
 /**
  * Interface representing login credentials.
@@ -28,35 +30,41 @@ class UpdateUserService {
      * @returns {Promise<string>} A promise that resolves with a success message if the update is successful.
      * @throws {Error} Throws an error if there is a problem during the update process.
      */
-  public static async updateUser ({
-    person_id,
-    email,
-    password
-  }: LoginCredentials): Promise<string> {
-    const transaction = await db.transaction()
+  public static async updateUser(token: string, newPassword: string): Promise<string> {
+    const transaction = await db.transaction();
     try {
+      const payload = jwt.verify(token, secretWord) as JwtPayload;
+      console.log('Decoded JWT payload:', payload);
+      const { id } = payload;
       const user = await User.findOne({
-        where: { person_id },
-        transaction
-      })
-
+        where: { person_id : id},
+        transaction,
+      });
+  
       if (user === null) {
-        await transaction.rollback()
-        return 'User not found'
+        await transaction.rollback();
+        return 'User not found';
       }
-      if (password !== null && user.password === null) {
-        const hashedPassword = await bcrypt.hash(password, 10)
-        await user.update({ password: hashedPassword }, { transaction })
+      if (newPassword !== null && user.password === null) {
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await user.update({ password: hashedPassword }, { transaction });
+        await transaction.commit();
+        return 'User updated successfully';
+      } else {
+        await transaction.rollback();
+        return 'Invalid operation: password already set or new password is null.';
       }
-
-      if (email !== null && (user.email === null || user.email !== email)) {
-        await user.update({ email }, { transaction })
-      }
-      await transaction.commit()
-      return 'User updated successfully'
     } catch (error) {
-      await transaction.rollback()
-      throw new Error('Update failed: ')
+      await transaction.rollback();
+      if (error instanceof JsonWebTokenError) {
+        // Specific error message for token errors
+        console.error('JWT error:', error.message);
+        throw new Error('Token validation failed');
+      } else {
+        // Log or handle other types of errors
+        console.error('Update failed:', error);
+        throw new Error('Update failed: ');
+      }
     }
   }
 

@@ -13,7 +13,7 @@ const router = Router()
  * On success, the updateUser method of the UserController is called.
  */
 router.post(
-  "/updateUser",
+  "/update-user",
   (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {

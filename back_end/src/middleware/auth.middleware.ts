@@ -35,6 +35,9 @@ type RequestWithUser = Request & {
 // Define a custom type for what you expect in your JWT payload
 interface JwtPayload {
   id: string
+  username: string
+  email: string
+
   // add other payload properties as needed
 }
 
@@ -69,4 +72,4 @@ const validateToken = async (
   }
 }
 
-export { maxAge, createToken, validateToken }
+export { maxAge, createToken, validateToken, secretWord }

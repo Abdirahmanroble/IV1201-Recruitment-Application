@@ -60,38 +60,51 @@ export default class ViewModel implements VM {
 
   public async emailConfirmation(params: EmailParams): Promise<boolean> {
     try {
-      const data = await this.fetchData(
+      const response = await this.fetchData(
         "http://localhost:3000/send-confirmation",
         "POST",
-        {
-          email: params.email,
-        }
-      )
-
-      console.log(data)
-      this.email = data.email
-       
-      console.log(this.email)
-      if (data?.message) {
-        if (+data.responseCode === 100) {
-          /** invalid credentials */
-          this.setCurrentError(100)
-          // this.changeAuthState(false)
-        } else {
-          /** valid credentials */
-          this.setUserBody(data.foundUser)
-          // this.changeAuthState(true)
-        }
-      } else if (data?.error) {
-        this.setCurrentError(+data.error.errorCode) /** string to number */
-        // this.changeAuthState(false)
-      } else throw new Error("Unknown error")
-      return true
+        { email: params.email }
+      );
+        console.log(response);
+      if (response?.message && response.id) {
+        this.setEmail(params.email)
+        this.setPersonNumber(response.id)
+        console.log("Email sent successfully.");
+        return true;
+      } else {
+        console.error("Invalid response or error", response?.error);
+        return false;
+      }
     } catch (error) {
-      this.setCurrentError(-1)
-      return false
+      console.error("emailConfirmation error:", error);
+      return false;
     }
   }
+  
+  public async updatePassword(token: string, newPassword: string): Promise<boolean> {
+    try {
+      const response = await this.fetchData(
+        'http://localhost:3000/update-user', // Ensure this matches your endpoint
+        'POST',
+        { token, password: newPassword }
+      );
+
+      console.log(token, newPassword, response);
+  
+      if (response.success) {
+        console.log("Password updated successfully.");
+        return true;
+      } else {
+        console.error("Failed to update password", response.error);
+        return false;
+      }
+    } catch (error) {
+      console.error("Update password error:", error);
+      return false;
+    }
+  }
+  
+  
 
   public async createAccount(params: CreateAccountParams): Promise<boolean> {
     try {

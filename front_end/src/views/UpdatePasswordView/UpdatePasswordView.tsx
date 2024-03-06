@@ -1,15 +1,14 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
-import UpdatePasswordForm from "../../components/UpdatePasswordForm/UpdatePasswordForm";
-import "./UpdatePasswordView.css";
+// UpdatePasswordView.tsx
 
-const UpdatePasswordView = (): React.ReactNode => {
-  const { t } = useTranslation();
+import React from 'react';
+import UpdatePasswordForm from '../../components/UpdatePasswordForm/UpdatePasswordForm';
+import { UpdatePasswordViewProps } from '../../@types/UpdatePassword';
 
+const UpdatePasswordView: React.FC<UpdatePasswordViewProps> = ({ onUpdatePassword }) => {
   return (
-    <div className="update-password-view">
-      <h1>{t("updatePasswordHeader")}</h1>
-      <UpdatePasswordForm></UpdatePasswordForm>
+    <div>
+      {/* You can include more UI elements as necessary */}
+      <UpdatePasswordForm onUpdatePassword={onUpdatePassword} />
     </div>
   );
 };
