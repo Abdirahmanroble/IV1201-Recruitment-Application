@@ -32,5 +32,17 @@
   "invalidPersonNumber": "Fadlan geli lambarka qofka sax ah (YYYYMMDD-XXX)",
   "missingCookie": "Gelitaanka aan la oggolayn si loo baxo",
   "unknownError": "Fadlan isku day mar kale",
-  "Group 5": "Kooxda 5"
+  "Group 5": "Kooxda 5",
+  "updatePasswordHeader": "Cusboonaysii Furaha",
+  "updatePasswordSuccess": "Furaha ayaa si guul leh loo cusboonaysiiyay",
+  "updatePasswordFailure": "Ku guuldareystay in la cusboonaysiiyo furaha",
+  "confirmEmail": "Xaqiiji Emailka",
+  "confirmEmailSuccess": "Hubi sanduuqaaga si aad u cusboonaysiiso furahaaga",
+  "confirmEmailFailure": "Emailka waa baadil",
+  "passwordTooShort": "Furaha waa inuu ka koobnaadaa ugu yaraan 8 xaraf",
+  "passwordIsEmpty": "Furaha ma noqon karo madhan",
+  "invalidEmailFormat": "Fadlan geli email sax ah",
+  "passwordsDoNotMatch": "Xaqiijintu uma dhiganto furaha",
+  "passwordAlreadyExists": "Ma dib u dejin karo furaha sirta ah ee hore u jiray",
+  "reset": "Dib u Deji Furaha"
 }

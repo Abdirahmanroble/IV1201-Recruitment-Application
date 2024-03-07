@@ -1,4 +1,4 @@
-.login-box {
+.update-password-box {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -12,39 +12,38 @@
   border-radius: 0.75rem;
 }
 
-.login-box-header {
+.update-password-box-header {
   font-weight: var(--bold-weight);
   text-align: center;
 }
 
-.login-box-input {
+.update-password-box-input {
   display: flex;
   flex-direction: column;
   gap: 1vh;
 }
 
-.login-box-buttons {
+.update-password-box-buttons {
   display: flex;
   flex-direction: column;
-  gap: 1vh;
 
   width: 12vw;
 }
 
-.login-box-buttons button {
+.update-password-box-buttons button {
   background-color: var(--white);
   border: 0.1rem solid var(--green-primary);
   border-radius: 0.75rem;
   cursor: pointer;
 }
 
-.login-box-error {
+.update-password-box-error {
   color: var(--red-primary);
   font-weight: var(--bold-weight);
   font-size: 0.8rem;
 }
 
-.login-form-error {
+.update-password-form-error {
   color: var(--red-primary);
   font-weight: var(--bold-weight);
   font-size: 0.8rem;
