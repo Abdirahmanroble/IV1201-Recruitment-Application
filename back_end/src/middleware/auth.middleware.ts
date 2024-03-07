@@ -22,8 +22,8 @@ const maxAge = 1 * 3600
  * @param {string} email - The email address to be included in the token payload.
  * @returns {string} The generated JWT string.
  */
-const createToken = (email: string): string => {
-  return jwt.sign({ email }, secretWord, {
+const createToken = (id: number, username: string): string => {
+  return jwt.sign({ id, username }, secretWord, {
     expiresIn: maxAge
   })
 }
@@ -35,6 +35,9 @@ type RequestWithUser = Request & {
 // Define a custom type for what you expect in your JWT payload
 interface JwtPayload {
   id: string
+  username: string
+  email: string
+
   // add other payload properties as needed
 }
 
@@ -69,4 +72,4 @@ const validateToken = async (
   }
 }
 
-export { maxAge, createToken, validateToken }
+export { maxAge, createToken, validateToken, secretWord }

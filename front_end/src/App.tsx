@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { isTokenPresent } from "./utils/auth";
 
-import './ii8n/ii8n';
 import ViewModel from "./view-models/ViewModel";
 
 import Layout from "./components/Layout/Layout";
@@ -12,7 +11,10 @@ import ListApplicationsController from "./controllers/ListApplicationsController
 import LoginController from "./controllers/LoginController";
 import CreateAccountController from "./controllers/CreateAccountController";
 
+import "./ii8n/ii8n";
 import "./App.css";
+import EmailConfirmationController from "./controllers/EmailConfirmationController";
+import UpdatePasswordController from "./controllers/UpdatePasswordController";
 
 /**
  * The main component of the application responsible for rendering different routes
@@ -23,6 +25,7 @@ import "./App.css";
 function App() {
   const [signedIn, setSignedIn] = useState(false);
   const [viewModel, setViewModel] = useState(new ViewModel());
+  // const [match, setMatch] = useState('');
 
   useEffect(() => {
     const updateAuthState = () => {
@@ -45,7 +48,10 @@ function App() {
     window.location.replace("/");
   };
 
-  if (signedIn && viewModel.getRole() === 2 || viewModel.getRole() === null /**Applicant */)
+  if (
+    (signedIn && viewModel.getRole() === 2) ||
+    viewModel.getRole() === null /**Applicant */
+  )
     return (
       <Router>
         <Routes>
@@ -132,6 +138,36 @@ function App() {
               ></Layout>
             }
           ></Route>
+          <Route
+            path="/update-password/:token?"
+            element={
+              <Layout
+                signedIn={false}
+                isApplicant={false}
+                element={
+                  <UpdatePasswordController
+                    viewModel={viewModel}
+                  ></UpdatePasswordController>
+                }
+                onLogout={onLogout}
+              ></Layout>
+            }
+          ></Route>
+          <Route
+            path="/send-confirmation"
+            element={
+              <Layout
+                signedIn={false}
+                isApplicant={false}
+                element={
+                  <EmailConfirmationController
+                    viewModel={viewModel}
+                  ></EmailConfirmationController>
+                }
+                onLogout={onLogout}
+              ></Layout>
+            }
+          />
         </Routes>
       </Router>
     );
