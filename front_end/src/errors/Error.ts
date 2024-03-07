@@ -34,6 +34,9 @@ export class Error {
   public static get PASSWORD_IS_EMPTY(): string {
     return "passwordIsEmpty";
   } /** Error code: 402 */
+  public static get PASSWORD_ALREADY_EXISTS(): string {
+    return "passwordAlreadyExists";
+  } /** Error code: 403 */
 
   public static get INVALID_EMAIL_FORMAT(): string {
     return "invalidEmailFormat";
@@ -80,6 +83,9 @@ function readErrorMsg(errorCode: number): string {
     }
     case 402: {
       return t(Error.PASSWORD_IS_EMPTY);
+    }
+    case 403: {
+      return t(Error.PASSWORD_ALREADY_EXISTS);
     }
     case 501: {
       return t(Error.INVALID_EMAIL_FORMAT);

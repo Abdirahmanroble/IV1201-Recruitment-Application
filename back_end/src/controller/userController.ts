@@ -188,7 +188,9 @@ class UserController {
     const { token, password } = req.body;
     try {
       const updateMessage = await UpdateUserService.updateUser(token, password);
-      res.json({ message: updateMessage });
+      const success = updateMessage === 'User updated successfully' ? true : false;
+      if(success) res.json({ message: updateMessage, success: success });
+      else res.json({ error: { errorCode: 403, message: updateMessage } });
     } catch (error: unknown) {
       if (error instanceof Error) {
         res.status(500).send(error.message)

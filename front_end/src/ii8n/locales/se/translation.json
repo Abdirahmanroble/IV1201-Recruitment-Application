@@ -42,5 +42,6 @@
   "passwordIsEmpty": "Lösenordet kan inte vara tomt",
   "invalidEmailFormat": "Vänligen ange en giltig E-postadress",
   "passwordsDoNotMatch": "Bekräftelsen matchar inte lösenordet",
+  "passwordAlreadyExists": "Kan inte återställa ett redan befintligt lösenord",
   "reset": "Återställ Lösenord"
 }

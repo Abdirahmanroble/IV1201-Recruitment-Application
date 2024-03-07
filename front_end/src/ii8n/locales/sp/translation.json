@@ -42,5 +42,6 @@
   "passwordIsEmpty": "La contraseña no puede estar vacía",
   "invalidEmailFormat": "Por favor, introduce un correo electrónico válido",
   "passwordsDoNotMatch": "La confirmación no coincide con la contraseña",
-  "reset": "Restablecer contraseña"
+  "passwordAlreadyExists": "No se puede restablecer una contraseña ya existente",
+  "reset": "Restablecer Contraseña"
 }

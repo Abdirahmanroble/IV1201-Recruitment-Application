@@ -42,5 +42,6 @@
   "passwordIsEmpty": "Password cannot be empty",
   "invalidEmailFormat": "Please enter a valid email",
   "passwordsDoNotMatch": "The confirmation does not match the password",
+  "passwordAlreadyExists": "Cannot reset already existing password",
   "reset": "Reset Password"
 }

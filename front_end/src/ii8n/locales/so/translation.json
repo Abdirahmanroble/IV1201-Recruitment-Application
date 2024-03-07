@@ -43,5 +43,6 @@
   "passwordIsEmpty": "Furaha ma noqon karo madhan",
   "invalidEmailFormat": "Fadlan geli email sax ah",
   "passwordsDoNotMatch": "Xaqiijintu uma dhiganto furaha",
+  "passwordAlreadyExists": "Ma dib u dejin karo furaha sirta ah ee hore u jiray",
   "reset": "Dib u Deji Furaha"
 }
