@@ -90,7 +90,6 @@ export default class ViewModel implements VM {
       );
 
       // Check for the response code from your backend and handle accordingly
-      console.log(response);
       if (response?.success) {
         // Handle successful password update (perhaps clear any existing errors)
         this.setCurrentError(0);

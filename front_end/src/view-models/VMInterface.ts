@@ -1,6 +1,7 @@
 import {
   ApplicationsPromiseBody,
   CreateAccountParams,
+  EmailParams,
   LoginParams,
 } from "../@types/ViewModel";
 import ViewModel from "./ViewModel";
@@ -35,6 +36,23 @@ export interface VM {
    * @returns A promise that resolves to true if the account creation is successful, otherwise false.
    */
   createAccount(params: CreateAccountParams): Promise<boolean>;
+
+  /**
+   * Specifies a method to confirm an email.
+   *
+   * @param {EmailParams} params - Parameters required for email confirmation.
+   * @returns {Promise<boolean>} A Promise that resolves to a boolean indicating the success of email confirmation.
+   */
+  emailConfirmation(params: EmailParams): Promise<boolean>;
+
+  /**
+   * Specifies a method to update a password.
+   *
+   * @param {string} token - The token for password update.
+   * @param {string} newPassword - The new password to be set.
+   * @returns {Promise<boolean>} A Promise that resolves to a boolean indicating the success of password update.
+   */
+  updatePassword(token: string, newPassword: string): Promise<boolean>;
 
   /**
    * Retrieves a list of all applications.

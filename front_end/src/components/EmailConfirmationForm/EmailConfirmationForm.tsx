@@ -1,10 +1,15 @@
 import { useState } from "react";
 import { EmailConfirmationFormProps } from "../../@types/EmailConfirmation";
 import FormInput from "../FormInput/FormInput";
-// import readErrorMsg from "../../errors/Error";
 import { useTranslation } from "react-i18next";
 import "./EmailConfirmationForm.css";
 
+/**
+ * A component for handling email confirmation form.
+ *
+ * @param {EmailConfirmationFormProps} props - The props for the EmailConfirmationForm component.
+ * @returns {JSX.Element} JSX element representing the email confirmation form.
+ */
 function EmailConfirmationForm(props: EmailConfirmationFormProps): JSX.Element {
   const [email, setEmail] = useState("");
   const [counter, setCounter] = useState(0);
