@@ -231,7 +231,7 @@ class UserController {
   
       const token = createToken(user?.person_id!, user?.username!)
       const id = user?.person_id
-      const url = `http://localhost:4000/update-password/${token}`
+      const url = `https://iv1201-recruitment-application-backend.onrender.com/update-password/${token}`
   
       const emailHTML = `
         <div style="font-family: Arial, sans-serif; font-size: 16px; color: #333;">
