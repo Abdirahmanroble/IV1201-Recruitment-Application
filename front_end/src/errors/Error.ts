@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 
-class Error {
+export class Error {
   public static get LOGIN_INVALID_CREDENTIALS(): string {
     return "invalidCredentials";
   } /** Response code: 100 */
@@ -27,6 +27,24 @@ class Error {
   public static get LOGOUT_MISSING_COOKIE(): string {
     return "missingCookie";
   } /** Error code: 301 */
+
+  public static get PASSWORD_TOO_SHORT(): string {
+    return "passwordTooShort";
+  } /** Error code: 401 */
+  public static get PASSWORD_IS_EMPTY(): string {
+    return "passwordIsEmpty";
+  } /** Error code: 402 */
+  public static get PASSWORD_ALREADY_EXISTS(): string {
+    return "passwordAlreadyExists";
+  } /** Error code: 403 */
+
+  public static get INVALID_EMAIL_FORMAT(): string {
+    return "invalidEmailFormat";
+  } /** Error code: 501 */
+
+  public static get PASSWORDS_DO_NOT_MATCH(): string {
+    return "passwordsDoNotMatch";
+  } /** Error code: 10 */
 
   public static get UNKNOWN_ERROR(): string {
     return "unknownError";
@@ -59,6 +77,18 @@ function readErrorMsg(errorCode: number): string {
     }
     case 301: {
       return t(Error.LOGOUT_MISSING_COOKIE);
+    }
+    case 401: {
+      return t(Error.PASSWORD_TOO_SHORT);
+    }
+    case 402: {
+      return t(Error.PASSWORD_IS_EMPTY);
+    }
+    case 403: {
+      return t(Error.PASSWORD_ALREADY_EXISTS);
+    }
+    case 501: {
+      return t(Error.INVALID_EMAIL_FORMAT);
     }
     default: {
       return t(Error.UNKNOWN_ERROR);

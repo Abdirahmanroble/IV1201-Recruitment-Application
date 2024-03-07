@@ -31,6 +31,17 @@
   "invalidPersonNumber": "Por favor, introduzca un número de persona válido (AAAAMMDD-XXX)",
   "missingCookie": "Acceso no autorizado para cerrar sesión",
   "unknownError": "Por favor, intente de nuevo",
-  "Group 5" : "Grupo 5"
-
+  "Group 5": "Grupo 5",
+  "updatePasswordHeader": "Actualizar Contraseña",
+  "updatePasswordSuccess": "La contraseña se actualizó correctamente",
+  "updatePasswordFailure": "Error al actualizar la contraseña",
+  "confirmEmail": "Confirmar correo electrónico",
+  "confirmEmailSuccess": "Revisa tu bandeja de entrada para actualizar tu contraseña",
+  "confirmEmailFailure": "Correo electrónico no válido",
+  "passwordTooShort": "La contraseña debe tener al menos 8 caracteres",
+  "passwordIsEmpty": "La contraseña no puede estar vacía",
+  "invalidEmailFormat": "Por favor, introduce un correo electrónico válido",
+  "passwordsDoNotMatch": "La confirmación no coincide con la contraseña",
+  "passwordAlreadyExists": "No se puede restablecer una contraseña ya existente",
+  "reset": "Restablecer Contraseña"
 }

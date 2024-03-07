@@ -31,5 +31,17 @@
   "invalidPersonNumber": "Please enter a valid person number (YYYYMMDD-XXX)",
   "missingCookie": "Unauthorized access to logout",
   "unknownError": "Please try again",
-  "Group 5" : "Group 5"
-  }
+  "Group 5": "Group 5",
+  "updatePasswordHeader": "Update Password",
+  "updatePasswordSuccess": "Password was updated successfully",
+  "updatePasswordFailure": "Failed to update password",
+  "confirmEmail": "Confirm Email",
+  "confirmEmailSuccess": "Check your inbox to update your password",
+  "confirmEmailFailure": "Invalid email",
+  "passwordTooShort": "Password must consist of at least 8 characters",
+  "passwordIsEmpty": "Password cannot be empty",
+  "invalidEmailFormat": "Please enter a valid email",
+  "passwordsDoNotMatch": "The confirmation does not match the password",
+  "passwordAlreadyExists": "Cannot reset already existing password",
+  "reset": "Reset Password"
+}

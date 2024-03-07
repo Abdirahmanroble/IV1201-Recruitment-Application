@@ -49,6 +49,10 @@ export interface LoginParams {
   password: string;
 }
 
+export interface EmailParams {
+  email: string;
+}
+
 export interface UserBody {
   name: string;
   surname: string;

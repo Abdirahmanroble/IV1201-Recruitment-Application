@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { LoginBoxProps } from "../../@types/Login";
 import FormInput from "../FormInput/FormInput";
 import readErrorMsg from "../../errors/Error";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import "./LoginBox.css";
 
 /**
@@ -16,6 +18,11 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
   const [password, setPassword] = useState("");
   const [counter, setCounter] = useState(0);
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
+
+  const handleResetClick = async () => {
+    navigate("/send-confirmation");
+  };
 
   const { t } = useTranslation();
 
@@ -51,6 +58,7 @@ function LoginBox(props: LoginBoxProps): JSX.Element {
         >
           {t("login")}
         </button>
+        <button onClick={handleResetClick}>{t("reset")}</button>
       </div>
       <div className="login-form-error" style={{ display: `${errorDisplay}` }}>
         {readErrorMsg(props.getCurrentError())}
