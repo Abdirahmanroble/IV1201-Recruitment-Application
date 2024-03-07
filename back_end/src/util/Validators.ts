@@ -29,14 +29,14 @@ class UserValidators {
   }> {
     // console.log("We are here")
     const { username, password } = data;
-    if (!username && !password) {
+    if (!username || !password) {
       // console.log("I am here")
       // throw new Error("Please provide either an email/username or a password.")
       return {
         isValid: false,
         error: {
           errorCode: 101,
-          message: "Please provide either an email/username or a password.",
+          message: "Both email/username and password must be provided and cannot be empty.",
           status: 400,
         },
       };
